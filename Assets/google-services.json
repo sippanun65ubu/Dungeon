@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "853718465676",
+    "firebase_url": "https://dungeon-8f4ab-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "dungeon-8f4ab",
+    "storage_bucket": "dungeon-8f4ab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853718465676:android:622d92dcebfef2a1044fa9",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.Dungeon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCjXgw4kUA8JoEfG9-ry_D-mPWSj_w9qU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
