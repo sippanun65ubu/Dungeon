@@ -15,7 +15,7 @@ MonoBehaviour:
   TitleId: 48A9A
   DeveloperSecretKey: GNB91SK1FY35MJ4XUQXIZA3EPP5ZZG7IA1NB7BMCJHMQS4RHDT
   ProductionEnvironmentUrl: 
-  RequestType: 2
+  RequestType: 0
   DisableDeviceInfo: 0
   DisableFocusTimeCollection: 0
   RequestTimeout: 2000

@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
-public class AuthManager : MonoBehaviour
+public class PLayFabManager : MonoBehaviour
 {
     //firebase varialbes
     [SerializeField] Text messagetext;
@@ -36,6 +37,15 @@ public class AuthManager : MonoBehaviour
     [SerializeField] GameObject menupage;
 
 
+    [Header("LeaderBoard")]
+    [SerializeField] GameObject leaderboardpage;
+
+    [Header("Create Score")]
+    [SerializeField] GameObject createscorepage;
+    [SerializeField] InputField scoreInput;
+    [SerializeField] InputField dungeonClearsInput;
+    [SerializeField] InputField killCountInput;
+
     private void Start()
     {
         
@@ -51,6 +61,9 @@ public class AuthManager : MonoBehaviour
         signuppage.SetActive(false);
         menupage.SetActive(false);
         forgetpasswordpage.SetActive(false);
+        createscorepage.SetActive(false);
+        leaderboardpage.SetActive(false);
+
     }
     public void LoginScreen() //Back button
     {
@@ -77,6 +90,17 @@ public class AuthManager : MonoBehaviour
         forgetpasswordpage.SetActive(true);
     }
     //Function for the login button
+    public void CreateScoreScreen()
+    {
+        ClearScreen();
+        createscorepage.SetActive(true);
+    }
+
+    public void LeaderBoardScreen()
+    {
+        ClearScreen();
+        leaderboardpage.SetActive(true);
+    }
     public void ClearLoginFeilds()
     {
         loginEmail.text = "";
@@ -169,5 +193,57 @@ public class AuthManager : MonoBehaviour
     public void Startgame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void SentLeaderboard()
+    {
+        // Ensure input fields are not empty
+        if (string.IsNullOrEmpty(scoreInput.text) ||
+            string.IsNullOrEmpty(dungeonClearsInput.text) ||
+            string.IsNullOrEmpty(killCountInput.text))
+        {
+            Debug.LogError("One or more input fields are empty!");
+            return;
+        }
+
+        // Convert user input from string to integer
+        int score = int.Parse(scoreInput.text);
+        int dungeonClears = int.Parse(dungeonClearsInput.text);
+        int killCount = int.Parse(killCountInput.text);
+
+        var request = new UpdatePlayerStatisticsRequest
+        {
+            Statistics = new List<StatisticUpdate>
+        {
+            new StatisticUpdate { StatisticName = "Ranking", Value = score }, // Ensure it matches GetLeaderboard()
+            new StatisticUpdate { StatisticName = "DungeonClears", Value = dungeonClears },
+            new StatisticUpdate { StatisticName = "KillCount", Value = killCount }
+        }
+        };
+
+        PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderboardUpdate, OnError);
+    }
+    void OnLeaderboardUpdate(UpdatePlayerStatisticsResult result)
+    {
+        Debug.Log("Successfull leaderboard sent");
+    }
+    public void Getleaderboard()
+    {
+        var request = new GetLeaderboardRequest
+        {
+            StatisticName = "Ranking",
+            StartPosition = 0,
+            MaxResultsCount = 10
+        };
+        PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
+
+    }
+    void OnLeaderboardGet(GetLeaderboardResult result)
+    {
+        foreach (var item in result.Leaderboard)
+        {
+            Debug.Log(item.Position + " " + item.PlayFabId + " " + item.StatValue);
+
+        }
     }
 }

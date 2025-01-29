@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0199c11aa6f514784c5c69cd8378d8, type: 3}
   m_Name: PlayFabEditorPrefsSO
   m_EditorClassIdentifier: 
-  DevAccountEmail: Sippanunxd@gmail.com
-  DevAccountToken: pim9c8eonos3ugy9c1wf81ay1e6uunm38xnhk33tm1dw6jon14q7jn7cyoae59z3xp7pbw517bxguxfr3ka8g3cofiibdsrsypk9h3uocantnhbuchay5kcfapeb4mcui17uoay91qfqsy79u7xtcmkhm9heyrid7hyrcc7rdgsrjuoc46k7gctyu5qeeeabycfbcg4n
+  DevAccountEmail: sippanunxd@gmail.com
+  DevAccountToken: hni3rfbqtz76mikdmryo1z57odccgnq4893s1nuokq9fjbzzkmcqr7jhp4qoozq8yy8a357u9d87am75un4hgen3a4m3o3f1ka4pbxs9xxii18fi4ttd1qxank5phcwhikpiw317azpkznbxkqnseh94q4ectropj1j5sx65mbrkc3s9jk4pwizuo9d6jujoj4xtd3sh
   AadAuthorization: 
   SelectedStudio: Dungeon
   SdkPath: Assets/PlayFabSDK
   EdExPath: 
   LocalCloudScriptPath: 
   PanelIsShown: 0
-  curMainMenuIdx: 1
+  curMainMenuIdx: 0
   curSubMenuIdx: 0

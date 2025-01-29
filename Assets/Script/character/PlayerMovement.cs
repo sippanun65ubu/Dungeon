@@ -1,225 +1,138 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    Animator animator;
-    float velocityX = 0f;
-    float velocityZ = 0f;
-    public float acceleration = 2.0f;
-    public float deceleration = 2.0f;
-    public float maximumCrouchVelocity = 4.0f;
-    public float maximumWalkVelocity = 6.0f;
-    public float maximumRunVelocity = 10.0f;
-
-    private bool isCrouching = false;
-
-    int VelocityZHash;
-    int VelocityXHash;
     public CharacterController controller;
+    public CapsuleCollider colliderp;
 
-    public float speed = 6f;
+    [Header("Animation Settings")]
+    public Animator animator; // Assign the child's animator in Unity Inspector
+    private float velocityX = 0f;
+    private float velocityZ = 0f;
+
+    [Header("Movement Settings")]
+    public float walkSpeed = 6f;       // Normal walking speed
+    public float sprintSpeed = 12f;    // Speed while sprinting
+    public float crouchSpeed = 3f;     // Speed while crouching
+    private float currentSpeed;        // The speed that changes dynamically
+
+    [Header("Jump & Gravity")]
     public float gravity = -9.81f * 2;
     public float jumpHeight = 3f;
+    private bool isJumping = false; // Track jump state
 
+    [Header("Ground Check")]
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
-    Vector3 velocity;
+    [Header("Crouch Settings")]
+    public float crouchHeight = 2.75f;  // Height when crouching
+    public float standHeight = 4f;     // Height when standing
+    private bool isCrouching = false;
 
-    bool isGrounded;
-    private void Start()
+    private Vector3 velocity;
+    private bool isGrounded;
+
+    void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
-        VelocityXHash = Animator.StringToHash("Velocity X");
-        VelocityZHash = Animator.StringToHash("Velocity Z");
+        if (animator == null)
+        {
+            Debug.LogError("Animator not found! Assign it manually.");
+        }
+
+        currentSpeed = walkSpeed;  // Start with normal walking speed
     }
-    // Update is called once per frame
+
     void Update()
     {
-        //checking if we hit the ground to reset our falling velocity, otherwise we will fall faster the next time
+        // Check if player is on the ground
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f;
+            velocity.y = -2f; // Reset fall speed
+            isJumping = false; // Reset jump state when grounded
+            animator.SetBool("IsJumping", false);
         }
 
+        // Get movement input
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        //right is the red Axis, foward is the blue axis
+        bool isMoving = x != 0 || z != 0;
+
+        // Handle Sprinting (Prevent sprinting while crouching)
+        if (Input.GetKey(KeyCode.LeftShift) && !isCrouching)
+        {
+            currentSpeed = sprintSpeed; // Sprint speed
+        }
+        else if (isCrouching)
+        {
+            currentSpeed = crouchSpeed; // Use crouch speed
+        }
+        else
+        {
+            currentSpeed = walkSpeed; // Normal walking speed
+        }
+
+        // Handle Crouching
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            isCrouching = !isCrouching; // Toggle crouch state
+
+            if (isCrouching)
+            {
+                controller.height = crouchHeight; // Reduce height
+                colliderp.height = crouchHeight;
+            }
+            else
+            {
+                controller.height = standHeight; // Restore height
+                colliderp.height = standHeight;
+            }
+        }
+
+        // Move in the direction the camera is facing
         Vector3 move = transform.right * x + transform.forward * z;
+        controller.Move(move * currentSpeed * Time.deltaTime);
 
-        controller.Move(move * speed * Time.deltaTime);
+        // **Update Animation Parameters**
+        velocityX = x * currentSpeed;
+        velocityZ = z * currentSpeed;
 
-        //check if the player is on the ground so he can jump
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        animator.SetFloat("X_Velocity", velocityX);
+        animator.SetFloat("Z_Velocity", velocityZ);
+
+        // **Set Animation Conditions**
+        animator.SetBool("IsWalking", isMoving && currentSpeed == walkSpeed);
+        animator.SetBool("IsRunning", isMoving && currentSpeed == sprintSpeed);
+        animator.SetBool("IsCrouch", isCrouching);
+
+        // Jumping
+        if (Input.GetButtonDown("Jump") && isGrounded && !isCrouching) // Prevent jumping while crouching
         {
-            //the equation for jumping
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            isJumping = true;
+            animator.SetBool("IsJumping", true); // Play jump animation
+
+            // **Check if moving forward for Jump Forward**
+            if (Mathf.Abs(velocityZ) > 1)
+            {
+                animator.SetFloat("Z_Velocity", 1); // Jump Forward
+            }
+            else
+            {
+                animator.SetFloat("Z_Velocity", 0); // Normal Jump
+            }
         }
 
+        // Apply gravity
         velocity.y += gravity * Time.deltaTime;
-
         controller.Move(velocity * Time.deltaTime);
-
-        bool forwardPressed = Input.GetKey(KeyCode.W);
-        bool leftPressed = Input.GetKey(KeyCode.A);
-        bool backPressed = Input.GetKey(KeyCode.S);
-        bool rightPressed = Input.GetKey(KeyCode.D);
-        bool runPressed = Input.GetKey(KeyCode.LeftShift);
-        bool crouchPressed = Input.GetKeyDown(KeyCode.C);
-
-
-        float currentMaxVelocity = runPressed ? maximumRunVelocity : maximumWalkVelocity;
-
-        //handle change in velocity
-        changeVelocity(forwardPressed, leftPressed, backPressed, rightPressed,runPressed,currentMaxVelocity);
-        lockOrResetVelocity(forwardPressed, leftPressed, backPressed, rightPressed, runPressed, currentMaxVelocity);
-
-        animator.SetFloat(VelocityXHash, velocityX);
-        animator.SetFloat(VelocityZHash, velocityZ);
-
-    }
-    //handle acceleration and deceleration
-    void changeVelocity(bool forwardPressed,bool leftPressed, bool rightPressed, bool backPressed, bool runPressed, float currentMaxVelocity)
-    {
-        //forward
-        if (forwardPressed && velocityZ < currentMaxVelocity)
-        {
-            velocityZ += Time.deltaTime * acceleration;
-        }
-        //left
-        if (leftPressed && velocityX < -currentMaxVelocity)
-        {
-            velocityX -= Time.deltaTime * acceleration;
-        }
-        //right
-        if (rightPressed && velocityX < currentMaxVelocity)
-        {
-            velocityX += Time.deltaTime * acceleration;
-        }
-        //back
-        if (backPressed && velocityZ < -currentMaxVelocity)
-        {
-            velocityZ += Time.deltaTime * acceleration;
-        }
-        //decrease Z velocity
-        if (!forwardPressed && velocityZ > 0.0f)
-        {
-            velocityZ -= Time.deltaTime * deceleration;
-        }
-        //increase Z velocity
-        if (!backPressed && velocityZ > 0.0f)
-        {
-            velocityZ += Time.deltaTime * deceleration;
-        }
-        //increase X velocity
-        if (!leftPressed && velocityX < 0.0f)
-        {
-            velocityX += Time.deltaTime * deceleration;
-        }
-        //decrease X velocity
-        if (!rightPressed && velocityX > 0.0f)
-        {
-            velocityX -= Time.deltaTime * deceleration;
-        }
-    }
-    void lockOrResetVelocity(bool forwardPressed, bool leftPressed, bool rightPressed, bool backPressed, bool runPressed, float currentMaxVelocity)
-    {
-        //reset Z velocity
-        if (!forwardPressed && !backPressed && velocityX != 0.0f && (velocityZ > -0.05f && velocityZ < 0.05f))
-        {
-            velocityZ = 0.0f;
-        }
-
-        //reset X velocity
-        if (!leftPressed && !rightPressed && velocityX != 0.0f && (velocityX > -0.05f && velocityX < 0.05f))
-        {
-            velocityX = 0.0f;
-        }
-        //run froward
-        if (forwardPressed && runPressed && velocityZ > currentMaxVelocity)
-        {
-            velocityZ = currentMaxVelocity;
-        }
-        //decelerate
-        else if (forwardPressed && velocityZ > currentMaxVelocity)
-        {
-            velocityZ -= Time.deltaTime * deceleration;
-            if (velocityZ > currentMaxVelocity && velocityZ < (currentMaxVelocity + 0.05f))
-            {
-                velocityZ = currentMaxVelocity;
-            }
-        }
-        //round velocity
-        else if (forwardPressed && velocityZ < currentMaxVelocity && velocityZ > (currentMaxVelocity - 0.05f))
-        {
-            velocityZ = currentMaxVelocity;
-        }
-        //run back
-        if (backPressed && runPressed && velocityZ > -currentMaxVelocity)
-        {
-            velocityZ = -currentMaxVelocity;
-        }
-        //decelerate
-        else if (backPressed && velocityZ > -currentMaxVelocity)
-        {
-            velocityZ -= Time.deltaTime * deceleration;
-            if (velocityZ > -currentMaxVelocity && velocityZ < (-currentMaxVelocity - 0.05f))
-            {
-                velocityZ = -currentMaxVelocity;
-            }
-        }
-        //round velocity
-        else if (backPressed && velocityZ < -currentMaxVelocity && velocityZ > (-currentMaxVelocity + 0.05f))
-        {
-            velocityZ = -currentMaxVelocity;
-        }
-        //run left
-        if (leftPressed && runPressed && velocityX > -currentMaxVelocity)
-        {
-            velocityX = -currentMaxVelocity;
-        }
-        //decelerate
-        else if (leftPressed && velocityX > -currentMaxVelocity)
-        {
-            velocityX -= Time.deltaTime * deceleration;
-            if (velocityX > -currentMaxVelocity && velocityX < (-currentMaxVelocity - 0.05f))
-            {
-                velocityX = -currentMaxVelocity;
-            }
-        }
-        //round velocity
-        else if (leftPressed && velocityX < -currentMaxVelocity && velocityX > (-currentMaxVelocity + 0.05f))
-        {
-            velocityX = -currentMaxVelocity;
-        }
-        //run right
-        if (rightPressed && runPressed && velocityX > currentMaxVelocity)
-        {
-            velocityX = currentMaxVelocity;
-        }
-        //decelerate
-        else if (rightPressed && velocityX > currentMaxVelocity)
-        {
-            velocityX -= Time.deltaTime * deceleration;
-            if (velocityX > currentMaxVelocity && velocityX < (currentMaxVelocity + 0.05f))
-            {
-                velocityX = currentMaxVelocity;
-            }
-        }
-        //round velocity
-        else if (rightPressed && velocityX < currentMaxVelocity && velocityX > (currentMaxVelocity - 0.05f))
-        {
-            velocityX = currentMaxVelocity;
-        }
     }
 }
