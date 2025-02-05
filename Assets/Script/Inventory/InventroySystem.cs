@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventorySystem : MonoBehaviour
 {
@@ -17,7 +19,12 @@ public class InventorySystem : MonoBehaviour
     public bool isOpen;
 
 
-    public GameObject itemInfoUI;
+    //public GameObject itemInfoUI;
+    //pickupPopup
+    public GameObject pickupAlert;
+    public Text pickupName;
+    public Image pickupImage;
+
 
 
 
@@ -61,7 +68,6 @@ public class InventorySystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && !isOpen)
         {
 
-            Debug.Log("f is pressed");
             inventoryScreenUI.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             isOpen = true;
@@ -77,12 +83,21 @@ public class InventorySystem : MonoBehaviour
     
 public void AddToInventory(string itemName)
     {
-            whatSlotToEquip = FindEmtrySlot();
+      whatSlotToEquip = FindEmtrySlot();
 
-            itemToAdd = (GameObject)Instantiate(Resources.Load<GameObject>(itemName), whatSlotToEquip.transform.position, whatSlotToEquip.transform.rotation);
-            itemToAdd.transform.SetParent(whatSlotToEquip.transform);
+      itemToAdd = (GameObject)Instantiate(Resources.Load<GameObject>(itemName), whatSlotToEquip.transform.position, whatSlotToEquip.transform.rotation);
+      itemToAdd.transform.SetParent(whatSlotToEquip.transform);
 
-            itemList.Add(itemName);
+      itemList.Add(itemName);
+      TriggerPickupPopUp(itemName, itemToAdd.GetComponent<Image>().sprite);
+    }
+
+void TriggerPickupPopUp(string itemName, Sprite itemSprite)
+    {
+        pickupAlert.SetActive(true);
+        
+        pickupName.text = itemName;
+        pickupImage.sprite = itemSprite;
     }
 public bool CheckifFull() 
   {

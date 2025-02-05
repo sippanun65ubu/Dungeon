@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump & Gravity")]
     public float gravity = -9.81f * 2;
     public float jumpHeight = 3f;
-    private bool isJumping = false; // Track jump state
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -56,20 +55,20 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f; // Reset fall speed
-            isJumping = false; // Reset jump state when grounded
             animator.SetBool("IsJumping", false);
         }
 
         // Get movement input
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-
         bool isMoving = x != 0 || z != 0;
 
+        bool isRunning = false;
         // Handle Sprinting (Prevent sprinting while crouching)
         if (Input.GetKey(KeyCode.LeftShift) && !isCrouching)
         {
             currentSpeed = sprintSpeed; // Sprint speed
+            isRunning = true;
         }
         else if (isCrouching)
         {
@@ -80,6 +79,10 @@ public class PlayerMovement : MonoBehaviour
             currentSpeed = walkSpeed; // Normal walking speed
         }
 
+        if (PlayerState.Instance != null)
+        {
+            PlayerState.Instance.isSprinting = isRunning;
+        }
         // Handle Crouching
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -117,7 +120,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded && !isCrouching) // Prevent jumping while crouching
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            isJumping = true;
             animator.SetBool("IsJumping", true); // Play jump animation
 
             // **Check if moving forward for Jump Forward**

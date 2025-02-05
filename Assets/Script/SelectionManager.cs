@@ -11,7 +11,10 @@ public class SelectionManager : MonoBehaviour
 
     public bool onTarget;
     public GameObject interaction_Info_UI;
+    public GameObject selectedObject;
     Text interaction_text;
+    public Image centerDotIcon;
+    public Image handIcon;
 
     private void Start()
     {
@@ -36,17 +39,33 @@ public class SelectionManager : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             var selectionTransform = hit.transform;
+            InteractableObject interactable = selectionTransform.GetComponent<InteractableObject>();
 
-            if (selectionTransform.GetComponent<InteractableObject>()&& selectionTransform.GetComponent<InteractableObject>().playerInRange)
+
+            if (interactable && interactable.playerInRange)
             {
                 onTarget = true;
-                interaction_text.text = selectionTransform.GetComponent<InteractableObject>().GetItemName();
+                selectedObject = interactable.gameObject;
+                interaction_text.text = interactable.GetItemName();
                 interaction_Info_UI.SetActive(true);
+
+                if (interactable.CompareTag("pickable"))
+                {
+                    centerDotIcon.gameObject.SetActive(false);
+                    handIcon.gameObject.SetActive(true);
+                }
+                else
+                {
+                    handIcon.gameObject.SetActive(false);
+                    centerDotIcon.gameObject.SetActive(true);   
+                }
             }
             else
             {
                 onTarget = false;
                 interaction_Info_UI.SetActive(false);
+                handIcon.gameObject.SetActive(false);
+                centerDotIcon.gameObject.SetActive(true);
             }
 
         }
@@ -54,6 +73,8 @@ public class SelectionManager : MonoBehaviour
         {
             onTarget = false;
             interaction_Info_UI.SetActive(false);
+            handIcon.gameObject.SetActive(false);
+            centerDotIcon.gameObject.SetActive(true);
         }
     }
 }
