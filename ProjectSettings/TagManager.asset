@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - slot
   - pickable
+  - Slot
+  - QuickSlot
   layers:
   - Default
   - TransparentFX

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
+    public int weaponDamage;
     // Start is called before the first frame update
     void Start()
     {

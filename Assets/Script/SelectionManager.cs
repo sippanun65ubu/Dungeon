@@ -39,8 +39,31 @@ public class SelectionManager : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             var selectionTransform = hit.transform;
-            InteractableObject interactable = selectionTransform.GetComponent<InteractableObject>();
 
+            Enemy enemy = selectionTransform.GetComponent<Enemy>();
+
+            if (enemy && enemy.playerInRange)
+            {
+                interaction_text.text = enemy.enemyName;
+                interaction_Info_UI.SetActive(true);
+
+                if (Input.GetMouseButtonDown(0) && EquipSystem.Instance.IsHoldingWeapon())
+                {
+                    StartCoroutine(DealDamageTo(enemy, 0.3f, EquipSystem.Instance.GetWeaponDamage()));
+                }
+                else
+                {
+                    interaction_text.text = "";
+                    interaction_Info_UI.SetActive(false);
+                }
+            }
+
+
+
+
+
+
+            InteractableObject interactable = selectionTransform.GetComponent<InteractableObject>();
 
             if (interactable && interactable.playerInRange)
             {
@@ -48,6 +71,7 @@ public class SelectionManager : MonoBehaviour
                 selectedObject = interactable.gameObject;
                 interaction_text.text = interactable.GetItemName();
                 interaction_Info_UI.SetActive(true);
+
 
                 if (interactable.CompareTag("pickable"))
                 {
@@ -76,5 +100,29 @@ public class SelectionManager : MonoBehaviour
             handIcon.gameObject.SetActive(false);
             centerDotIcon.gameObject.SetActive(true);
         }
+    }
+    public void DisableSelection()
+    {
+        handIcon.enabled = false;
+        centerDotIcon.enabled = false;
+        interaction_Info_UI.SetActive(false);
+
+        selectedObject = null;
+
+    }
+
+    public void EnableSelection()
+    {
+        handIcon.enabled = true;
+        centerDotIcon.enabled = true;
+        interaction_Info_UI.SetActive(true);
+
+    }
+
+    IEnumerator DealDamageTo(Enemy enemy, float delay, int damage)
+    {
+        yield return new WaitForSeconds(delay);
+
+        enemy.TakeDamage(damage);
     }
 }

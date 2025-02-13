@@ -80,4 +80,12 @@ public class PlayerState : MonoBehaviour
             }
         }
     }
+    public void setHealth(float newHealth)
+    {
+        currentHealth = newHealth;
+    }
+    public void setStamina(float newStamina)
+    {
+        currentStamina = newStamina;
+    }
 }

@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class InventorySystem : MonoBehaviour
 {
 
+
     public static InventorySystem Instance { get; set; }
 
     public GameObject inventoryScreenUI;
@@ -17,9 +18,8 @@ public class InventorySystem : MonoBehaviour
     private GameObject itemToAdd;
     private GameObject whatSlotToEquip;
     public bool isOpen;
+    public GameObject ItemInfoUi;
 
-
-    //public GameObject itemInfoUI;
     //pickupPopup
     public GameObject pickupAlert;
     public Text pickupName;
@@ -47,6 +47,7 @@ public class InventorySystem : MonoBehaviour
 
         PopulateSlotList();
 
+        Cursor.visible = false;
     }
 
     private void PopulateSlotList()
@@ -70,6 +71,10 @@ public class InventorySystem : MonoBehaviour
 
             inventoryScreenUI.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            SelectionManager.Instance.DisableSelection();
+            SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
             isOpen = true;
 
         }
@@ -77,6 +82,10 @@ public class InventorySystem : MonoBehaviour
         {
             inventoryScreenUI.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            SelectionManager.Instance.EnableSelection();
+            SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
             isOpen = false;
         }
     }
@@ -98,7 +107,51 @@ void TriggerPickupPopUp(string itemName, Sprite itemSprite)
         
         pickupName.text = itemName;
         pickupImage.sprite = itemSprite;
+
+
+        StartCoroutine(HidePickupAfterDelay(4f));
     }
+
+    private IEnumerator HidePickupAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        pickupAlert.SetActive(false);
+    }
+
+    public void RemoveItem(string nameToRemove, int amountToRemove)
+{
+    int counter = amountToRemove;
+
+    for (var i = slotList.Count - 1; i >= 0; i--)
+    {
+        if (slotList[i].transform.childCount > 0)
+        {
+            if (slotList[i].transform.GetChild(0).name == nameToRemove + "(Clone)" && counter != 0)
+            {
+                DestroyImmediate(slotList[i].transform.GetChild(0).gameObject);
+            }
+        }
+    }
+}
+
+public void ReCalculateList()
+{
+    itemList.Clear();
+    foreach (GameObject slot in slotList)
+    {
+        if (slot.transform.childCount > 0)
+            {
+                string name = slot.transform.GetChild(0).name;
+                string str1 = name;
+                string str2 = "(Clone)";
+
+                string result = name.Replace(str2, "");
+
+                itemList.Add(result);
+
+            }
+    }
+}
 public bool CheckifFull() 
   {
         int counter = 0;
@@ -121,6 +174,7 @@ public bool CheckifFull()
         }
 
   }
+
 
 private GameObject FindEmtrySlot()
     {
