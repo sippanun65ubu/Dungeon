@@ -152,19 +152,19 @@ public void ReCalculateList()
             }
     }
 }
-public bool CheckifFull() 
+public bool CheckSlotAvailable(int emtryMeeded) 
   {
-        int counter = 0;
+        int emtrySlot = 0;
 
         foreach (GameObject slot in slotList)
         {
-            if (slot.transform.childCount > 0)
+            if (slot.transform.childCount <= 0)
             {
-                counter += 1;
+                emtrySlot += 1;
             }
         }
 
-        if (counter == 18)
+        if (emtrySlot >= emtryMeeded)
         {
             return true;
         }

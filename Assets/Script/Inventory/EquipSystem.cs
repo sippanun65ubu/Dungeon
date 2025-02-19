@@ -17,7 +17,7 @@ public class EquipSystem : MonoBehaviour
     public GameObject numberHolder;
 
     public int selectNumber = -1;
-    public GameObject selectItem;
+    public GameObject selectedItem;
 
     public GameObject selectedItemModel;
     public GameObject toolHolder;
@@ -78,16 +78,23 @@ public class EquipSystem : MonoBehaviour
             {
                 selectNumber = number;
                 // unselected the previous item in quickslot
-                if (selectItem != null)
+                if (selectedItem != null)
                 {
-                    selectItem.gameObject.GetComponent<InventoryItem>().isSelected = false;
+                    selectedItem.gameObject.GetComponent<InventoryItem>().isSelected = false;
+                    // Disable the equippable behavior on the previously selected item
+                    EquippableItem prevEquippable = selectedItem.GetComponent<EquippableItem>();
+                    if (prevEquippable != null)
+                    {
+                        prevEquippable.enabled = false;
+                        prevEquippable.animator.enabled = false;
+                    }
                 }
-                selectItem = GetSelectedItem(number);
-                selectItem.GetComponent<InventoryItem>().isSelected = true;
+                selectedItem = GetSelectedItem(number);
+                selectedItem.GetComponent<InventoryItem>().isSelected = true;
 
-                SetEquippedModel(selectItem);
+                SetEquippedModel(selectedItem);
 
-                // for change color
+                // Update UI colors for quick slot numbers
                 foreach (Transform child in numberHolder.transform)
                 {
                     child.transform.Find("Text").GetComponent<Text>().color = Color.gray;
@@ -100,15 +107,25 @@ public class EquipSystem : MonoBehaviour
             {
                 selectNumber = -1; //null
                 // unselected slot
-                if (selectItem != null)
+                if (selectedItem != null)
                 {
-                    selectItem.gameObject.GetComponent<InventoryItem>().isSelected = false;
-                    selectItem = null;
+                    selectedItem.gameObject.GetComponent<InventoryItem>().isSelected = false;
+
+                    // Disable equippable behavior when deselecting
+                    EquippableItem equippable = selectedItem.GetComponent<EquippableItem>();
+                    if (equippable != null)
+                    {
+                        equippable.enabled = false;
+                        equippable.animator.enabled = false;
+                    }
+
+                    selectedItem = null;
                 }
 
                 if (selectedItemModel != null)
                 {
                     DestroyImmediate(selectedItemModel.gameObject);
+                    selectedItemModel = null;
                 }
                 // change color to gray
                 foreach (Transform child in numberHolder.transform)
@@ -119,11 +136,16 @@ public class EquipSystem : MonoBehaviour
         }
     }
 
-    private void SetEquippedModel(GameObject selectItem)
+    private void SetEquippedModel(GameObject selectedItem)
     {
-        string selectItemName = selectItem.name.Replace("(Clone)", "");
-        GameObject selectedItemModel = Instantiate(Resources.Load<GameObject>(selectItemName + "_Model"),
-            new Vector3(0.6f, 3f , 0.4f), Quaternion.Euler(0, 12.5f, -20f));
+        if (selectedItemModel != null)
+        {
+            DestroyImmediate(selectedItemModel.gameObject);
+            selectedItemModel = null;
+        }
+        string selectItemName = selectedItem.name.Replace("(Clone)", "");
+        selectedItemModel = Instantiate(Resources.Load<GameObject>(selectItemName + "_Model"),
+            new Vector3(0.75f, -0.43f , 1.35f), Quaternion.Euler(-80f, 0, -90f));
         selectedItemModel.transform.SetParent(toolHolder.transform, false); 
     }
 
@@ -205,9 +227,9 @@ public class EquipSystem : MonoBehaviour
 
     internal bool IsHoldingWeapon()
     {
-        if (selectItem != null)
+        if (selectedItem != null)
         {
-            if (selectItem.GetComponent<Weapon>() != null)
+            if (selectedItem.GetComponent<Weapon>() != null)
             {
                 return true;
             }
@@ -224,9 +246,9 @@ public class EquipSystem : MonoBehaviour
 
     internal int GetWeaponDamage()
     {
-        if (selectItem != null)
+        if (selectedItem != null)
         {
-            return selectItem.GetComponent<Weapon>().weaponDamage;
+            return selectedItem.GetComponent<Weapon>().weaponDamage;
         }
         else
         {
