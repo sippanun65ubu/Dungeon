@@ -32,9 +32,9 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private void Start()
     {
         itemInfoUI = InventorySystem.Instance.ItemInfoUi;
-        itemInfoUI_itemName = itemInfoUI.transform.Find("itemName").GetComponent<Text>();
-        itemInfoUI_itemDescription = itemInfoUI.transform.Find("itemDescription").GetComponent<Text>();
-        itemInfoUI_itemFunctionality = itemInfoUI.transform.Find("itemFunctionality").GetComponent<Text>();
+        itemInfoUI_itemName = itemInfoUI.transform.Find("ItemName").GetComponent<Text>();
+        itemInfoUI_itemDescription = itemInfoUI.transform.Find("ItemDescription").GetComponent<Text>();
+        itemInfoUI_itemFunctionality = itemInfoUI.transform.Find("ItemFunctionality").GetComponent<Text>();
     }
 
     void Update()

@@ -40,11 +40,6 @@ public class PLayFabManager : MonoBehaviour
     [Header("LeaderBoard")]
     [SerializeField] GameObject leaderboardpage;
 
-    [Header("Create Score")]
-    [SerializeField] GameObject createscorepage;
-    [SerializeField] InputField scoreInput;
-    [SerializeField] InputField dungeonClearsInput;
-    [SerializeField] InputField killCountInput;
 
     private void Start()
     {
@@ -61,20 +56,20 @@ public class PLayFabManager : MonoBehaviour
         signuppage.SetActive(false);
         menupage.SetActive(false);
         forgetpasswordpage.SetActive(false);
-        createscorepage.SetActive(false);
         leaderboardpage.SetActive(false);
+        ClearLoginFeilds();
+        ClearSignUpFeilds();
+        ClearRecoveryFeilds();
 
     }
     public void LoginScreen() //Back button
     {
         ClearScreen();
-        ClearLoginFeilds();
         loginpage.SetActive(true);
     }
     public void RegisterScreen() // Regester button
     {
         ClearScreen();
-        ClearSignUpFeilds();
         signuppage.SetActive(true);
     }
     public void MainmenuScreen()
@@ -86,15 +81,9 @@ public class PLayFabManager : MonoBehaviour
     public void ForgetPasswordScreen()
     {
         ClearScreen();
-        ClearRecoveryFeilds();
         forgetpasswordpage.SetActive(true);
     }
     //Function for the login button
-    public void CreateScoreScreen()
-    {
-        ClearScreen();
-        createscorepage.SetActive(true);
-    }
 
     public void LeaderBoardScreen()
     {
@@ -120,11 +109,6 @@ public class PLayFabManager : MonoBehaviour
         signupPassword.text = "";
         signupCPassword.text = "";
         messagetext.text = "";
-    }
-    public void SignOutButton()
-    {
-        ClearSignUpFeilds();
-        ClearLoginFeilds();
     }
     public void RegisterUser()
     {
@@ -190,43 +174,6 @@ public class PLayFabManager : MonoBehaviour
         LoginScreen();
     }
 
-    public void Startgame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void SentLeaderboard()
-    {
-        // Ensure input fields are not empty
-        if (string.IsNullOrEmpty(scoreInput.text) ||
-            string.IsNullOrEmpty(dungeonClearsInput.text) ||
-            string.IsNullOrEmpty(killCountInput.text))
-        {
-            Debug.LogError("One or more input fields are empty!");
-            return;
-        }
-
-        // Convert user input from string to integer
-        int score = int.Parse(scoreInput.text);
-        int dungeonClears = int.Parse(dungeonClearsInput.text);
-        int killCount = int.Parse(killCountInput.text);
-
-        var request = new UpdatePlayerStatisticsRequest
-        {
-            Statistics = new List<StatisticUpdate>
-        {
-            new StatisticUpdate { StatisticName = "Ranking", Value = score }, // Ensure it matches GetLeaderboard()
-            new StatisticUpdate { StatisticName = "DungeonClears", Value = dungeonClears },
-            new StatisticUpdate { StatisticName = "KillCount", Value = killCount }
-        }
-        };
-
-        PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderboardUpdate, OnError);
-    }
-    void OnLeaderboardUpdate(UpdatePlayerStatisticsResult result)
-    {
-        Debug.Log("Successfull leaderboard sent");
-    }
     public void Getleaderboard()
     {
         var request = new GetLeaderboardRequest

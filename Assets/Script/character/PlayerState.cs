@@ -28,6 +28,11 @@ public class PlayerState : MonoBehaviour
 
     private float lastDamageTime;
     public bool isSprinting;
+    public bool isPlayerDead;
+
+    public AudioSource playerAudioSource;
+    public AudioClip playerPainSound;
+    public AudioClip playerDeathSound;
 
 
     private void Awake()
@@ -87,5 +92,32 @@ public class PlayerState : MonoBehaviour
     public void setStamina(float newStamina)
     {
         currentStamina = newStamina;
+    }
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        if (currentHealth <= 0 && !isPlayerDead)
+        {
+            Debug.Log("player is dead");
+            PlayerDead();
+        }
+        else
+        {
+            if (currentHealth > 0)
+            {
+                Debug.Log("player is hurt");
+                playerAudioSource.PlayOneShot(playerPainSound);
+            }
+
+
+
+        }
+    }
+    public void PlayerDead()
+    {
+        isPlayerDead = true;
+        playerAudioSource.PlayOneShot(playerDeathSound);
+
     }
 }

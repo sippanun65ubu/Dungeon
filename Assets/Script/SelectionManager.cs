@@ -38,31 +38,8 @@ public class SelectionManager : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
-        {
+        {   
             var selectionTransform = hit.transform;
-
-            Enemy enemy = selectionTransform.GetComponent<Enemy>();
-
-            if (enemy && enemy.playerInRange)
-            {
-                interaction_text.text = enemy.enemyName;
-                interaction_Info_UI.SetActive(true);
-
-                if (Input.GetMouseButtonDown(0) && EquipSystem.Instance.IsHoldingWeapon())
-                {
-                    StartCoroutine(DealDamageTo(enemy, 0.3f, EquipSystem.Instance.GetWeaponDamage()));
-                }
-                else
-                {
-                    interaction_text.text = "";
-                    interaction_Info_UI.SetActive(false);
-                }
-            }
-
-
-
-
-
 
             InteractableObject interactable = selectionTransform.GetComponent<InteractableObject>();
 
@@ -81,35 +58,101 @@ public class SelectionManager : MonoBehaviour
 
                     handIsVisible = true;
                 }
+            }
+
+
+            Enemy enemy = selectionTransform.GetComponent<Enemy>();
+
+            if (enemy && enemy.playerInRange)
+            {
+                if (enemy.isDead)
+                {
+                    interaction_text.text = "loot";
+                    interaction_Info_UI.SetActive(true);
+
+                    centerDotIcon.gameObject.SetActive(false);
+                    handIcon.gameObject.SetActive(true);
+
+                    handIsVisible = true;
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        Lootable lootable = enemy.GetComponent<Lootable>();
+                        loot(lootable);
+                    }
+                }
                 else
                 {
+                    interaction_text.text = enemy.enemyName;
+                    interaction_Info_UI.SetActive(true);
+
+                    centerDotIcon.gameObject.SetActive(true);  
                     handIcon.gameObject.SetActive(false);
-                    centerDotIcon.gameObject.SetActive(true);
 
-                    handIsVisible = false;
+                    if (Input.GetMouseButtonDown(0) && EquipSystem.Instance.IsHoldingWeapon() && EquipSystem.Instance.IsThereASwingLock() == false)
+                    {
+                        StartCoroutine(DealDamageTo(enemy, 0.3f, EquipSystem.Instance.GetWeaponDamage()));
+                    }
                 }
+
             }
-            else
+            if (!interactable && !enemy)
             {
-                onTarget = false;
-                interaction_Info_UI.SetActive(false);
-                handIcon.gameObject.SetActive(false);
-                centerDotIcon.gameObject.SetActive(true);
-
+                onTarget = false; 
                 handIsVisible = false;
+
+                centerDotIcon.gameObject.SetActive(true);
+                handIcon.gameObject.SetActive(false);
             }
 
-        }
-        else
-        {
-            onTarget = false;
-            interaction_Info_UI.SetActive(false);
-            handIcon.gameObject.SetActive(false);
-            centerDotIcon.gameObject.SetActive(true);
-
-            handIsVisible = false;
+            if (!interactable && !enemy)
+            {
+                interaction_text.text = "";
+                interaction_Info_UI.SetActive(false);
+            }
         }
     }
+
+    private void loot(Lootable lootable)
+    {
+        if (lootable.wasLootCalculated == false)
+        {
+            List<LootRecieved> recievedLoot  = new List<LootRecieved>();
+
+            foreach (LootPossibility loot in lootable.possibleLoot)
+            {
+                var lootamount = UnityEngine.Random.Range(loot.amountMin, loot.amountMax +1);
+                if (lootamount != 0)
+                {
+                    LootRecieved it = new LootRecieved();
+                    it.item = loot.item;
+                    it.amount = lootamount;
+
+                    recievedLoot.Add(it);
+                }
+            }
+            
+            lootable.finalLoot = recievedLoot;
+            lootable.wasLootCalculated = true;
+        }
+        // spawn loot on the ground
+        Vector3 LootSpawnPosition = lootable.gameObject.transform.position;
+
+        foreach (LootRecieved lootRecieved in lootable.finalLoot)
+        {
+            for (int i = 0; i < lootRecieved.amount; i++)
+            {
+                GameObject lootSpawn = Instantiate(Resources.Load<GameObject>(lootRecieved.item.name+"_Model"),
+                    new Vector3(LootSpawnPosition.x, LootSpawnPosition.y+0.2f, LootSpawnPosition.z),
+                    Quaternion.Euler(0,0,0));
+            }
+
+        }
+        Destroy(lootable.gameObject);
+    }
+
+
+
     public void DisableSelection()
     {
         handIcon.enabled = false;
@@ -134,4 +177,6 @@ public class SelectionManager : MonoBehaviour
 
         enemy.TakeDamage(damage);
     }
+
+
 }

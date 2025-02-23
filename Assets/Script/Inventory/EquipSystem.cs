@@ -255,4 +255,16 @@ public class EquipSystem : MonoBehaviour
             return 0;
         }
     }
+
+    internal bool IsThereASwingLock()
+    {
+        if (selectedItemModel && selectedItemModel.GetComponent<EquippableItem>())
+        {
+            return selectedItemModel.GetComponent<EquippableItem>().swingWait;
+        } 
+        else
+        {
+            return false; 
+        }
+    }
 }

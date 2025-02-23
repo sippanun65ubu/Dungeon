@@ -26,6 +26,6 @@ public class StaminaBar : MonoBehaviour
         float fillvalue = currentStamina / maxStamina;
         slider.value = fillvalue;
 
-        staminaCounter.text = currentStamina + "/" + maxStamina;
+        staminaCounter.text = (int)currentStamina + "/" + (int)maxStamina;
     }
 }

@@ -27,6 +27,6 @@ public class HealthBar : MonoBehaviour
         float fillvalue = currentHealth / maxHealth;
         slider.value = fillvalue;
 
-        healthCounter.text = currentHealth + "/" + maxHealth;
+        healthCounter.text = (int)currentHealth + "/" + (int)maxHealth;
     }
 }
