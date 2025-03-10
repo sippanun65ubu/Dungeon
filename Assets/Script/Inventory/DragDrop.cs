@@ -51,16 +51,15 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        var tempItemReference = itemBeingDragged;
 
         itemBeingDragged = null;
 
-        if (transform.parent == startParent || transform.parent == transform.root)
+        if (tempItemReference.transform.parent == tempItemReference.transform.root || tempItemReference.transform.parent == startParent)
         {
             transform.position = startPosition;
             transform.SetParent(startParent);
-
         }
-
         Debug.Log("OnEndDrag");
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;

@@ -29,6 +29,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public bool isInsideQuickSlot;
 
     public bool isSelected;
+
     private void Start()
     {
         itemInfoUI = InventorySystem.Instance.ItemInfoUi;

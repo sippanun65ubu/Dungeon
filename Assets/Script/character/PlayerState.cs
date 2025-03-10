@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,6 +35,11 @@ public class PlayerState : MonoBehaviour
     public AudioClip playerPainSound;
     public AudioClip playerDeathSound;
 
+    public RespawnLocation spawnLocation;
+    public GameObject playerBody;
+
+    private float hurtSoundDelay = 2f;
+    private float nextHurtTime = 0f;
 
     private void Awake()
     {
@@ -104,10 +110,12 @@ public class PlayerState : MonoBehaviour
         }
         else
         {
-            if (currentHealth > 0)
+            if (currentHealth > 0 && Time.time >= nextHurtTime)
             {
                 Debug.Log("player is hurt");
                 playerAudioSource.PlayOneShot(playerPainSound);
+
+                nextHurtTime = Time.time + hurtSoundDelay;
             }
 
 
@@ -118,6 +126,37 @@ public class PlayerState : MonoBehaviour
     {
         isPlayerDead = true;
         playerAudioSource.PlayOneShot(playerDeathSound);
+        RespawnPlayer();
+    }
+    public void RespawnPlayer()
+    {
+        StartCoroutine(RespawnCoroutine());
+    }
+    public IEnumerator RespawnCoroutine()
+    {
+        playerBody.GetComponent<PlayerMovement>().enabled = false;
+        //playerBody.GetComponent<MouseMovement>().enabled = false;
 
+        Vector3 position = spawnLocation.transform.position;
+
+        position.y += 5f;
+
+        playerBody.transform.position = position;
+
+        currentHealth = maxHealth;
+
+
+        yield return new WaitForSeconds(0.2f);
+
+        isPlayerDead = false;
+
+        //playerBody.GetComponent<PlayerMovement>().enabled = true;
+        //playerBody.GetComponent<MouseMovement>().enabled = true;
+    }
+
+    internal void SpawnPlayerLocation(RespawnLocation respawnLocation)
+    {
+         spawnLocation = respawnLocation;
+            
     }
 }

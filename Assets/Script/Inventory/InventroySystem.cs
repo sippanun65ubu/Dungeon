@@ -25,7 +25,7 @@ public class InventorySystem : MonoBehaviour
     public Text pickupName;
     public Image pickupImage;
 
-
+    public List<string> itemsPickedup;
 
 
     private void Awake()
@@ -81,27 +81,35 @@ public class InventorySystem : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.F) && isOpen)
         {
             inventoryScreenUI.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            if (!QuestManager.instance.isQuestMenuOpen)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
 
-            SelectionManager.Instance.EnableSelection();
-            SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
+                SelectionManager.Instance.EnableSelection();
+                SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
+
+            }
             isOpen = false;
         }
     }
     
 public void AddToInventory(string itemName)
     {
-      whatSlotToEquip = FindEmtrySlot();
 
-      itemToAdd = (GameObject)Instantiate(Resources.Load<GameObject>(itemName), whatSlotToEquip.transform.position, whatSlotToEquip.transform.rotation);
-      itemToAdd.transform.SetParent(whatSlotToEquip.transform);
+        whatSlotToEquip = FindEmtrySlot();
 
-      itemList.Add(itemName);
-      TriggerPickupPopUp(itemName, itemToAdd.GetComponent<Image>().sprite);
+        itemToAdd = (GameObject)Instantiate(Resources.Load<GameObject>(itemName), whatSlotToEquip.transform.position, whatSlotToEquip.transform.rotation);
+        itemToAdd.transform.SetParent(whatSlotToEquip.transform);
+
+        itemList.Add(itemName);
+        TriggerPickupPopUp(itemName, itemToAdd.GetComponent<Image>().sprite);
+        ReCalculateList();
+
+        QuestManager.instance.RefreshTrackerList();
     }
 
-void TriggerPickupPopUp(string itemName, Sprite itemSprite)
+    void TriggerPickupPopUp(string itemName, Sprite itemSprite)
     {
         pickupAlert.SetActive(true);
         
@@ -180,7 +188,7 @@ private GameObject FindEmtrySlot()
     {
         foreach (GameObject slot in slotList)
         {
-            if (slot.transform.childCount == 0)
+            if (slot.transform.childCount <= 0)
             {
                 return slot;
             }
@@ -189,4 +197,17 @@ private GameObject FindEmtrySlot()
     }
     
 
+public int CheckItemAmount(string name)
+    {
+        int itemCounter = 0;
+
+        foreach (string item in itemList)
+        {
+            if (item == name)
+            {
+                itemCounter++;
+            }
+        }
+        return itemCounter;
+    }
 }

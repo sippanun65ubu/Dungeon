@@ -49,6 +49,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(DialogSystem.instance.dialogUIActive == false)
+        {
+            Movement();
+        }
+    }
+
+    public void Movement()
+    {
         // Check if player is on the ground
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
