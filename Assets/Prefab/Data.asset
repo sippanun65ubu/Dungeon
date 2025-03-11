@@ -25,9 +25,12 @@ MonoBehaviour:
   comebackCompleted: You found it! Thank you so much!
   finalWords: "Here\u2019s a little something for your trouble. Thank you again!"
   coinReward: 50
-  rewardItem1: 
+  rewardItem1: CrystalBlue
   rewardItem2: 
-  firstRequirmentItem: 
-  firstRequirementAmount: 0
-  secondRequirmentItem: 
-  secondRequirementAmount: 0
+  firstRequirmentItem: LowPotion
+  firstRequirementAmount: 1
+  secondRequirmentItem: MediumPotion
+  secondRequirementAmount: 2
+  hasCheckPoints: 1
+  checkPoints:
+  - {fileID: 11400000, guid: 50398f400c350d24f96baf4090be3a09, type: 2}

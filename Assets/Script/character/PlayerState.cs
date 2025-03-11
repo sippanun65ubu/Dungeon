@@ -125,7 +125,7 @@ public class PlayerState : MonoBehaviour
     public void PlayerDead()
     {
         isPlayerDead = true;
-        playerAudioSource.PlayOneShot(playerDeathSound);
+        //playerAudioSource.PlayOneShot(playerDeathSound);
         RespawnPlayer();
     }
     public void RespawnPlayer()
@@ -139,18 +139,19 @@ public class PlayerState : MonoBehaviour
 
         Vector3 position = spawnLocation.transform.position;
 
-        position.y += 5f;
+        position.y += 3f;
 
         playerBody.transform.position = position;
 
         currentHealth = maxHealth;
 
 
+
         yield return new WaitForSeconds(0.2f);
 
         isPlayerDead = false;
 
-        //playerBody.GetComponent<PlayerMovement>().enabled = true;
+        playerBody.GetComponent<PlayerMovement>().enabled = true;
         //playerBody.GetComponent<MouseMovement>().enabled = true;
     }
 

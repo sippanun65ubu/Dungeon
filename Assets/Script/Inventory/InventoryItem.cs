@@ -29,6 +29,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public bool isInsideQuickSlot;
 
     public bool isSelected;
+    public int sellingPrice;
 
     private void Start()
     {
@@ -36,6 +37,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         itemInfoUI_itemName = itemInfoUI.transform.Find("ItemName").GetComponent<Text>();
         itemInfoUI_itemDescription = itemInfoUI.transform.Find("ItemDescription").GetComponent<Text>();
         itemInfoUI_itemFunctionality = itemInfoUI.transform.Find("ItemFunctionality").GetComponent<Text>();
+
     }
 
     void Update()
@@ -113,7 +115,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     }
 
-    private static void healthEffectCalculation(float healthEffect)
+    public static void healthEffectCalculation(float healthEffect)
     {
         // --- Health --- //
 
@@ -132,7 +134,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             }
         }
     }
-    private static void staminaEffectCalculation(float staminaEffect)
+    public static void staminaEffectCalculation(float staminaEffect)
     {
         // --- Stamina --- //
 

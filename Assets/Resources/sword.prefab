@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1532530532521841801}
   - component: {fileID: 7171120484261859142}
   m_Layer: 5
-  m_Name: Sword
+  m_Name: sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,13 +118,14 @@ MonoBehaviour:
   isTrashable: 1
   thisName: Sword
   thisDescription: an edged, bladed weapon intended for manual cutting or thrusting
-  thisFunctionality: 
+  thisFunctionality: damage 20
   isConsumable: 0
   healthEffect: 0
   staminaEffect: 0
   isEquippable: 0
   isInsideQuickSlot: 0
   isSelected: 0
+  sellingPrice: 40
 --- !u!114 &7171120484261859142
 MonoBehaviour:
   m_ObjectHideFlags: 0

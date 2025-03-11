@@ -42,19 +42,25 @@ public class EquipSystem : MonoBehaviour
 
     void Update()
     {
+        HandleQuickSlotSelection();
+        HandleConsumableItemUse();
+
+    }
+    private void HandleQuickSlotSelection()
+    {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
             SelectQuickSlot(1);
         }
-        else if(Input.GetKeyUp(KeyCode.Alpha2))
+        else if (Input.GetKeyUp(KeyCode.Alpha2))
         {
             SelectQuickSlot(2);
         }
-        else if(Input.GetKeyUp(KeyCode.Alpha3))
+        else if (Input.GetKeyUp(KeyCode.Alpha3))
         {
             SelectQuickSlot(3);
         }
-        else if(Input.GetKeyUp(KeyCode.Alpha4))
+        else if (Input.GetKeyUp(KeyCode.Alpha4))
         {
             SelectQuickSlot(4);
         }
@@ -66,8 +72,6 @@ public class EquipSystem : MonoBehaviour
         {
             SelectQuickSlot(6);
         }
-
-
     }
 
     void SelectQuickSlot(int number)
@@ -265,6 +269,51 @@ public class EquipSystem : MonoBehaviour
         else
         {
             return false; 
+        }
+    }
+    private void HandleConsumableItemUse()
+    {
+        if (selectNumber != -1 && selectedItem != null)
+        {
+            InventoryItem item = selectedItem.GetComponent<InventoryItem>();
+            if (item != null && item.isConsumable && Input.GetMouseButtonDown(0)) // Left mouse click
+            {
+                ApplyConsumableEffect(item);
+                DestroyConsumableItem(item);
+            }
+        }
+    }
+
+    private void ApplyConsumableEffect(InventoryItem item)
+    {
+        if (item.isConsumable)
+        {
+            // Call the health and stamina effect calculation methods
+            InventoryItem.healthEffectCalculation(item.healthEffect);
+            InventoryItem.staminaEffectCalculation(item.staminaEffect);
+        }
+    }
+
+    private void DestroyConsumableItem(InventoryItem item)
+    {
+        if (item.isConsumable)
+        {
+            // Destroy the selected item
+            Destroy(selectedItem);
+
+            // Destroy the selected item model
+            if (selectedItemModel != null)
+            {
+                Destroy(selectedItemModel);
+                selectedItemModel = null;
+            }
+
+            // Clear the selected item
+            selectedItem = null;
+            selectNumber = -1;
+
+            // Update the UI
+            InventorySystem.Instance.ReCalculateList();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,6 +48,14 @@ public class ItemSlot : MonoBehaviour, IDropHandler
                 InventorySystem.Instance.ReCalculateList();
             }
         }
+        StartCoroutine(DelayScan());
 
+    }
+
+    IEnumerator DelayScan()
+    {
+        yield return new WaitForSeconds(0.1f);
+        SellSystem.Instance.ScanItemInSlots();
+        SellSystem.Instance.UpdateSellAmountUI();
     }
 }

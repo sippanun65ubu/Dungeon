@@ -27,6 +27,9 @@ public class InventorySystem : MonoBehaviour
 
     public List<string> itemsPickedup;
 
+    internal int currentCoins = 100;
+
+    public TextMeshProUGUI currencyUI;
 
     private void Awake()
     {
@@ -44,6 +47,7 @@ public class InventorySystem : MonoBehaviour
     void Start()
     {
         isOpen = false;
+
 
         PopulateSlotList();
 
@@ -68,33 +72,45 @@ public class InventorySystem : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F) && !isOpen)
         {
-
-            inventoryScreenUI.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-
-            SelectionManager.Instance.DisableSelection();
-            SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
-            isOpen = true;
-
+            OpenUI();
         }
         else if (Input.GetKeyDown(KeyCode.F) && isOpen)
         {
-            inventoryScreenUI.SetActive(false);
-            if (!QuestManager.instance.isQuestMenuOpen)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-
-                SelectionManager.Instance.EnableSelection();
-                SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
-
-            }
-            isOpen = false;
+            CloseUI();
         }
+
+        currencyUI.text = $"{currentCoins} Coins";
     }
-    
-public void AddToInventory(string itemName)
+
+    public void OpenUI()
+    {
+        inventoryScreenUI.SetActive(true);
+
+        //inventoryScreenUI.GetComponent<Canvas>().sortingOrder = MenuManager.Instance.SetAsFront();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        SelectionManager.Instance.DisableSelection();
+        SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
+        isOpen = true;
+        ReCalculateList();
+    }
+
+    public void CloseUI()
+    {
+        inventoryScreenUI.SetActive(false);
+        if (!QuestManager.instance.isQuestMenuOpen && !BuySystem.Instance.ShopSystem.isTalkingWithPlayer)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            SelectionManager.Instance.EnableSelection();
+            SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
+
+        }
+        isOpen = false;
+    }
+    public void AddToInventory(string itemName)
     {
 
         whatSlotToEquip = FindEmtrySlot();

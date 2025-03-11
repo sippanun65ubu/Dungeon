@@ -49,7 +49,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(DialogSystem.instance.dialogUIActive == false)
+        if (MovementManager.instance.canMove)
+        {
+            Movement();
+        }
+        if (DialogSystem.instance.dialogUIActive == false)
         {
             Movement();
         }
