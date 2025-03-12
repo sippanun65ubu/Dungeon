@@ -497,6 +497,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8382590410011688245}
   - component: {fileID: 7261968873093678731}
+  - component: {fileID: 6531894583749466300}
+  - component: {fileID: 9142937730944796586}
   m_Layer: 0
   m_Name: DragonMesh
   m_TagString: Untagged
@@ -655,6 +657,48 @@ SkinnedMeshRenderer:
     m_Center: {x: 58.695984, y: 18.95456, z: 0.58447266}
     m_Extent: {x: 502.86066, y: 504.02463, z: 633.1132}
   m_DirtyAABB: 0
+--- !u!65 &6531894583749466300
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484720032897120437}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4000, y: 1000, z: 4000}
+  m_Center: {x: 0.5844652, y: 378.73, z: -249.83354}
+--- !u!65 &9142937730944796586
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484720032897120437}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1266.227, y: 1356.2747, z: 1355.2688}
+  m_Center: {x: 0.5844652, y: 289.45697, z: -249.83354}
 --- !u!1 &1491516379280803712
 GameObject:
   m_ObjectHideFlags: 0
@@ -3121,13 +3165,11 @@ GameObject:
   - component: {fileID: 8265577267215351229}
   - component: {fileID: 5708589032683922220}
   - component: {fileID: 1075089067545639034}
-  - component: {fileID: 2061912735243185033}
-  - component: {fileID: 2010316848267156203}
   - component: {fileID: 5588140073744351121}
   - component: {fileID: 1819814329605452732}
   m_Layer: 0
   m_Name: Blue
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3199,48 +3241,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &2061912735243185033
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6690943475240465362}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 8, y: 7, z: 7}
-  m_Center: {x: 0, y: 3, z: -1}
---- !u!65 &2010316848267156203
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6690943475240465362}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 12, y: 11, z: 12}
-  m_Center: {x: 0, y: 3, z: -1}
 --- !u!114 &5588140073744351121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3258,7 +3258,11 @@ MonoBehaviour:
   isDead: 0
   currentHealth: 0
   maxHealth: 1000
-  healthSlider: {fileID: 0}
+  healthSlider: {fileID: 9065609022700280084}
+  isSuperregen: 0
+  healthRegenRate: 5
+  healthRegenDelay: 3
+  enemyScoreValue: 10
   soundChannel: {fileID: 0}
   skeletonTakeDamage: {fileID: 0}
   skeletonDie: {fileID: 0}

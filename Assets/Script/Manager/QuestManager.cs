@@ -159,6 +159,7 @@ public class QuestManager : MonoBehaviour
         //add it into the completed list
         allCompletedQuests.Add(quest);
         UnTrackQuest(quest);
+        GameManager.instance.AddQuestScore(quest.info.questScoreValue);
         RefreshQuestList();
     }
     public void RefreshQuestList()

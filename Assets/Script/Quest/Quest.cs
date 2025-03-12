@@ -20,4 +20,6 @@ public class Quest
 
     [Header("Quest info")]
     public QuestInfo info;
+
+
 }

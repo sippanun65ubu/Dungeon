@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1177589473681227995}
   - component: {fileID: -4826051339334335220}
   - component: {fileID: 1532530532521841801}
-  - component: {fileID: 7171120484261859142}
+  - component: {fileID: 7526027418900403180}
   m_Layer: 5
   m_Name: sword
   m_TagString: Untagged
@@ -126,7 +126,7 @@ MonoBehaviour:
   isInsideQuickSlot: 0
   isSelected: 0
   sellingPrice: 40
---- !u!114 &7171120484261859142
+--- !u!114 &7526027418900403180
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,4 +138,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42374edc4ae729f4fbb5a916fd5ee208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDamage: 30
+  weaponDamage: 50

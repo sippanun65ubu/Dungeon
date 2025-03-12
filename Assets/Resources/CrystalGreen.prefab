@@ -118,10 +118,10 @@ MonoBehaviour:
   thisName: CrystalGreen
   thisDescription: A vibrant, nature-infused crystal. Known for its healing properties.
   thisFunctionality: 'Sell Price: 100 coins'
-  isConsumable: 0
+  isConsumable: 1
   healthEffect: 30
   staminaEffect: 0
-  isEquippable: 0
+  isEquippable: 1
   isInsideQuickSlot: 0
   isSelected: 0
   sellingPrice: 100

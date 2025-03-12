@@ -118,10 +118,10 @@ MonoBehaviour:
   thisName: LargePotion
   thisDescription: a drink that is believed to be able to cure an illness
   thisFunctionality: heal 80
-  isConsumable: 0
+  isConsumable: 1
   healthEffect: 80
   staminaEffect: 0
-  isEquippable: 0
+  isEquippable: 1
   isInsideQuickSlot: 0
   isSelected: 0
   sellingPrice: 30

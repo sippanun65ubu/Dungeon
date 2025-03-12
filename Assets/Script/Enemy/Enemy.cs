@@ -23,6 +23,9 @@ public class Enemy : MonoBehaviour
     public float healthRegenDelay = 3f; 
     private float lastDamageTime; // Track when the enemy last took damage
 
+    public int enemyScoreValue = 10;
+
+
     enum EnemyType
     {
         Skeleton,
@@ -40,6 +43,7 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();  
         agent = GetComponent<NavMeshAgent>();
+
     }
     private void Update()
     {
@@ -91,9 +95,9 @@ public class Enemy : MonoBehaviour
                 animator.SetTrigger("DIE");
                 agent.enabled = false;
 
-
                 isDead = true;
                 healthSlider.gameObject.SetActive(false);
+                GameManager.instance.AddKill(enemyScoreValue);
             }
             else
             {

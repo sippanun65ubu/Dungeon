@@ -44,4 +44,6 @@ public class QuestInfo : ScriptableObject
 
     public bool hasCheckPoints;
     public List<CheckPoints> checkPoints;
+
+    public int questScoreValue;
 }

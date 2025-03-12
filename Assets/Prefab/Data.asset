@@ -34,3 +34,4 @@ MonoBehaviour:
   hasCheckPoints: 1
   checkPoints:
   - {fileID: 11400000, guid: 50398f400c350d24f96baf4090be3a09, type: 2}
+  questScoreValue: 10

@@ -134,7 +134,7 @@ public class SelectionManager : MonoBehaviour
 
                     if (Input.GetMouseButtonDown(0) && EquipSystem.Instance.IsHoldingWeapon() && EquipSystem.Instance.IsThereASwingLock() == false)
                     {
-                        StartCoroutine(DealDamageTo(enemy, 0.3f, EquipSystem.Instance.GetWeaponDamage()));
+                        StartCoroutine(DealDamageTo(enemy, 3f, EquipSystem.Instance.GetWeaponDamage()));
                     }
                 }
 
@@ -216,10 +216,7 @@ public class SelectionManager : MonoBehaviour
 
     IEnumerator DealDamageTo(Enemy enemy, float delay, int damage)
     {
-        yield return new WaitForSeconds(delay);
-
         enemy.TakeDamage(damage);
+        yield return new WaitForSeconds(delay);
     }
-
-
 }

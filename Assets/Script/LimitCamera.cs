@@ -9,6 +9,9 @@ public class LimitCamera : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.position = new Vector3(Player.transform.position.x, 40 , Player.transform.position.z);
+        if (Player != null) // Prevent null errors
+        {
+            transform.position = new Vector3(Player.transform.position.x, 40, Player.transform.position.z);
+        }
     }
 }

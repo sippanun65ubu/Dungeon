@@ -1285,6 +1285,68 @@ RectTransform:
   m_AnchoredPosition: {x: 0.001373291, y: -0.00055122375}
   m_SizeDelta: {x: 0.0027723312, y: -0.0056962967}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &5618630712098336162
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7285125048968282974}
+    m_Modifications:
+    - target: {fileID: 5085943480510703014, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+      propertyPath: m_Name
+      value: Enemy_dot_minimap
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621601552502154241, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621601552502154241, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621601552502154241, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621601552502154241, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621601552502154241, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621601552502154241, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621601552502154241, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621601552502154241, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621601552502154241, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621601552502154241, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+--- !u!4 &2611028842555132323 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7621601552502154241, guid: c37c8e4fd169ab94b8e98163f62ee535, type: 3}
+  m_PrefabInstance: {fileID: 5618630712098336162}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7285125048967895440
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1296,6 +1358,10 @@ PrefabInstance:
     - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_Name
       value: Skeleton
+      objectReference: {fileID: 0}
+    - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 400078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_LocalScale.x
@@ -1366,6 +1432,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 400078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8880544633202162093}
+    - targetCorrespondingSourceObject: {fileID: 400078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2611028842555132323}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       insertIndex: -1
@@ -1469,6 +1538,7 @@ MonoBehaviour:
   isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
+  enemyScoreValue: 10
   soundChannel: {fileID: 6671256131559214744}
   skeletonTakeDamage: {fileID: 8300000, guid: 4978fcbaf8e035043ab38aa034ae6bbe, type: 3}
   skeletonDie: {fileID: 8300000, guid: 27d2304b3cd64874ab9532e3bc76ae37, type: 3}
@@ -1491,8 +1561,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.5, z: 0.4}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.5, z: 1}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!114 &2048719807287581166
 MonoBehaviour:
   m_ObjectHideFlags: 0

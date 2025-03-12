@@ -7,13 +7,17 @@ using UnityEngine;
 public class EquippableItem : MonoBehaviour
 {
     public Animator animator;
-
     public bool swingWait = false;
+    private Weapon damage;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        damage = GetComponent<Weapon>();
+
     }
 
     // Update is called once per frame
@@ -23,11 +27,9 @@ public class EquippableItem : MonoBehaviour
             InventorySystem.Instance.isOpen == false &&
             SelectionManager.Instance.handIsVisible == false && swingWait == false)
         {
-            Debug.Log("Swing initiated");
+            
             swingWait = true;
-            //StartCoroutine(SwingSoundDelay());
-
-            animator.SetTrigger("hit");
+            Debug.Log("Swing initiated");
             StartCoroutine(NewSwingDelay());
         }
     }
@@ -41,7 +43,9 @@ public class EquippableItem : MonoBehaviour
     IEnumerator NewSwingDelay()
     {
         Debug.Log("Starting swing delay coroutine");
-        yield return new WaitForSeconds(10f);
+        animator.SetTrigger("hit");
+        //float attackDuration = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(1f);
         swingWait = false;
         Debug.Log("Swing delay over, swingWait reset");
     }
