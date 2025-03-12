@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerState : MonoBehaviour
 {
@@ -10,24 +7,19 @@ public class PlayerState : MonoBehaviour
 
     [Header("Health Settings")]
     public float maxHealth;
-    public float currentHealth; 
+    public float currentHealth;
     public float healthRegenRate; // Health regenerated per second
     public float healthRegenDelay; // Delay before health regeneration starts
 
     [Header("Stamina Settings")]
     public float maxStamina;
     public float currentStamina;
-    public float staminaDrainRate; // Stamina drained per second while sprinting
-    public float staminaRegenRate; // Stamina regenerated per second
-    public float staminaRegenDelay; // Delay before stamina regeneration starts
-
-    //[Header("UI Elements")]
-    //public Slider healthBar;
-    //public Text healthText; // New health text component
-    //public Slider staminaBar;
-    //public Text staminaText; // New stamina text component
+    public float staminaDrainRate = 1f; // Stamina drained per second while sprinting (slower drain)
+    public float staminaRegenRate = 2f; // Stamina regenerated per second
+    public float staminaRegenDelay = 1f; // Delay before stamina regeneration starts after stopping sprinting
 
     private float lastDamageTime;
+    private float lastSprintEndTime; // Track when the player stopped sprinting
     public bool isSprinting;
     public bool isPlayerDead;
 
@@ -57,7 +49,6 @@ public class PlayerState : MonoBehaviour
     {
         currentHealth = maxHealth;
         currentStamina = maxStamina;
-
     }
 
     private void Update()
@@ -77,28 +68,45 @@ public class PlayerState : MonoBehaviour
 
     private void HandleStamina()
     {
+        // Handle stamina drain while sprinting
         if (isSprinting && currentStamina > 0)
         {
             currentStamina -= staminaDrainRate * Time.deltaTime;
             currentStamina = Mathf.Max(currentStamina, 0);
         }
-        else if (!isSprinting && currentStamina < maxStamina)
+
+        // Handle stamina regeneration
+        if (!isSprinting && currentStamina < maxStamina)
         {
-            if (Time.time - lastDamageTime > staminaRegenDelay)
+            // Check if enough time has passed since the player stopped sprinting
+            if (Time.time - lastSprintEndTime > staminaRegenDelay)
             {
                 currentStamina += staminaRegenRate * Time.deltaTime;
                 currentStamina = Mathf.Min(currentStamina, maxStamina);
             }
         }
+
+        // Update lastSprintEndTime when the player stops sprinting
+        if (!isSprinting && lastSprintEndTime == 0)
+        {
+            lastSprintEndTime = Time.time;
+        }
+        else if (isSprinting)
+        {
+            lastSprintEndTime = 0; // Reset the timer if the player starts sprinting again
+        }
     }
+
     public void setHealth(float newHealth)
     {
         currentHealth = newHealth;
     }
+
     public void setStamina(float newStamina)
     {
         currentStamina = newStamina;
     }
+
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -117,21 +125,21 @@ public class PlayerState : MonoBehaviour
 
                 nextHurtTime = Time.time + hurtSoundDelay;
             }
-
-
-
         }
     }
+
     public void PlayerDead()
     {
         isPlayerDead = true;
         //playerAudioSource.PlayOneShot(playerDeathSound);
         RespawnPlayer();
     }
+
     public void RespawnPlayer()
     {
         StartCoroutine(RespawnCoroutine());
     }
+
     public IEnumerator RespawnCoroutine()
     {
         playerBody.GetComponent<PlayerMovement>().enabled = false;
@@ -145,8 +153,6 @@ public class PlayerState : MonoBehaviour
 
         currentHealth = maxHealth;
 
-
-
         yield return new WaitForSeconds(0.2f);
 
         isPlayerDead = false;
@@ -157,7 +163,6 @@ public class PlayerState : MonoBehaviour
 
     internal void SpawnPlayerLocation(RespawnLocation respawnLocation)
     {
-         spawnLocation = respawnLocation;
-            
+        spawnLocation = respawnLocation;
     }
 }

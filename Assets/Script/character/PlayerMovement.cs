@@ -13,9 +13,8 @@ public class PlayerMovement : MonoBehaviour
     private float velocityZ = 0f;
 
     [Header("Movement Settings")]
-    public float walkSpeed = 6f;       // Normal walking speed
-    public float sprintSpeed = 12f;    // Speed while sprinting
-    public float crouchSpeed = 3f;     // Speed while crouching
+    public float walkSpeed = 3f;       // Normal walking speed
+    public float sprintSpeed = 7f;    // Speed while sprinting
     private float currentSpeed;        // The speed that changes dynamically
 
     [Header("Jump & Gravity")]
@@ -27,10 +26,6 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
-    [Header("Crouch Settings")]
-    public float crouchHeight = 2.75f;  // Height when crouching
-    public float standHeight = 4f;     // Height when standing
-    private bool isCrouching = false;
 
     private Vector3 velocity;
     private bool isGrounded;
@@ -67,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f; // Reset fall speed
-            animator.SetBool("IsJumping", false);
+
         }
 
         // Get movement input
@@ -76,15 +71,11 @@ public class PlayerMovement : MonoBehaviour
         bool isMoving = x != 0 || z != 0;
 
         bool isRunning = false;
-        // Handle Sprinting (Prevent sprinting while crouching)
-        if (Input.GetKey(KeyCode.LeftShift) && !isCrouching)
+        // Handle Sprinting 
+        if (Input.GetKey(KeyCode.LeftShift) && PlayerState.Instance.currentStamina > 0)
         {
             currentSpeed = sprintSpeed; // Sprint speed
             isRunning = true;
-        }
-        else if (isCrouching)
-        {
-            currentSpeed = crouchSpeed; // Use crouch speed
         }
         else
         {
@@ -94,22 +85,6 @@ public class PlayerMovement : MonoBehaviour
         if (PlayerState.Instance != null)
         {
             PlayerState.Instance.isSprinting = isRunning;
-        }
-        // Handle Crouching
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            isCrouching = !isCrouching; // Toggle crouch state
-
-            if (isCrouching)
-            {
-                controller.height = crouchHeight; // Reduce height
-                colliderp.height = crouchHeight;
-            }
-            else
-            {
-                controller.height = standHeight; // Restore height
-                colliderp.height = standHeight;
-            }
         }
 
         // Move in the direction the camera is facing
@@ -126,13 +101,13 @@ public class PlayerMovement : MonoBehaviour
         // **Set Animation Conditions**
         animator.SetBool("IsWalking", isMoving && currentSpeed == walkSpeed);
         animator.SetBool("IsRunning", isMoving && currentSpeed == sprintSpeed);
-        animator.SetBool("IsCrouch", isCrouching);
+
 
         // Jumping
-        if (Input.GetButtonDown("Jump") && isGrounded && !isCrouching) // Prevent jumping while crouching
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            animator.SetBool("IsJumping", true); // Play jump animation
+            animator.SetTrigger("IsJumping");
 
             // **Check if moving forward for Jump Forward**
             if (Mathf.Abs(velocityZ) > 1)
