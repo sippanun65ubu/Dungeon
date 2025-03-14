@@ -20,11 +20,13 @@ public class Enemy : MonoBehaviour
 
     public bool isSuperregen = false; // Enable/disable super regeneration
     public float healthRegenRate = 5f; // Health regenerated per second
-    public float healthRegenDelay = 3f; 
+    public float healthRegenDelay = 3f;
     private float lastDamageTime; // Track when the enemy last took damage
 
-    public int enemyScoreValue = 10;
-
+    public int damageToInflict = 1; // damage in attack
+    public int damageInSecondForm = 2; //damage in second form
+    public bool hasSecondState;
+    public bool secondStateActive;
 
     enum EnemyType
     {
@@ -38,10 +40,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] AudioSource soundChannel;
     [SerializeField] AudioClip skeletonTakeDamage;
     [SerializeField] AudioClip skeletonDie;
+
+
+    public int enemyScoreValue = 10;
     private void Start()
     {
         currentHealth = maxHealth;
-        animator = GetComponent<Animator>();  
+        animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
     }
@@ -89,6 +94,7 @@ public class Enemy : MonoBehaviour
         {
             currentHealth -= damage;
             healthSlider.value = currentHealth / maxHealth;
+
             if (currentHealth <= 0)
             {
                 PlayDyingSound();
@@ -99,6 +105,12 @@ public class Enemy : MonoBehaviour
                 healthSlider.gameObject.SetActive(false);
                 GameManager.instance.AddKill(enemyScoreValue);
             }
+            else if ((currentHealth <= maxHealth * 0.5) && hasSecondState == true)
+            {
+                secondStateActive = true;
+
+            }
+
             else
             {
                 PlayHitSound();
@@ -111,29 +123,41 @@ public class Enemy : MonoBehaviour
 
     private void PlayHitSound()
     {
-        switch(thisenemyType)
+        switch (thisenemyType)
         {
             case EnemyType.Skeleton:
                 soundChannel.PlayOneShot(skeletonTakeDamage);
                 break;
-            //case :
-            //    soundChannel.PlayOneShot();
-            //    break;
+                //case :
+                //    soundChannel.PlayOneShot();
+                //    break;
         }
     }
 
     private void PlayDyingSound()
     {
-        switch(thisenemyType)
+        switch (thisenemyType)
         {
             case EnemyType.Skeleton:
                 soundChannel.PlayOneShot(skeletonDie);
                 break;
-            //case :
-            //    soundChannel.PlayOneShot();
-            //    break;
+                //case :
+                //    soundChannel.PlayOneShot();
+                //    break;
         }
     }
+    public void Attack()
+    {
+        PlayerState.Instance.TakeDamage(damageToInflict);
+    }
 
+    private void AttackSecondForm()
+    {
+        PlayerState.Instance.TakeDamage(damageInSecondForm);
+    }
 
+    internal void AttackfromP(int damage)
+    {
+        PlayerState.Instance.TakeDamage(damage);
+    }
 }
