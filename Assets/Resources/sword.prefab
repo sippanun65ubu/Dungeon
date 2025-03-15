@@ -118,7 +118,7 @@ MonoBehaviour:
   isTrashable: 1
   thisName: Sword
   thisDescription: an edged, bladed weapon intended for manual cutting or thrusting
-  thisFunctionality: damage 20
+  thisFunctionality: damage 40
   isConsumable: 0
   healthEffect: 0
   staminaEffect: 0
@@ -138,4 +138,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42374edc4ae729f4fbb5a916fd5ee208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDamage: 50
+  weaponDamage: 40

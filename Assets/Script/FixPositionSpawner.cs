@@ -33,7 +33,6 @@ public class FixPositionSpawner : MonoBehaviour
 
     IEnumerator SpawnObjects()
     {
-        // Continue spawning until we reach the desired number
         while (spawnedCount < numberToSpawn)
         {
             if (spawnPoints.Length > 0 && prefabToSpawn != null)
@@ -56,5 +55,8 @@ public class FixPositionSpawner : MonoBehaviour
             // Wait for the specified interval before spawning the next object
             yield return new WaitForSeconds(spawnInterval);
         }
+
+        // After finishing the spawn, disable this spawner component to ensure it only spawns once
+        this.enabled = false;
     }
 }

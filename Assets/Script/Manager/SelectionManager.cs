@@ -56,7 +56,7 @@ public class SelectionManager : MonoBehaviour
                     interaction_Info_UI.SetActive(false);
                 }
 
-                if (Input.GetMouseButtonDown(0) && shop.isTalkingWithPlayer == false)
+                if (Input.GetKeyDown(KeyCode.E) && shop.isTalkingWithPlayer == false)
                 {
                     shop.Talk();
                 }

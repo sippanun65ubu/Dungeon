@@ -7,7 +7,7 @@ public class Enemy_attackState1 : StateMachineBehaviour
 {
     private NavMeshAgent agent;
     private Transform player;
-    public float meleeRange = 3f;          // Maximum distance for melee attack
+    public float meleeRange = 4f;          // Maximum distance for melee attack
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

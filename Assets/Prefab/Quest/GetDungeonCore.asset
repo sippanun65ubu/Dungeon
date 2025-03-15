@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65af0373df4664d4d93bc18a3e1d70fd, type: 3}
+  m_Name: GetDungeonCore
+  m_EditorClassIdentifier: 
+  initialDialog:
+  - "\"Adventurer, our realm teeters on the brink of darkness. The ancient Dungeon
+    Core\u2014our source of life and magic\u2014has been stolen by a sinister force
+    lurking in the dungeon depths.\""
+  - '"Legends whisper that only the bravest can challenge the evil that guards this
+    core. Our only hope lies in a hero who dares to venture into the Dungeon of Shadows."'
+  - '"Your quest is to enter the dungeon, face the monstrous boss, and reclaim the
+    Dungeon Core. With the core restored, light shall return to our land."'
+  - '"Will you accept this challenge and bring back the lost heart of our realm?"'
+  acceptOption: '"I will retrieve the Dungeon Core."'
+  acceptAnswer: '"Your courage inspires us all. Venture forth, defeat the boss, and
+    return with the core to restore our land!"'
+  declineOption: I cannot face such darkness.
+  declineAnswer: A sorrowful decision... but remember, the fate of our realm hangs
+    in the balance. Should you change your mind, our hope remains with you.
+  comebackAfterDecline: 
+  comebackInProgress: 
+  comebackCompleted: 
+  finalWords: 
+  coinReward: 500
+  rewardItem1: LargePotion
+  rewardItem2: LargePotion
+  firstRequirmentItem: DungeonCore
+  firstRequirementAmount: 1
+  secondRequirmentItem: 
+  secondRequirementAmount: 0
+  hasCheckPoints: 0
+  checkPoints: []
+  questScoreValue: 0

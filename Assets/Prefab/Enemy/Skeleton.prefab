@@ -1456,9 +1456,6 @@ PrefabInstance:
       addedObject: {fileID: 8314729175715948721}
     - targetCorrespondingSourceObject: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2465926137051244225}
-    - targetCorrespondingSourceObject: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6671256131559214744}
     - targetCorrespondingSourceObject: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       insertIndex: -1
@@ -1538,10 +1535,7 @@ MonoBehaviour:
   isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
-  damageToInflict: 1
-  damageInSecondForm: 2
-  hasSecondState: 0
-  secondStateActive: 0
+  damageToInflict: 7
   soundChannel: {fileID: 6671256131559214744}
   skeletonTakeDamage: {fileID: 8300000, guid: 4978fcbaf8e035043ab38aa034ae6bbe, type: 3}
   skeletonDie: {fileID: 8300000, guid: 27d2304b3cd64874ab9532e3bc76ae37, type: 3}
@@ -1602,18 +1596,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2465926137051244225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7285125048967995262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95c8c6db7b46c594f876028b086773b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &6671256131559214744
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1723,11 +1705,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possibleLoot:
-  - item: {fileID: 21029468070807706, guid: 67d08da7a7614034487509a4a46969d6, type: 3}
-    amountMin: 0
-    amountMax: 3
-  - item: {fileID: 5459890727867893105, guid: 2957927de13003b4a9e0153b62aa840b, type: 3}
-    amountMin: 1
+  - item: {fileID: 1926973156575006603, guid: b977be51b7a168b4fbae65546b13f997, type: 3}
+    amountMin: -1
+    amountMax: 1
+  - item: {fileID: 3179653244641900250, guid: 9a0723711f550844ba41fa96584d4a24, type: 3}
+    amountMin: -2
+    amountMax: 1
+  - item: {fileID: 4259216269740928140, guid: 9ef4e853e9ddabf42a873ea3698e6d58, type: 3}
+    amountMin: -4
+    amountMax: 1
+  - item: {fileID: 7035707400443128208, guid: 40981e64f15ab324581bd13b80b862d0, type: 3}
+    amountMin: -6
+    amountMax: 1
+  - item: {fileID: 6538844602166827147, guid: 0807dc32e54847d42aebf10af4e5fa96, type: 3}
+    amountMin: -8
+    amountMax: 2
+  - item: {fileID: 1591312734423904452, guid: 88c8421e07019af4da66171cca5f983b, type: 3}
+    amountMin: -12
     amountMax: 1
   finalLoot: []
   wasLootCalculated: 0

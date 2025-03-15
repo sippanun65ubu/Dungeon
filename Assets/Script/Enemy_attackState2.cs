@@ -7,8 +7,8 @@ public class Enemy_attackState2 : StateMachineBehaviour
 {
     private NavMeshAgent agent;
     private Transform player;
-    public float rangedMinRange = 3.5f;      // Minimum distance for ranged attack (if player is closer, use melee)
-    public float rangedMaxRange = 7f;        // Maximum distance for ranged attack
+    public float rangedMinRange = 4.5f;      // Minimum distance for ranged attack (if player is closer, use melee)
+    public float rangedMaxRange = 8f;        // Maximum distance for ranged attack
 
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

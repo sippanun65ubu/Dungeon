@@ -24,9 +24,6 @@ public class Enemy : MonoBehaviour
     private float lastDamageTime; // Track when the enemy last took damage
 
     public int damageToInflict = 1; // damage in attack
-    public int damageInSecondForm = 2; //damage in second form
-    public bool hasSecondState;
-    public bool secondStateActive;
 
     enum EnemyType
     {
@@ -105,11 +102,6 @@ public class Enemy : MonoBehaviour
                 healthSlider.gameObject.SetActive(false);
                 GameManager.instance.AddKill(enemyScoreValue);
             }
-            else if ((currentHealth <= maxHealth * 0.5) && hasSecondState == true)
-            {
-                secondStateActive = true;
-
-            }
 
             else
             {
@@ -149,11 +141,6 @@ public class Enemy : MonoBehaviour
     public void Attack()
     {
         PlayerState.Instance.TakeDamage(damageToInflict);
-    }
-
-    private void AttackSecondForm()
-    {
-        PlayerState.Instance.TakeDamage(damageInSecondForm);
     }
 
     internal void AttackfromP(int damage)

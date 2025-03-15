@@ -6,13 +6,13 @@ using UnityEngine.AI;
 public class Enemy_walkState : StateMachineBehaviour
 {
     float timer;
-    public float walkingTime = 10f;
+    public float walkingTime = 5f;
 
     Transform player;
     NavMeshAgent agent;
 
 
-    public float detectionAreaRadius = 18f;
+    public float detectionAreaRadius = 25f;
     public float walkSpeed = 5f;
 
     List<Transform> waypointsList = new List<Transform>();
@@ -59,6 +59,7 @@ public class Enemy_walkState : StateMachineBehaviour
         if (distanceFromPlayer < detectionAreaRadius)
         {
             animator.SetBool("isChasing", true);
+
         }
     }
 

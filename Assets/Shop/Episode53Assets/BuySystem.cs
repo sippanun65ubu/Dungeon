@@ -24,6 +24,8 @@ public class BuySystem : MonoBehaviour
     [Header("ShopSystem")]
     public ShopSystem ShopSystem;
 
+    public bool shop2;
+
     [Header("UI")]
     public Transform contentTransform;
     public GameObject shopItemPrefab;
@@ -32,10 +34,18 @@ public class BuySystem : MonoBehaviour
     [Header("Current List")]
     public List<ShopItemData> currentShopList;
 
+    [Header("Option List")]
+    public List<ShopItemData> currentShopList2 = new List<ShopItemData>(); 
+
 
     void Start()
     {
         backButton.onClick.AddListener(ExitBuyMode);
+        if (shop2 == true)
+        {
+            currentShopList = currentShopList2;
+        }
+
         InitializeBuyList(currentShopList);
     }
 

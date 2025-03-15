@@ -8,12 +8,12 @@ public class Enemy_chase2 : StateMachineBehaviour
     private NavMeshAgent agent;
     private Transform player;
 
-    public float chaseSpeed = 11f;
-    public float stopChasingDistance = 21f; // When the player is too far, exit chase state
+    public float chaseSpeed = 8f;
+    public float stopChasingDistance = 30f; // When the player is too far, exit chase state
 
     // Attack ranges for two different attacks
-    public float meleeAttackRange = 3f;   // Melee attack if player is very close
-    public float rangedAttackRange = 7f;  // Ranged attack if player is a bit further away
+    public float meleeAttackRange = 4f;   // Melee attack if player is very close
+    public float rangedAttackRange = 8f;  // Ranged attack if player is a bit further away
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -31,7 +31,7 @@ public class Enemy_chase2 : StateMachineBehaviour
         agent.isStopped = false;
 
         // Reset attack flags on entering the chase state
-        animator.SetBool("isAttacking", false);
+        animator.SetBool("isAttacking1", false);
         animator.SetBool("isAttacking2", false);
     }
 
@@ -66,7 +66,7 @@ public class Enemy_chase2 : StateMachineBehaviour
             {
                 agent.isStopped = true;
             }
-            animator.SetBool("isAttacking", true);
+            animator.SetBool("isAttacking1", true);
             animator.SetBool("isAttacking2", false);
         }
         else if (distance <= rangedAttackRange)
@@ -77,7 +77,7 @@ public class Enemy_chase2 : StateMachineBehaviour
                 agent.isStopped = true;
             }
             animator.SetBool("isAttacking2", true);
-            animator.SetBool("isAttacking", false);
+            animator.SetBool("isAttacking1", false);
         }
         else
         {
@@ -86,7 +86,7 @@ public class Enemy_chase2 : StateMachineBehaviour
             {
                 agent.isStopped = false;
             }
-            animator.SetBool("isAttacking", false);
+            animator.SetBool("isAttacking1", false);
             animator.SetBool("isAttacking2", false);
         }
     }

@@ -10,6 +10,7 @@ TagManager:
   - Waypoints
   - Enemy
   - Weapon
+  - Undefined
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Equipable
   - minimap
   - Weapon
-  - 
+  - Enemy
   - 
   - 
   - 
