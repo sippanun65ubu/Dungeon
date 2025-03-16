@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65af0373df4664d4d93bc18a3e1d70fd, type: 3}
+  m_Name: GivePotion
+  m_EditorClassIdentifier: 
+  initialDialog:
+  - Greetings, adventurer. I am Master Alaric, and I require your assistance.
+  - For years, I have researched the secrets of a powerful potion known as the Elixir
+    of Renewal
+  - "This elixir holds the promise to heal our most grievous afflictions\u2014but
+    it was lost when the Old Laboratory fell into ruin"
+  - I implore you to journey to the ruins, overcome its perils, and retrieve the
+    potion. Will you accept this vital quest?
+  acceptOption: '"I will retrieve the Elixir of Renewal."'
+  acceptAnswer: '"Excellent! Your bravery will restore hope. Return with the elixir,
+    and our healing arts shall flourish anew."'
+  declineOption: '"I cannot risk this dangerous expedition."'
+  declineAnswer: '"A shame... Without the elixir, our people may continue to suffer.
+    Should you change your mind, our doors remain open."'
+  comebackAfterDecline: '"If you reconsider, remember that every moment without the
+    elixir puts our future in jeopardy."'
+  comebackInProgress: '"You are making progress, but the true test awaits within
+    the ruins. Keep pressing on!"'
+  comebackCompleted: '"Remarkable! You have secured the Elixir of Renewal. Our hope
+    is renewed, and our path to healing is clearer than ever."'
+  finalWords: '"May your courage guide you, and may the elixir bring new life to
+    our land."'
+  coinReward: 2000
+  rewardItem1: LargePotion
+  rewardItem2: LargePotion
+  firstRequirmentItem: LowPotion
+  firstRequirementAmount: 2
+  secondRequirmentItem: MediumPotion
+  secondRequirementAmount: 1
+  hasCheckPoints: 0
+  checkPoints: []
+  questScoreValue: 2000

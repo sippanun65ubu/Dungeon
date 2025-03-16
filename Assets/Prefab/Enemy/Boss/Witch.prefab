@@ -1682,8 +1682,8 @@ MonoBehaviour:
   healthRegenDelay: 3
   damageToInflict: 7
   soundChannel: {fileID: 8206514833083150095}
-  skeletonTakeDamage: {fileID: 8300000, guid: 4978fcbaf8e035043ab38aa034ae6bbe, type: 3}
-  skeletonDie: {fileID: 8300000, guid: 27d2304b3cd64874ab9532e3bc76ae37, type: 3}
+  skeletonTakeDamage: {fileID: 8300000, guid: 71f5af87f7f2dfb4e890afe369e36c24, type: 3}
+  skeletonDie: {fileID: 8300000, guid: 90b3d298255549944a5fb78bc933785f, type: 3}
   enemyScoreValue: 10
 --- !u!65 &2718833718854748113
 BoxCollider:
@@ -1762,7 +1762,7 @@ AudioSource:
   m_GameObject: {fileID: 5109871050878376439}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7418761235935860217, guid: f02124b854a7c1f4c94157085ebc0da6, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1874,6 +1874,9 @@ MonoBehaviour:
   - item: {fileID: 5239939985135406909, guid: 80e1b76d57c34f04a8898f3ac1af947a, type: 3}
     amountMin: -7
     amountMax: 1
+  - item: {fileID: 4259216269740928140, guid: 9ef4e853e9ddabf42a873ea3698e6d58, type: 3}
+    amountMin: 1
+    amountMax: 3
   finalLoot: []
   wasLootCalculated: 0
 --- !u!1 &5215927960703771925

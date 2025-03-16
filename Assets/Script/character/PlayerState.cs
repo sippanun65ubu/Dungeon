@@ -23,16 +23,15 @@ public class PlayerState : MonoBehaviour
     public bool isSprinting;
     public bool isPlayerDead;
 
-    public AudioSource playerAudioSource;
-    public AudioClip playerPainSound;
-    public AudioClip playerDeathSound;
-
     public RespawnLocation spawnLocation;
     public GameObject playerBody;
 
     private float hurtSoundDelay = 2f;
     private float nextHurtTime = 0f;
 
+    public AudioSource playerAudio;
+    public AudioClip playerHurt;
+    public AudioClip playerDie;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -43,12 +42,14 @@ public class PlayerState : MonoBehaviour
         {
             Instance = this;
         }
+
     }
 
     private void Start()
     {
         currentHealth = maxHealth;
         currentStamina = maxStamina;
+
     }
 
     private void Update()
@@ -121,7 +122,7 @@ public class PlayerState : MonoBehaviour
             if (currentHealth > 0 && Time.time >= nextHurtTime)
             {
                 Debug.Log("player is hurt");
-                playerAudioSource.PlayOneShot(playerPainSound);
+                playerAudio.PlayOneShot(playerHurt);
 
                 nextHurtTime = Time.time + hurtSoundDelay;
             }
@@ -131,7 +132,7 @@ public class PlayerState : MonoBehaviour
     public void PlayerDead()
     {
         isPlayerDead = true;
-        //playerAudioSource.PlayOneShot(playerDeathSound);
+        playerAudio.PlayOneShot(playerDie);
         RespawnPlayer();
     }
 

@@ -40,4 +40,4 @@ MonoBehaviour:
   secondRequirementAmount: 0
   hasCheckPoints: 0
   checkPoints: []
-  questScoreValue: 0
+  questScoreValue: 1000

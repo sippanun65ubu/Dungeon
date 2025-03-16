@@ -10,7 +10,7 @@ TagManager:
   - Waypoints
   - Enemy
   - Weapon
-  - Undefined
+  - Audio
   layers:
   - Default
   - TransparentFX

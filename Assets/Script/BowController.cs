@@ -16,6 +16,9 @@ public class BowController : MonoBehaviour
 
     public float shootingForce = 100;
 
+    public AudioSource bow;
+    public AudioClip loadBow;
+    public AudioClip shotBow;
 
     private void Start()
     {
@@ -51,6 +54,7 @@ public class BowController : MonoBehaviour
         if (Input.GetMouseButtonDown(1)) // Right mouse button pressed
         {
             StartDraw();
+
         }
 
         if (Input.GetMouseButtonUp(1) && isDrawing) // Right mouse button released
@@ -68,6 +72,8 @@ public class BowController : MonoBehaviour
     {
         isDrawing = true;
         bowAnimator.SetBool("IsDrawing", true); // Set the Animator parameter
+        bow.PlayOneShot(loadBow);
+
     }
 
     private void CancelDraw()
@@ -82,6 +88,8 @@ public class BowController : MonoBehaviour
 
         isDrawing = false;
         bowAnimator.SetBool("IsDrawing", false);
+        bow.PlayOneShot(shotBow);
+
 
         ShootArrow();
     }

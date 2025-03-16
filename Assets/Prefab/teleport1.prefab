@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c057db85fb1f764fbbfd6a5a03d5de1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tpPoint: {fileID: 0}
+  tpPoint: {fileID: 8090934835822936145, guid: 168d6c0cf4234e7459ec3d6f4ed4c40c, type: 3}
 --- !u!114 &7084021938518823430
 MonoBehaviour:
   m_ObjectHideFlags: 0

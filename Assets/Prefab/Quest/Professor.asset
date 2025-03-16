@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65af0373df4664d4d93bc18a3e1d70fd, type: 3}
+  m_Name: Professor
+  m_EditorClassIdentifier: 
+  initialDialog:
+  - '"Greetings, adventurer. I am Professor Ardan, and I need your help in a matter
+    of utmost importance."'
+  - For centuries, our research has been fueled by the power of the Luminescent Crystal
+    and the mysterious Dungeon Core.
+  - Sadly, these artifacts have been lost to time, hidden away in a perilous dungeon
+    teeming with dangers
+  - I beg you to embark on this expedition, recover these relics, and bring them
+    back for our research
+  acceptOption: '"I accept the challenge."'
+  acceptAnswer: '"Splendid! Your courage shall illuminate our path to discovery.
+    Venture forth and bring back the artifacts."'
+  declineOption: '"I must decline this perilous quest."'
+  declineAnswer: '"A pity... Without these relics, our research remains in darkness.
+    Should you change your mind, our door is always open."'
+  comebackAfterDecline: "\"If you reconsider, remember that the fate of our research\u2014and
+    perhaps our kingdom\u2014rests on this mission.\""
+  comebackInProgress: '"You have made progress, but the true challenge lies ahead.
+    Keep pushing forward!"'
+  comebackCompleted: '"Incredible! You have succeeded in recovering the relics. Our
+    research will now reach new heights."'
+  finalWords: '"May wisdom guide your journey and discovery light your path."'
+  coinReward: 1000
+  rewardItem1: CrystalPurple
+  rewardItem2: CrystalPurple
+  firstRequirmentItem: CrystalBlue
+  firstRequirementAmount: 1
+  secondRequirmentItem: DungeonCore
+  secondRequirementAmount: 1
+  hasCheckPoints: 0
+  checkPoints: []
+  questScoreValue: 3000

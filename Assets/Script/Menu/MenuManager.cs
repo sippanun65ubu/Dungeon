@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class MenuManager : MonoBehaviour
     public GameObject uiCanvas;
     public GameObject saveMenu;
     public GameObject settingMenu;
-    public GameObject menu;
+    public GameObject loadMenu;
 
     public bool isMenuOpen;
 
@@ -27,35 +28,36 @@ public class MenuManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.M) && !isMenuOpen)
+        if (Input.GetKeyUp(KeyCode.Escape) && !isMenuOpen)
         {
             saveMenu.SetActive(false);
             settingMenu.SetActive(false);
-            menu.SetActive(true);
 
             uiCanvas.SetActive(false);
             menuCanvas.SetActive(true);
 
             isMenuOpen = true;
-
+            GameManager.instance.Pause();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
             SelectionManager.Instance.DisableSelection();
             SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
+            MovementManager.instance.EnableLook(false);
+            MovementManager.instance.EnableMovement(false);
         }
-        else if (Input.GetKeyUp(KeyCode.M) && isMenuOpen)
+        else if (Input.GetKeyUp(KeyCode.Escape) && isMenuOpen)
         {
 
             saveMenu.SetActive(false);
             settingMenu.SetActive(false);
-            menu.SetActive(true);
 
             uiCanvas.SetActive(true);
             menuCanvas.SetActive(false);
-
+            GameManager.instance.UnpauseGame();
             isMenuOpen = false;
             MovementManager.instance.EnableLook(true);
+            MovementManager.instance.EnableMovement(true);
 
             if (InventorySystem.Instance.isOpen == false)
             {
@@ -65,6 +67,58 @@ public class MenuManager : MonoBehaviour
 
             SelectionManager.Instance.EnableSelection();
             SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
+        }
+    }
+    public void GoToSetting()
+    {
+        if (isMenuOpen == true)
+        {
+            settingMenu.SetActive(true);
+            saveMenu.SetActive(false);
+            menuCanvas.SetActive(false);
+            loadMenu.SetActive(false);
+        }
+    }
+    public void GoToSaving()
+    {
+        if (isMenuOpen == true)
+        {
+            settingMenu.SetActive(false);
+            saveMenu.SetActive(true);
+            menuCanvas.SetActive(false);
+            loadMenu.SetActive(false);
+        }
+    }
+    public void GoToingamemanu()
+    {
+        if (isMenuOpen == true)
+        {
+            settingMenu.SetActive(false);
+            saveMenu.SetActive(false);
+            menuCanvas.SetActive(true);
+            loadMenu.SetActive(false);
+        }
+    }
+    public void Mainmennu()
+    {
+        if (isMenuOpen == true)
+        {
+            settingMenu.SetActive(false);
+            saveMenu.SetActive(false);
+            menuCanvas.SetActive(false);
+            loadMenu.SetActive(false);
+            SceneManager.LoadScene("MainMenu");
+        }
+    }
+
+    public void Loadmenu()
+    {
+        if(isMenuOpen == true)
+        {
+            settingMenu.SetActive(false);
+            saveMenu.SetActive(false);
+            menuCanvas.SetActive(false);
+            loadMenu.SetActive(true);
         }
     }
 }

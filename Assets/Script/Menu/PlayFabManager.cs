@@ -8,135 +8,71 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
+
 
 public class PLayFabManager : MonoBehaviour
 {
-    //firebase varialbes
-    [SerializeField] Text messagetext;
+    #region Awake
+    public static PLayFabManager Instance { get; private set; }
+    private const string PlayerDataKey = "PlayerData";
 
-    //firebase varialbes
-    [Header("Login")]
+    private void Awake()
+    {
+        // Setup singleton.
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    #endregion
+
+    #region  Field
+    //      UI & Login Section   //
+    [Header("Login UI")]
     [SerializeField] InputField loginEmail;
     [SerializeField] InputField loginPassword;
-    [SerializeField] GameObject loginpage;
 
-    //firebase varialbes
-    [Header("Signup")]  
+    [Header("Signup UI")]
     [SerializeField] InputField signupUsername;
     [SerializeField] InputField signupEmail;
     [SerializeField] InputField signupPassword;
     [SerializeField] InputField signupCPassword;
-    [SerializeField] GameObject signuppage;
 
-    [Header("forgetpassword")]
-    [SerializeField] GameObject forgetpasswordpage;
-    [SerializeField] InputField forgetpasswordEmail;
-
-
-    [Header("Menu")]
-    [SerializeField] GameObject menupage;
+    [Header("Forget Password UI")]
+    [SerializeField] InputField forgetPasswordEmail;
+    [SerializeField] Text messageText;
+    #endregion
 
 
-    [Header("LeaderBoard")]
-    [SerializeField] GameObject leaderboardpage;
 
-
-    private void Start()
-    {
-        
-    }
-    private void Update()
-    {
-        
-    }
-
-    public void ClearScreen()
-    {
-        loginpage.SetActive(false);
-        signuppage.SetActive(false);
-        menupage.SetActive(false);
-        forgetpasswordpage.SetActive(false);
-        leaderboardpage.SetActive(false);
-        ClearLoginFeilds();
-        ClearSignUpFeilds();
-        ClearRecoveryFeilds();
-
-    }
-    public void LoginScreen() //Back button
-    {
-        ClearScreen();
-        loginpage.SetActive(true);
-    }
-    public void RegisterScreen() // Regester button
-    {
-        ClearScreen();
-        signuppage.SetActive(true);
-    }
-    public void MainmenuScreen()
-    {
-        ClearScreen();
-        menupage.SetActive(true);
-    }
-
-    public void ForgetPasswordScreen()
-    {
-        ClearScreen();
-        forgetpasswordpage.SetActive(true);
-    }
-    //Function for the login button
-
-    public void LeaderBoardScreen()
-    {
-        ClearScreen();
-        leaderboardpage.SetActive(true);
-    }
-    public void ClearLoginFeilds()
-    {
-        loginEmail.text = "";
-        loginPassword.text = "";
-        messagetext.text = "";
-    }
-    public void ClearRecoveryFeilds()
-    {
-        forgetpasswordEmail.text = "";
-        messagetext.text = "";
-    }
-
-    public void ClearSignUpFeilds()
-    {
-        signupEmail.text = "";
-        signupUsername.text = "";
-        signupPassword.text = "";
-        signupCPassword.text = "";
-        messagetext.text = "";
-    }
+    #region Registration
     public void RegisterUser()
     {
-        //if statement  if password is less than 6 message text = too short password
-
+        // Optionally check that signupPassword and signupCPassword match and have minimum length.
         var request = new RegisterPlayFabUserRequest
         {
             DisplayName = signupUsername.text,
             Email = signupEmail.text,
             Password = signupPassword.text,
-
             RequireBothUsernameAndEmail = false
         };
-        PlayFabClientAPI.RegisterPlayFabUser(request, OnregisterSuccess, OnError);
+        PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError);
     }
 
-    private void OnError(PlayFabError Error)
+    private void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
-        messagetext.text = Error.ErrorMessage;
-        Debug.Log(Error.GenerateErrorReport());
+        messageText.text = "New Account Created";
+        FirstMenuManager.Instance.LoginScreen();
     }
+    #endregion
 
-    private void OnregisterSuccess(RegisterPlayFabUserResult result)
-    {
-        messagetext.text = "New Account Is Created";
-        LoginScreen();
-    }
-    
+    #region Login
     public void Login()
     {
         var request = new LoginWithEmailAddressRequest
@@ -146,51 +82,271 @@ public class PLayFabManager : MonoBehaviour
         };
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
     }
+
     private void OnLoginSuccess(LoginResult result)
     {
-        messagetext.text = "Logged In";
-        MainmenuScreen();
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   
+        messageText.text = "Logged In";
+        FirstMenuManager.Instance.MainMenuScreen();
     }
+    #endregion
 
+    #region Recovery
     public void RecoverUser()
     {
         var request = new SendAccountRecoveryEmailRequest
         {
-            Email = forgetpasswordEmail.text,
-            TitleId = "48A9A"
+            Email = forgetPasswordEmail.text,
+            TitleId = "YOUR_TITLE_ID" // Replace with your actual TitleId.
         };
-        PlayFabClientAPI.SendAccountRecoveryEmail(request, OnRecoverySucces, OnErrorRecovery);
+        PlayFabClientAPI.SendAccountRecoveryEmail(request, OnRecoverySuccess, OnErrorRecovery);
     }
 
-    private void OnErrorRecovery(PlayFabError result)
+    private void OnErrorRecovery(PlayFabError error)
     {
-        messagetext.text = "No Email Found";
+        messageText.text = "No Email Found";
     }
 
-    private void OnRecoverySucces(SendAccountRecoveryEmailResult result)
+    private void OnRecoverySuccess(SendAccountRecoveryEmailResult result)
     {
-        messagetext.text = "Recovery Mail Sent";
-        LoginScreen();
+        messageText.text = "Recovery Email Sent";
+        FirstMenuManager.Instance.LoginScreen();
     }
 
-    public void Getleaderboard()
+    private void OnError(PlayFabError error)
     {
-        var request = new GetLeaderboardRequest
+        messageText.text = error.ErrorMessage;
+        Debug.LogError(error.GenerateErrorReport());
+    }
+    #endregion
+
+    #region  plater data
+    [System.Serializable]
+    public class PlayerData
+    {
+        public float[] playerStats;              // [0]: health, [1]: stamina
+        public float[] playerPositionAndRotation; // [0-2]: position, [3-5]: forward direction (for LookRotation)
+        public string[] inventoryContent;
+        public string[] quickSlotContent;
+        public int enemyKillCount;
+        public int totalScore;
+        public float elapsedTime;
+        public string currentScene;
+
+
+        public PlayerData(float[] _playerStats, float[] _playerPosAndRot, string[] _inventoryContent, string[] _quickSlotContent, int _enemyKillCount, int _totalScore, float _elapsedTime, string _currentScene)
         {
-            StatisticName = "Ranking",
-            StartPosition = 0,
-            MaxResultsCount = 10
-        };
-        PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
-
-    }
-    void OnLeaderboardGet(GetLeaderboardResult result)
-    {
-        foreach (var item in result.Leaderboard)
-        {
-            Debug.Log(item.Position + " " + item.PlayFabId + " " + item.StatValue);
-
+            playerStats = _playerStats;
+            playerPositionAndRotation = _playerPosAndRot;
+            inventoryContent = _inventoryContent;
+            quickSlotContent = _quickSlotContent;
+            enemyKillCount = _enemyKillCount;
+            totalScore = _totalScore;
+            elapsedTime = _elapsedTime;
+            currentScene = _currentScene;
         }
     }
+    #endregion
+
+    #region SaveDataPlayFab
+    public void SavePlayerData()
+    {
+        PlayerData data = CreatePlayerData();
+        string jsonData = JsonUtility.ToJson(data);
+        Debug.Log("Saving Player Data: " + jsonData);
+
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>()
+            {
+                { PlayerDataKey, jsonData }
+            }
+        };
+
+        PlayFabClientAPI.UpdateUserData(request, OnDataSaved, OnDataError);
+    }
+
+    private void OnDataSaved(UpdateUserDataResult result)
+    {
+        Debug.Log("Player data saved successfully.");
+    }
+
+    private void OnDataError(PlayFabError error)
+    {
+        Debug.LogError("Error saving/loading player data: " + error.GenerateErrorReport());
+    }
+    #endregion
+
+    #region LoadData
+    public void LoadPlayerData(Action<PlayerData> OnDataLoaded)
+    {
+        var request = new GetUserDataRequest
+        {
+            Keys = new List<string>() { PlayerDataKey }
+        };
+
+        PlayFabClientAPI.GetUserData(request, result =>
+        {
+            if (result.Data != null && result.Data.ContainsKey(PlayerDataKey))
+            {
+                string jsonData = result.Data[PlayerDataKey].Value;
+                Debug.Log("Loaded Player Data: " + jsonData);
+                PlayerData loadedData = JsonUtility.FromJson<PlayerData>(jsonData);
+                OnDataLoaded?.Invoke(loadedData);
+            }
+            else
+            {
+                Debug.Log("No player data found.");
+                OnDataLoaded?.Invoke(null);
+            }
+        }, OnDataError);
+    }
+
+    /// Creates a PlayerData object from the current game state.
+    private PlayerData CreatePlayerData()
+    {
+        // Get player stats from PlayerState.
+        float[] playerStats = new float[2];
+        playerStats[0] = PlayerState.Instance.currentHealth;
+        playerStats[1] = PlayerState.Instance.currentStamina;
+
+        // Get player position and rotation.
+        float[] posAndRot = new float[6];
+        Vector3 pos = PlayerState.Instance.playerBody.transform.position;
+        posAndRot[0] = pos.x;
+        posAndRot[1] = pos.y;
+        posAndRot[2] = pos.z;
+        // Store forward direction for rotation.
+        Vector3 forward = PlayerState.Instance.playerBody.transform.forward;
+        posAndRot[3] = forward.x;
+        posAndRot[4] = forward.y;
+        posAndRot[5] = forward.z;
+
+        // Get inventory and quick slot content.
+        string[] inventory = InventorySystem.Instance.itemList.ToArray();
+        string[] quickSlots = GetQuickSlotContents();
+
+        // Get enemy kill count and total score.
+        int enemyKills = GameManager.instance.enemyKillCount;
+        int totalScore = GameManager.instance.totalScore;
+
+        // Get elapsed time from GameManager.
+        float elapsedTime = GameManager.instance.GetElapsedTime();
+        // Get current scene name.
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        return new PlayerData(playerStats, posAndRot, inventory, quickSlots, enemyKills, totalScore, elapsedTime, currentScene);
+    }
+
+    /// Retrieves quick slot contents from EquipSystem.
+    private string[] GetQuickSlotContents()
+    {
+        List<string> temp = new List<string>();
+
+        foreach (GameObject slot in EquipSystem.Instance.quickSlotsList)
+        {
+            if (slot.transform.childCount != 0)
+            {
+                string name = slot.transform.GetChild(0).name;
+                string cleanName = name.Replace("(Clone)", "").Trim();
+                temp.Add(cleanName);
+            }
+        }
+        return temp.ToArray();
+    }
+
+    /// Applies loaded player data to the game.
+    public IEnumerator SetPlayerDataCoroutine(PlayerData playerData)
+    {
+        // Check if the saved scene is different from the current scene.
+        if (SceneManager.GetActiveScene().name != playerData.currentScene)
+        {
+            Debug.Log("Loading saved scene: " + playerData.currentScene);
+            // Load the scene asynchronously.
+            AsyncOperation op = SceneManager.LoadSceneAsync(playerData.currentScene);
+            while (!op.isDone)
+            {
+                yield return null;
+            }
+            
+            yield return null;
+        }
+
+        
+        PlayerState.Instance.currentHealth = playerData.playerStats[0];
+        PlayerState.Instance.currentStamina = playerData.playerStats[1];
+
+        Vector3 loadPos = new Vector3(
+            playerData.playerPositionAndRotation[0],
+            playerData.playerPositionAndRotation[1],
+            playerData.playerPositionAndRotation[2]
+        );
+        Vector3 forward = new Vector3(
+            playerData.playerPositionAndRotation[3],
+            playerData.playerPositionAndRotation[4],
+            playerData.playerPositionAndRotation[5]
+        );
+        PlayerState.Instance.playerBody.transform.position = loadPos;
+        PlayerState.Instance.playerBody.transform.rotation = Quaternion.LookRotation(forward);
+
+        // Restore inventory.
+        foreach (string item in playerData.inventoryContent)
+        {
+            InventorySystem.Instance.AddToInventory(item);
+        }
+
+        // Restore quick slot content.
+        foreach (string item in playerData.quickSlotContent)
+        {
+            GameObject availableSlot = EquipSystem.Instance.FindNextEmptySlot();
+            GameObject itemToAdd = Instantiate(Resources.Load<GameObject>(item));
+            itemToAdd.transform.SetParent(availableSlot.transform, false);
+        }
+
+        // Update enemy kill count and total score.
+        GameManager.instance.enemyKillCount = playerData.enemyKillCount;
+        GameManager.instance.totalScore = playerData.totalScore;
+
+        // Update elapsed time.
+        GameManager.instance.SetElapsedTime(playerData.elapsedTime);
+
+        Debug.Log("Player data applied.");
+    }
+    #endregion LeaderBoard
+
+    #region LeaderBoard 
+
+    public void SendGameStatsToPlayFab()
+    {
+        // Retrieve values from your GameManager (assumes singleton instance).
+        int totalScore = GameManager.instance.totalScore;
+        int enemyKills = GameManager.instance.enemyKillCount;
+        // Convert elapsedTime to an integer value (seconds).
+        int elapsedTimeSeconds = Mathf.FloorToInt(GameManager.instance.GetElapsedTime());
+
+        // Build the request with multiple statistics.
+        var request = new UpdatePlayerStatisticsRequest
+        {
+            Statistics = new List<StatisticUpdate>
+            {
+                new StatisticUpdate { StatisticName = "DungeonScore", Value = totalScore },
+                new StatisticUpdate { StatisticName = "KillCount", Value = enemyKills },
+                new StatisticUpdate { StatisticName = "Time", Value = elapsedTimeSeconds }
+            }
+        };
+
+        // Send the request to PlayFab.
+        PlayFabClientAPI.UpdatePlayerStatistics(request, OnStatsUpdated, OnStatsError);
+    }
+
+    private void OnStatsUpdated(UpdatePlayerStatisticsResult result)
+    {
+        Debug.Log("Game statistics updated successfully.");
+    }
+
+    private void OnStatsError(PlayFabError error)
+    {
+        Debug.LogError("Error updating game statistics: " + error.GenerateErrorReport());
+    }
+
+    #endregion
 }

@@ -184,7 +184,7 @@ Transform:
   m_GameObject: {fileID: 1024759690989815093}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 97.79, y: -2.31, z: 41.2}
+  m_LocalPosition: {x: 105.93, y: -2.31, z: 41.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -601,7 +601,7 @@ Transform:
   m_GameObject: {fileID: 1632617064169699400}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 49.44, y: -1.2, z: -57}
+  m_LocalPosition: {x: 49.44, y: -0.44, z: -57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -649,7 +649,7 @@ GameObject:
   - component: {fileID: 5100218963079952372}
   - component: {fileID: 6979822405199920973}
   - component: {fileID: 5408163565820304990}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1624,7 +1624,7 @@ Transform:
   m_GameObject: {fileID: 3852257528403796887}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17, y: -2.93, z: -57}
+  m_LocalPosition: {x: 17, y: -2.19, z: -68.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2332,9 +2332,9 @@ GameObject:
   - component: {fileID: 3799169922353880627}
   - component: {fileID: 6759317170353088317}
   - component: {fileID: 1276902679701102074}
-  - component: {fileID: 129141818515281861}
-  - component: {fileID: 4776207498821055040}
-  - component: {fileID: 8879478578588987493}
+  - component: {fileID: 4902267764749753050}
+  - component: {fileID: 4765367226544047098}
+  - component: {fileID: 2029063054883729484}
   m_Layer: 0
   m_Name: Man
   m_TagString: Untagged
@@ -2449,6 +2449,15 @@ MonoBehaviour:
     isCompleted: 0
     hasNoRequirements: 0
     info: {fileID: 11400000, guid: 108cace0c2bfb77408d4d622f765793a, type: 2}
+  - questName: The Lost Dungeon Core
+    questGiver: Guts
+    questDescription: Kill Boss and Get the Dungeon Core
+    accepted: 0
+    declined: 0
+    initialDialogCompleted: 0
+    isCompleted: 0
+    hasNoRequirements: 0
+    info: {fileID: 11400000, guid: c8b85fa17b469024ebd71b86f1ab1d51, type: 2}
   currentActiveQuest:
     questName: 
     questGiver: 
@@ -2483,7 +2492,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0.95, z: 0}
---- !u!114 &129141818515281861
+--- !u!114 &4902267764749753050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2495,14 +2504,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58be38d5f99baf7479d0f295984d8d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 5741709170409573558, guid: 5561040d56e8315409fbe8989e2e873c, type: 3}
+  prefabToSpawn: {fileID: 9199043783070865929, guid: 5561040d56e8315409fbe8989e2e873c, type: 3}
   numberToSpawn: 1
-  spawnInterval: 1
+  spawnInterval: 0.5
   spawnPoints:
   - {fileID: 978794992758425235}
   - {fileID: 1970476686892560253}
-  - {fileID: 2186347101313788563}
---- !u!114 &4776207498821055040
+--- !u!114 &4765367226544047098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2514,13 +2522,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58be38d5f99baf7479d0f295984d8d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 4651695035307022390, guid: 0ee46f1491561134cb917e126d0baa87, type: 3}
+  prefabToSpawn: {fileID: 2497464820546142263, guid: 0ee46f1491561134cb917e126d0baa87, type: 3}
   numberToSpawn: 1
-  spawnInterval: 1
+  spawnInterval: 0.5
   spawnPoints:
   - {fileID: 6915987676971735587}
   - {fileID: 5806623697955028302}
---- !u!114 &8879478578588987493
+--- !u!114 &2029063054883729484
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2532,10 +2540,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58be38d5f99baf7479d0f295984d8d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 3219722498227198681, guid: 7f8814ffa85b5354a8a80326ab3d6ca4, type: 3}
+  prefabToSpawn: {fileID: 7180697543755695103, guid: 7f8814ffa85b5354a8a80326ab3d6ca4, type: 3}
   numberToSpawn: 1
-  spawnInterval: 1
+  spawnInterval: 0.5
   spawnPoints:
+  - {fileID: 2186347101313788563}
   - {fileID: 6114766491843378240}
   - {fileID: 3089345616932478303}
 --- !u!1 &5901406983796149354
@@ -3052,7 +3061,7 @@ Transform:
   m_GameObject: {fileID: 6725800201995067092}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 166.2, y: -2.31, z: 80.4}
+  m_LocalPosition: {x: 166.2, y: -2.09, z: 80.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

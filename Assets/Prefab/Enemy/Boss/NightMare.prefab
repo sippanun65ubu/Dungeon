@@ -1150,8 +1150,8 @@ MonoBehaviour:
   healthRegenDelay: 3
   damageToInflict: 10
   soundChannel: {fileID: -683131427954325367}
-  skeletonTakeDamage: {fileID: 0}
-  skeletonDie: {fileID: 0}
+  skeletonTakeDamage: {fileID: 8300000, guid: c564fc86cfa1faf45b1bc980034e7768, type: 3}
+  skeletonDie: {fileID: 8300000, guid: 50d25b28abc988544ab2331e689ecd9e, type: 3}
   enemyScoreValue: 10
 --- !u!114 &5365398259359954193
 MonoBehaviour:
@@ -1224,7 +1224,7 @@ AudioSource:
   m_GameObject: {fileID: 2534507159416327860}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7418761235935860217, guid: f02124b854a7c1f4c94157085ebc0da6, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
