@@ -22,6 +22,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public bool isConsumable;
     public float healthEffect;
     public float staminaEffect;
+    public float lifeEffect;
 
     //--- Equipping --//
     public bool isEquippable;
@@ -80,7 +81,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             {
                 // Setting this specific gameobject to be the item we want to destroy later
                 itemPendingConsumption = gameObject;
-                consumingFunction(healthEffect, staminaEffect);
+                consumingFunction(healthEffect, staminaEffect, lifeEffect);
             }
 
             if (isEquippable && isInsideQuickSlot == false && EquipSystem.Instance.CheckIfFull() == false)
@@ -105,13 +106,15 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
     }
 
-    private void consumingFunction(float healthEffect, float staminaEffect)
+    private void consumingFunction(float healthEffect, float staminaEffect, float lifeEffect)
     {
         itemInfoUI.SetActive(false);
 
         healthEffectCalculation(healthEffect);
 
         staminaEffectCalculation(staminaEffect);
+
+        lifeEffectCalculation(lifeEffect);
 
     }
 
@@ -152,6 +155,25 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             }
         }
     }
+    public static void lifeEffectCalculation(float lifeEffect)
+    {
+        // --- Life --- //
+
+        float lifeBeforeConsumption = PlayerState.Instance.currentLife;
+        float maxLife = PlayerState.Instance.maxLife;
+        if (lifeEffect != 0)
+        {
+            if ((lifeBeforeConsumption + lifeEffect) > maxLife)
+            {
+                PlayerState.Instance.setStamina(maxLife);
+            }
+            else
+            {
+                PlayerState.Instance.setStamina(lifeBeforeConsumption + lifeEffect);
+            }
+        }
+    }
+
 }
 
  

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerState : MonoBehaviour
 {
@@ -23,6 +24,14 @@ public class PlayerState : MonoBehaviour
     public bool isSprinting;
     public bool isPlayerDead;
 
+    [Header("Life")]
+    public float maxLife;
+    public float currentLife;
+    public float baseLifeDrainRate = 1f;
+    public float lifeDrainTimeThreshold = 300f;
+    public float increasedLifeDrainRate = 2f;
+
+
     public RespawnLocation spawnLocation;
     public GameObject playerBody;
 
@@ -32,6 +41,8 @@ public class PlayerState : MonoBehaviour
     public AudioSource playerAudio;
     public AudioClip playerHurt;
     public AudioClip playerDie;
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -49,6 +60,7 @@ public class PlayerState : MonoBehaviour
     {
         currentHealth = maxHealth;
         currentStamina = maxStamina;
+        currentLife = maxLife;
 
     }
 
@@ -56,6 +68,7 @@ public class PlayerState : MonoBehaviour
     {
         HandleStamina();
         HandleHealthRegeneration();
+        HandleLifeDrain();
     }
 
     private void HandleHealthRegeneration()
@@ -98,6 +111,23 @@ public class PlayerState : MonoBehaviour
         }
     }
 
+    private void HandleLifeDrain()
+    {
+        // Ensure GameManager exists.
+        float elapsedTime = GameManager.instance != null ? GameManager.instance.elapsedTime : 0f;
+        // Choose drain rate based on elapsed time.
+        float currentDrainRate = (elapsedTime >= lifeDrainTimeThreshold) ? increasedLifeDrainRate : baseLifeDrainRate;
+
+        currentLife -= currentDrainRate * Time.deltaTime;
+        currentLife = Mathf.Max(currentLife, 0); // Prevent negative life
+
+        //If life reaches zero, trigger endgame.
+        if (currentLife <= 0 && !isPlayerDead)
+        {
+            Debug.Log("Player's life has drained completely.");
+            SceneManager.LoadScene("EndGame");
+        }
+    }
     public void setHealth(float newHealth)
     {
         currentHealth = newHealth;
@@ -132,6 +162,7 @@ public class PlayerState : MonoBehaviour
     public void PlayerDead()
     {
         isPlayerDead = true;
+        currentLife = Mathf.Max(currentLife - 100, 0);
         playerAudio.PlayOneShot(playerDie);
         RespawnPlayer();
     }

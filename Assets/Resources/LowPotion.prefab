@@ -121,6 +121,7 @@ MonoBehaviour:
   isConsumable: 1
   healthEffect: 20
   staminaEffect: 0
+  lifeEffect: 20
   isEquippable: 1
   isInsideQuickSlot: 0
   isSelected: 0

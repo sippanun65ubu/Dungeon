@@ -8,7 +8,6 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 
 
 public class PLayFabManager : MonoBehaviour
@@ -48,7 +47,6 @@ public class PLayFabManager : MonoBehaviour
     [SerializeField] InputField forgetPasswordEmail;
     [SerializeField] Text messageText;
     #endregion
-
 
 
     #region Registration

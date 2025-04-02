@@ -16,6 +16,7 @@ public class TeleportArea : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("Player"))
         {
             // Get the TeleportPlayer component from the player
@@ -23,12 +24,7 @@ public class TeleportArea : MonoBehaviour
 
             if (player != null)
             {
-                // Set the teleport location and flag
-                player.SetTeleportLocation(tpPosition);
-                player.playerTeleport = true;
-
-                // Trigger the teleportation
-                player.Teleport();
+                StartCoroutine(DelayTeleport(tpPosition));
             }
         }
     }
@@ -43,5 +39,20 @@ public class TeleportArea : MonoBehaviour
                 player.playerTeleport = false;
             }
         }
+    }
+    IEnumerator DelayTeleport(Vector3 tpPosition)
+    {
+        MovementManager.instance.EnableLook(false);
+        MovementManager.instance.EnableMovement(false);
+        yield return null;
+        // Set the teleport location and flag
+        player.SetTeleportLocation(tpPosition);
+        player.playerTeleport = true;
+
+        // Trigger the teleportation
+        player.Teleport();
+        yield return null;
+        MovementManager.instance.EnableLook(true);
+        MovementManager.instance.EnableMovement(true);
     }
 }

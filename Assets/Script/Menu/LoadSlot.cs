@@ -11,8 +11,8 @@ public class LoadSlot : MonoBehaviour
     public TextMeshProUGUI loadButtonText;
     public int slotNumber;
 
-    private string slotUsedKey;   // e.g. "SaveSlot_1"
-    private string slotTextKey;   // e.g. "SaveSlotText_1"
+    private string slotUsedKey;  
+    private string slotTextKey;   
 
     private void Awake()
     {
@@ -66,10 +66,13 @@ public class LoadSlot : MonoBehaviour
             {
                 if (loadedData != null)
                 {
-                    
+                    MovementManager.instance.EnableLook(false);
+                    MovementManager.instance.EnableMovement(false);
                     StartCoroutine(PLayFabManager.Instance.SetPlayerDataCoroutine(loadedData));
                     loadButtonText.text = "Game Loaded";
                     Debug.Log($"Game loaded from slot {slotNumber}");
+                    MovementManager.instance.EnableLook(false);
+                    MovementManager.instance.EnableMovement(false);
                 }
                 else
                 {
