@@ -5,7 +5,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     private Rigidbody rb;
-    public int arrowDamage = 25;
+    public int projectileDamage = 25;
+    public int projectilePenetration = 0;
 
     private bool isStuck = false; // Flag to track if the arrow is stuck
     private void Start()
@@ -46,7 +47,7 @@ public class Projectile : MonoBehaviour
         if (collision.transform.GetComponent<Enemy>())
         {
             Enemy enemy = collision.transform.GetComponent<Enemy>();
-            enemy.TakeDamage(arrowDamage);
+            enemy.TakeDamage(projectileDamage, projectilePenetration);
         }
     }
 }

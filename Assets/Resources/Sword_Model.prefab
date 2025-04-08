@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2051462236503296086}
   - component: {fileID: 5106210921807246462}
   - component: {fileID: -4260579254656904004}
+  - component: {fileID: -5157045791151969545}
   m_Layer: 0
   m_Name: Sword_Model
   m_TagString: Weapon
@@ -157,3 +158,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   swingWait: 0
+--- !u!114 &-5157045791151969545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4363373241972884887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca72e6a506efc3f45bbb660e934ae0d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canHit: 0

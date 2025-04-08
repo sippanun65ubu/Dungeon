@@ -205,7 +205,7 @@ public class PLayFabManager : MonoBehaviour
         // Get player stats from PlayerState.
         float[] playerStats = new float[2];
         playerStats[0] = PlayerState.Instance.currentHealth;
-        playerStats[1] = PlayerState.Instance.currentStamina;
+        playerStats[1] = PlayerState.Instance.currentLife;
 
         // Get player position and rotation.
         float[] posAndRot = new float[6];
@@ -271,7 +271,7 @@ public class PLayFabManager : MonoBehaviour
 
         
         PlayerState.Instance.currentHealth = playerData.playerStats[0];
-        PlayerState.Instance.currentStamina = playerData.playerStats[1];
+        PlayerState.Instance.currentLife = playerData.playerStats[1];
 
         Vector3 loadPos = new Vector3(
             playerData.playerPositionAndRotation[0],

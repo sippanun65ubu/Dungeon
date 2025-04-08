@@ -252,12 +252,27 @@ public class EquipSystem : MonoBehaviour
         if (selectedItem != null)
         {
             return selectedItem.GetComponent<Weapon>().weaponDamage;
+            
+            
         }
         else
         {
             return 0;
         }
     }
+    internal int GetWeaponPenetration()
+    {
+        if (selectedItem != null)
+        {
+            return selectedItem.GetComponent<Weapon>().penetration;
+
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
 
     internal bool IsThereASwingLock()
     {
@@ -289,7 +304,7 @@ public class EquipSystem : MonoBehaviour
         {
             // Call the health and stamina effect calculation methods
             InventoryItem.healthEffectCalculation(item.healthEffect);
-            InventoryItem.staminaEffectCalculation(item.staminaEffect);
+            InventoryItem.lifeEffectCalculation(item.lifeEffect);
         }
     }
 

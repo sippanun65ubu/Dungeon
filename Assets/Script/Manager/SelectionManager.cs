@@ -132,10 +132,10 @@ public class SelectionManager : MonoBehaviour
                     centerDotIcon.gameObject.SetActive(true);  
                     handIcon.gameObject.SetActive(false);
 
-                    if (Input.GetMouseButtonDown(0) && EquipSystem.Instance.IsHoldingWeapon() && EquipSystem.Instance.IsThereASwingLock() == false)
-                    {
-                        StartCoroutine(DealDamageTo(enemy, 3f, EquipSystem.Instance.GetWeaponDamage()));
-                    }
+                    //if (Input.GetMouseButtonDown(0) && EquipSystem.Instance.IsHoldingWeapon() && EquipSystem.Instance.IsThereASwingLock() == false)
+                    //{
+                    //    StartCoroutine(DealDamageTo(enemy, 3f, EquipSystem.Instance.GetWeaponDamage(), EquipSystem.Instance.GetWeaponPenetration()));
+                    //}
                 }
 
             }
@@ -214,9 +214,10 @@ public class SelectionManager : MonoBehaviour
 
     }
 
-    IEnumerator DealDamageTo(Enemy enemy, float delay, int damage)
-    {
-        enemy.TakeDamage(damage);
-        yield return new WaitForSeconds(delay);
-    }
+    //IEnumerator DealDamageTo(Enemy enemy, float delay, int damage, int penetration)
+    //{
+    //    enemy.TakeDamage(damage, penetration);
+    //    Debug.Log("Damage: " + damage + ", Penetration: " + penetration);
+    //    yield return new WaitForSeconds(delay);
+    //}
 }

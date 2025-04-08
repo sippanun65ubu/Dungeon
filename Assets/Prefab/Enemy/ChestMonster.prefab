@@ -115,6 +115,7 @@ MonoBehaviour:
   healthRegenRate: 5
   healthRegenDelay: 3
   damageToInflict: 8
+  armor: 5
   soundChannel: {fileID: 7745331328896665321}
   skeletonTakeDamage: {fileID: 8300000, guid: 71f5af87f7f2dfb4e890afe369e36c24, type: 3}
   skeletonDie: {fileID: 8300000, guid: 8e65f2b68ee6726478a28888f61c8feb, type: 3}

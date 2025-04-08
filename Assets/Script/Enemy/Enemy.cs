@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour
     private float lastDamageTime; // Track when the enemy last took damage
 
     public int damageToInflict = 1; // damage in attack
+    public int armor = 0;
+    private int maxarmor = 5;
 
     enum EnemyType
     {
@@ -85,11 +87,15 @@ public class Enemy : MonoBehaviour
             healthSlider.gameObject.SetActive(false);
         }
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, int penetration)
     {
+
         if (isDead == false)
         {
-            currentHealth -= damage;
+            int effectiveArmor = Mathf.Clamp(armor - penetration, 0, maxarmor);
+            float reductionPercentage = (float)effectiveArmor / (maxarmor * 2f);
+            int effectiveDamage = Mathf.CeilToInt(damage * (1 - reductionPercentage));
+            currentHealth -= effectiveDamage;
             healthSlider.value = currentHealth / maxHealth;
 
             if (currentHealth <= 0)

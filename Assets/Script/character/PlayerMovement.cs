@@ -70,22 +70,16 @@ public class PlayerMovement : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         bool isMoving = x != 0 || z != 0;
 
-        bool isRunning = false;
         // Handle Sprinting 
-        if (Input.GetKey(KeyCode.LeftShift) && PlayerState.Instance.currentStamina > 0)
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             currentSpeed = sprintSpeed; // Sprint speed
-            isRunning = true;
         }
         else
         {
             currentSpeed = walkSpeed; // Normal walking speed
         }
 
-        if (PlayerState.Instance != null)
-        {
-            PlayerState.Instance.isSprinting = isRunning;
-        }
 
         // Move in the direction the camera is facing
         Vector3 move = transform.right * x + transform.forward * z;

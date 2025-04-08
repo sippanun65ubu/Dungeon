@@ -12,15 +12,7 @@ public class PlayerState : MonoBehaviour
     public float healthRegenRate; // Health regenerated per second
     public float healthRegenDelay; // Delay before health regeneration starts
 
-    [Header("Stamina Settings")]
-    public float maxStamina;
-    public float currentStamina;
-    public float staminaDrainRate = 1f; // Stamina drained per second while sprinting (slower drain)
-    public float staminaRegenRate = 2f; // Stamina regenerated per second
-    public float staminaRegenDelay = 1f; // Delay before stamina regeneration starts after stopping sprinting
-
     private float lastDamageTime;
-    private float lastSprintEndTime; // Track when the player stopped sprinting
     public bool isSprinting;
     public bool isPlayerDead;
 
@@ -59,14 +51,12 @@ public class PlayerState : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
-        currentStamina = maxStamina;
         currentLife = maxLife;
 
     }
 
     private void Update()
     {
-        HandleStamina();
         HandleHealthRegeneration();
         HandleLifeDrain();
     }
@@ -77,37 +67,6 @@ public class PlayerState : MonoBehaviour
         {
             currentHealth += healthRegenRate * Time.deltaTime;
             currentHealth = Mathf.Min(currentHealth, maxHealth);
-        }
-    }
-
-    private void HandleStamina()
-    {
-        // Handle stamina drain while sprinting
-        if (isSprinting && currentStamina > 0)
-        {
-            currentStamina -= staminaDrainRate * Time.deltaTime;
-            currentStamina = Mathf.Max(currentStamina, 0);
-        }
-
-        // Handle stamina regeneration
-        if (!isSprinting && currentStamina < maxStamina)
-        {
-            // Check if enough time has passed since the player stopped sprinting
-            if (Time.time - lastSprintEndTime > staminaRegenDelay)
-            {
-                currentStamina += staminaRegenRate * Time.deltaTime;
-                currentStamina = Mathf.Min(currentStamina, maxStamina);
-            }
-        }
-
-        // Update lastSprintEndTime when the player stops sprinting
-        if (!isSprinting && lastSprintEndTime == 0)
-        {
-            lastSprintEndTime = Time.time;
-        }
-        else if (isSprinting)
-        {
-            lastSprintEndTime = 0; // Reset the timer if the player starts sprinting again
         }
     }
 
@@ -133,9 +92,9 @@ public class PlayerState : MonoBehaviour
         currentHealth = newHealth;
     }
 
-    public void setStamina(float newStamina)
+    public void setLife(float newLife)
     {
-        currentStamina = newStamina;
+        currentLife = newLife;
     }
 
     public void TakeDamage(int damage)
