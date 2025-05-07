@@ -12,7 +12,8 @@ public class LoadSlot : MonoBehaviour
     public int slotNumber;
 
     private string slotUsedKey;  
-    private string slotTextKey;   
+    private string slotTextKey;
+
 
     private void Awake()
     {
@@ -66,13 +67,11 @@ public class LoadSlot : MonoBehaviour
             {
                 if (loadedData != null)
                 {
-                    MovementManager.instance.EnableLook(false);
-                    MovementManager.instance.EnableMovement(false);
+
                     StartCoroutine(PLayFabManager.Instance.SetPlayerDataCoroutine(loadedData));
                     loadButtonText.text = "Game Loaded";
                     Debug.Log($"Game loaded from slot {slotNumber}");
-                    MovementManager.instance.EnableLook(false);
-                    MovementManager.instance.EnableMovement(false);
+                    StartCoroutine(MenuManager.Instance.ClosesMenu());
                 }
                 else
                 {
@@ -87,6 +86,7 @@ public class LoadSlot : MonoBehaviour
         }
 
         DeselectButton();
+
     }
 
     // Check if the slot is empty by seeing if "SaveSlot_X" is set in PlayerPrefs

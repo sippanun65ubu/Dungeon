@@ -17,7 +17,7 @@ public class PlayerState : MonoBehaviour
     public bool isPlayerDead;
 
     [Header("Life")]
-    public float maxLife;
+    public float maxLife = 100f;
     public float currentLife;
     public float baseLifeDrainRate = 1f;
     public float lifeDrainTimeThreshold = 300f;
@@ -72,10 +72,17 @@ public class PlayerState : MonoBehaviour
 
     private void HandleLifeDrain()
     {
+        float totalGameTime = 1800f;
         // Ensure GameManager exists.
-        float elapsedTime = GameManager.instance != null ? GameManager.instance.elapsedTime : 0f;
-        // Choose drain rate based on elapsed time.
-        float currentDrainRate = (elapsedTime >= lifeDrainTimeThreshold) ? increasedLifeDrainRate : baseLifeDrainRate;
+        float remaining = GameManager.instance != null ? GameManager.instance.GetRemainingTime() : 0f;
+
+        // Calculate elapsed time.
+        float elapsed = totalGameTime - remaining;
+        // Every 5 minutes (300 seconds), the drain rate increases.
+        int factor = Mathf.FloorToInt(elapsed / 300f);
+        // Calculate current drain rate: add an extra "increasedLifeDrainRate" for every factor.
+        float currentDrainRate = baseLifeDrainRate + (increasedLifeDrainRate * factor);
+
 
         currentLife -= currentDrainRate * Time.deltaTime;
         currentLife = Mathf.Max(currentLife, 0); // Prevent negative life
@@ -156,4 +163,6 @@ public class PlayerState : MonoBehaviour
     {
         spawnLocation = respawnLocation;
     }
+
+
 }

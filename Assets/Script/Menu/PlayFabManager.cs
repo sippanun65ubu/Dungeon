@@ -46,7 +46,10 @@ public class PLayFabManager : MonoBehaviour
     [Header("Forget Password UI")]
     [SerializeField] InputField forgetPasswordEmail;
     [SerializeField] Text messageText;
+
+    public GameObject playerBody;
     #endregion
+
 
 
     #region Registration
@@ -125,22 +128,36 @@ public class PLayFabManager : MonoBehaviour
         public float[] playerPositionAndRotation; // [0-2]: position, [3-5]: forward direction (for LookRotation)
         public string[] inventoryContent;
         public string[] quickSlotContent;
-        public int enemyKillCount;
         public int totalScore;
-        public float elapsedTime;
+        public float remainingTime;
         public string currentScene;
 
 
-        public PlayerData(float[] _playerStats, float[] _playerPosAndRot, string[] _inventoryContent, string[] _quickSlotContent, int _enemyKillCount, int _totalScore, float _elapsedTime, string _currentScene)
+        public PlayerData(float[] _playerStats, float[] _playerPosAndRot, string[] _inventoryContent, string[] _quickSlotContent, int _totalScore, float _remainingTime, string _currentScene)
         {
             playerStats = _playerStats;
             playerPositionAndRotation = _playerPosAndRot;
             inventoryContent = _inventoryContent;
             quickSlotContent = _quickSlotContent;
-            enemyKillCount = _enemyKillCount;
             totalScore = _totalScore;
-            elapsedTime = _elapsedTime;
+            remainingTime = _remainingTime;
             currentScene = _currentScene;
+        }
+
+        public static PlayerData CreateDefaultData()
+        {
+
+            Vector3 spawnposition = PlayerState.Instance.spawnLocation.transform.position;
+
+            float[] defaultStats = new float[2] { 300f, 1000f };              
+            float[] defaultPosAndRot = new float[6] { spawnposition.x, spawnposition.y, spawnposition.z, 0f, 0f, 1f }; 
+            string[] defaultInventory = new string[0];                       
+            string[] defaultQuickSlots = new string[0];                        
+            int defaultTotalScore = 0;
+            float defaultRemainingTime = 1800f;                                
+            string defaultScene = "TownNo2";                             
+
+            return new PlayerData(defaultStats, defaultPosAndRot, defaultInventory, defaultQuickSlots, defaultTotalScore, defaultRemainingTime, defaultScene);
         }
     }
     #endregion
@@ -224,15 +241,14 @@ public class PLayFabManager : MonoBehaviour
         string[] quickSlots = GetQuickSlotContents();
 
         // Get enemy kill count and total score.
-        int enemyKills = GameManager.instance.enemyKillCount;
         int totalScore = GameManager.instance.totalScore;
 
         // Get elapsed time from GameManager.
-        float elapsedTime = GameManager.instance.GetElapsedTime();
+        float remainingTime = GameManager.instance.GetRemainingTime();
         // Get current scene name.
         string currentScene = SceneManager.GetActiveScene().name;
 
-        return new PlayerData(playerStats, posAndRot, inventory, quickSlots, enemyKills, totalScore, elapsedTime, currentScene);
+        return new PlayerData(playerStats, posAndRot, inventory, quickSlots,totalScore, remainingTime, currentScene);
     }
 
     /// Retrieves quick slot contents from EquipSystem.
@@ -265,11 +281,11 @@ public class PLayFabManager : MonoBehaviour
             {
                 yield return null;
             }
-            
+                    
             yield return null;
         }
+        playerBody.GetComponent<PlayerMovement>().enabled = false;
 
-        
         PlayerState.Instance.currentHealth = playerData.playerStats[0];
         PlayerState.Instance.currentLife = playerData.playerStats[1];
 
@@ -283,8 +299,8 @@ public class PLayFabManager : MonoBehaviour
             playerData.playerPositionAndRotation[4],
             playerData.playerPositionAndRotation[5]
         );
-        PlayerState.Instance.playerBody.transform.position = loadPos;
-        PlayerState.Instance.playerBody.transform.rotation = Quaternion.LookRotation(forward);
+        playerBody.transform.position = loadPos;
+        playerBody.transform.rotation = Quaternion.LookRotation(forward);
 
         // Restore inventory.
         foreach (string item in playerData.inventoryContent)
@@ -300,16 +316,16 @@ public class PLayFabManager : MonoBehaviour
             itemToAdd.transform.SetParent(availableSlot.transform, false);
         }
 
-        // Update enemy kill count and total score.
-        GameManager.instance.enemyKillCount = playerData.enemyKillCount;
+        // Update total score.
         GameManager.instance.totalScore = playerData.totalScore;
 
-        // Update elapsed time.
-        GameManager.instance.SetElapsedTime(playerData.elapsedTime);
+        // Update time.
+        GameManager.instance.SetRemainingTime(playerData.remainingTime);
 
+        playerBody.GetComponent<PlayerMovement>().enabled = true;
         Debug.Log("Player data applied.");
     }
-    #endregion LeaderBoard
+    #endregion LoadData
 
     #region LeaderBoard 
 
@@ -317,9 +333,8 @@ public class PLayFabManager : MonoBehaviour
     {
         // Retrieve values from your GameManager (assumes singleton instance).
         int totalScore = GameManager.instance.totalScore;
-        int enemyKills = GameManager.instance.enemyKillCount;
         // Convert elapsedTime to an integer value (seconds).
-        int elapsedTimeSeconds = Mathf.FloorToInt(GameManager.instance.GetElapsedTime());
+        int elapsedTimeSeconds = Mathf.FloorToInt(GameManager.instance.GetRemainingTime());
 
         // Build the request with multiple statistics.
         var request = new UpdatePlayerStatisticsRequest
@@ -327,7 +342,6 @@ public class PLayFabManager : MonoBehaviour
             Statistics = new List<StatisticUpdate>
             {
                 new StatisticUpdate { StatisticName = "DungeonScore", Value = totalScore },
-                new StatisticUpdate { StatisticName = "KillCount", Value = enemyKills },
                 new StatisticUpdate { StatisticName = "Time", Value = elapsedTimeSeconds }
             }
         };

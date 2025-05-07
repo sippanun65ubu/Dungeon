@@ -159,6 +159,7 @@ MonoBehaviour:
   signupCPassword: {fileID: 767903395}
   forgetPasswordEmail: {fileID: 982399426}
   messageText: {fileID: 1519434253}
+  playerBody: {fileID: 0}
 --- !u!4 &5381427
 Transform:
   m_ObjectHideFlags: 0
@@ -4726,7 +4727,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Game
+  m_Text: StartGame
 --- !u!222 &880151832
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6191,7 +6192,7 @@ GameObject:
   - component: {fileID: 1142955077}
   - component: {fileID: 1142955076}
   m_Layer: 5
-  m_Name: New Game
+  m_Name: StartGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

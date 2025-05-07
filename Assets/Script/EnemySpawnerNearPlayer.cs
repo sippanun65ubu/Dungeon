@@ -15,30 +15,47 @@ public class EnemySpawnerNearPlayer : MonoBehaviour
     public List<EnemySpawnData> enemySpawnTable;
     public Transform player;
 
-    public float minSpawnInterval = 5f;
-    public float maxSpawnInterval = 10f;
     public float spawnRadius = 10f;
     public int maxActiveEnemies = 5;
+    public bool allowSpawning = true;
+
+    public float movementThreshold = 5f; 
+    private float accumulatedMovement = 0f;
+    private Vector3 lastPlayerPosition;
 
     private List<GameObject> activeEnemies = new List<GameObject>();
 
     private void Start()
     {
-        StartCoroutine(SpawnEnemiesAtRandom());
+        if (player != null)
+            lastPlayerPosition = player.position;
+
+        StartCoroutine(CheckPlayerMovementAndSpawn());
     }
 
-    private IEnumerator SpawnEnemiesAtRandom()
+    private IEnumerator CheckPlayerMovementAndSpawn()
     {
         while (true)
         {
-            float waitTime = Random.Range(minSpawnInterval, maxSpawnInterval);
-            yield return new WaitForSeconds(waitTime);
+            yield return new WaitForSeconds(0.2f); // Check movement every 0.2 seconds
 
-            activeEnemies.RemoveAll(e => e == null);
+            if (!allowSpawning || player == null)
+                continue;
 
-            if (activeEnemies.Count < maxActiveEnemies)
+            float distanceMoved = Vector3.Distance(lastPlayerPosition, player.position);
+            accumulatedMovement += distanceMoved;
+            lastPlayerPosition = player.position;
+
+            if (accumulatedMovement >= movementThreshold)
             {
-                SpawnEnemyNearPlayer();
+                accumulatedMovement = 0f;
+
+                activeEnemies.RemoveAll(e => e == null);
+
+                if (activeEnemies.Count < maxActiveEnemies)
+                {
+                    SpawnEnemyNearPlayer();
+                }
             }
         }
     }
@@ -78,6 +95,6 @@ public class EnemySpawnerNearPlayer : MonoBehaviour
             }
         }
 
-        return null; // fallback
+        return null;
     }
 }

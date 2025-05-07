@@ -148,9 +148,4 @@ public class Enemy : MonoBehaviour
     {
         PlayerState.Instance.TakeDamage(damageToInflict);
     }
-
-    internal void AttackfromP(int damage)
-    {
-        PlayerState.Instance.TakeDamage(damage);
-    }
 }

@@ -50,7 +50,7 @@ public class FirstMenuManager : MonoBehaviour
     public void NewGame()
     {
 
-        SceneManager.LoadScene("Town");
+        SceneManager.LoadScene("TownNo2");
     }
     public void ExitGame()
     {

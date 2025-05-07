@@ -21,14 +21,12 @@ public class EndGameManager : MonoBehaviour
 
         if (GameManager.instance != null)
         {
-            // Kills
-            killCountText.text = "How Many EnemyKills: " + GameManager.instance.enemyKillCount;
 
             // Score
             totalScoreText.text = "Total Score: " + GameManager.instance.totalScore;
 
             // Time
-            float time = GameManager.instance.elapsedTime;
+            float time = GameManager.instance.GetRemainingTime();
             int hours = Mathf.FloorToInt(time / 3600);
             int minutes = Mathf.FloorToInt((time % 3600) / 60);
             int seconds = Mathf.FloorToInt(time % 60);

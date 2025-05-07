@@ -6,11 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public int enemyKillCount = 0; // Track enemy kills
     public int totalScore = 0; // Track total score
     [SerializeField] TextMeshProUGUI timerText;
-    public float elapsedTime;
     public bool isPaused = false;
+
+    // Countdown: 30 minutes = 1800 seconds.
+    public float remainingTime = 1800f;
 
     void Awake()
     {
@@ -20,7 +21,6 @@ public class GameManager : MonoBehaviour
 
     public void AddKill(int scoreValue)
     {
-        enemyKillCount++;
         totalScore += scoreValue;
     }
 
@@ -33,14 +33,21 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int hours = Mathf.FloorToInt(elapsedTime / 3600); // 1 hour = 3600 seconds
-        int minutes = Mathf.FloorToInt((elapsedTime % 3600) / 60); // 1 minute = 60 seconds
-        int seconds = Mathf.FloorToInt(elapsedTime % 60); // Remainder is seconds
+        if (remainingTime > 0)
+        {
+            remainingTime -= Time.deltaTime;
+            remainingTime = Mathf.Max(remainingTime, 0f);  // Avoid negative time
 
-
-        elapsedTime += Time.deltaTime;
-        timerText.text = elapsedTime.ToString();
-        timerText.text = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
+            int minutes = Mathf.FloorToInt(remainingTime / 60);
+            int seconds = Mathf.FloorToInt(remainingTime % 60);
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+        else
+        {
+            // Timer has reached zero—optional: trigger game over.
+            timerText.text = "00:00";
+            // Example: GameOver();
+        }
     }
     public void Pause()
     {
@@ -52,14 +59,14 @@ public class GameManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
     }
-    public float GetElapsedTime()
+    public float GetRemainingTime()
     {
-        return elapsedTime;
+        return remainingTime;
     }
 
-    public void SetElapsedTime(float time)
+    public void SetRemainingTime(float time)
     {
-        elapsedTime = time;
+        remainingTime = time;
     }
 
 }
