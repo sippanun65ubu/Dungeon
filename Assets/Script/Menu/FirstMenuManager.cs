@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using PlayFab;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,28 +9,28 @@ public class FirstMenuManager : MonoBehaviour
 {
     //      UI & Login Section   //
     [Header("Login UI")]
-    [SerializeField] InputField loginEmail;
-    [SerializeField] InputField loginPassword;
-    [SerializeField] GameObject loginPage;
+    public InputField loginEmail;
+    public InputField loginPassword;
+    public GameObject loginPage;
 
     [Header("Signup UI")]
-    [SerializeField] InputField signupUsername;
-    [SerializeField] InputField signupEmail;
-    [SerializeField] InputField signupPassword;
-    [SerializeField] InputField signupCPassword;
-    [SerializeField] GameObject signupPage;
+    public InputField signupUsername;
+    public InputField signupEmail;
+    public InputField signupPassword;
+    public InputField signupCPassword;
+    public GameObject signupPage;
 
     [Header("Forget Password UI")]
-    [SerializeField] InputField forgetPasswordEmail;
-    [SerializeField] GameObject forgetPasswordPage;
+    public InputField forgetPasswordEmail;
+    public GameObject forgetPasswordPage;
 
     [Header("Main Menu UI")]
-    [SerializeField] GameObject menuPage;
+    public GameObject menuPage;
 
     [Header("Leaderboard UI")]
-    [SerializeField] GameObject leaderboardPage;
-    [SerializeField] public GameObject KeyInfoMenu;
-    [SerializeField] Text messageText;
+    public GameObject leaderboardPage;
+    public GameObject KeyInfoMenu;
+    public Text messageText;
 
     public static FirstMenuManager Instance { get; set; }
     private void Awake()
@@ -52,11 +53,6 @@ public class FirstMenuManager : MonoBehaviour
 
         SceneManager.LoadScene("TownNo2");
     }
-    public void ExitGame()
-    {
-        Debug.Log("Quitting Game");
-        Application.Quit();
-    }
     public void ClearScreen()
     {
         loginPage.SetActive(false);
@@ -72,6 +68,7 @@ public class FirstMenuManager : MonoBehaviour
     public void LoginScreen()
     {
         ClearScreen();
+        PlayFabClientAPI.ForgetAllCredentials();
         loginPage.SetActive(true);
     }
     public void RegisterScreen()
@@ -117,5 +114,33 @@ public class FirstMenuManager : MonoBehaviour
         signupPassword.text = "";
         signupCPassword.text = "";
         messageText.text = "";
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+    public void LoadGame()
+    {
+        if (PLayFabManager.Instance == null)
+        {
+            Debug.LogError("PlayFab manager not found!");
+            return;
+        }
+
+        PLayFabManager.Instance.LoadFullGameData(full =>
+        {
+            if (full == null)
+            {
+                Debug.LogWarning("No saved game data found.");
+                // Optional: show “No save” popup
+                return;
+            }
+
+            // Start the coroutine that rehydrates player, enemies, quests, NPCs…
+            PLayFabManager.Instance.StartCoroutine(
+                PLayFabManager.Instance.ApplyFullLoad(full)
+            );
+        });
     }
 }

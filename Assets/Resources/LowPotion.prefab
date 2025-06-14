@@ -117,10 +117,10 @@ MonoBehaviour:
   isTrashable: 1
   thisName: LowPotion
   thisDescription: a drink that is believed to be able to cure an illness
-  thisFunctionality: heal 20
+  thisFunctionality: heal 50
   isConsumable: 1
-  healthEffect: 20
-  lifeEffect: 20
+  healthEffect: 50
+  maxHealthEffect: 0
   isEquippable: 1
   isInsideQuickSlot: 0
   isSelected: 0

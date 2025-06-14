@@ -1570,10 +1570,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f668eef65f9bbb44081730a73744f25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 8
-  stopChasingDistance: 30
-  meleeAttackRange: 5
-  rangedAttackRange: 15
+  chaseSpeed: 20
+  stopChasingDistance: 50
+  meleeAttackRange: 10
+  rangedAttackRange: 25
 --- !u!1102 &4871323620050487343
 AnimatorState:
   serializedVersion: 6

@@ -1,13 +1,14 @@
+using System;
 using System.Collections;
-using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using PlayFab;
 using PlayFab.ClientModels;
 using TMPro;
-using System.Threading.Tasks;
-using UnityEngine.UI;
-using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
+using UnityEngine.UI;
 
 
 public class PLayFabManager : MonoBehaviour
@@ -15,6 +16,8 @@ public class PLayFabManager : MonoBehaviour
     #region Awake
     public static PLayFabManager Instance { get; private set; }
     private const string PlayerDataKey = "PlayerData";
+    private const string EnemyDataKey = "EnemyData";
+    private const string EnvironmentDataKey = "EnvironmentData";
 
     private void Awake()
     {
@@ -31,26 +34,6 @@ public class PLayFabManager : MonoBehaviour
     }
     #endregion
 
-    #region  Field
-    //      UI & Login Section   //
-    [Header("Login UI")]
-    [SerializeField] InputField loginEmail;
-    [SerializeField] InputField loginPassword;
-
-    [Header("Signup UI")]
-    [SerializeField] InputField signupUsername;
-    [SerializeField] InputField signupEmail;
-    [SerializeField] InputField signupPassword;
-    [SerializeField] InputField signupCPassword;
-
-    [Header("Forget Password UI")]
-    [SerializeField] InputField forgetPasswordEmail;
-    [SerializeField] Text messageText;
-
-    public GameObject playerBody;
-    #endregion
-
-
 
     #region Registration
     public void RegisterUser()
@@ -58,9 +41,9 @@ public class PLayFabManager : MonoBehaviour
         // Optionally check that signupPassword and signupCPassword match and have minimum length.
         var request = new RegisterPlayFabUserRequest
         {
-            DisplayName = signupUsername.text,
-            Email = signupEmail.text,
-            Password = signupPassword.text,
+            DisplayName = FirstMenuManager.Instance.signupUsername.text,
+            Email = FirstMenuManager.Instance.signupEmail.text,
+            Password = FirstMenuManager.Instance.signupPassword.text,
             RequireBothUsernameAndEmail = false
         };
         PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError);
@@ -68,7 +51,7 @@ public class PLayFabManager : MonoBehaviour
 
     private void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
-        messageText.text = "New Account Created";
+        FirstMenuManager.Instance.messageText.text = "New Account Created";
         FirstMenuManager.Instance.LoginScreen();
     }
     #endregion
@@ -78,15 +61,15 @@ public class PLayFabManager : MonoBehaviour
     {
         var request = new LoginWithEmailAddressRequest
         {
-            Email = loginEmail.text,
-            Password = loginPassword.text,
+            Email = FirstMenuManager.Instance.loginEmail.text,
+            Password = FirstMenuManager.Instance.loginPassword.text,
         };
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnError);
     }
 
     private void OnLoginSuccess(LoginResult result)
     {
-        messageText.text = "Logged In";
+        FirstMenuManager.Instance.messageText.text = "Logged In";
         FirstMenuManager.Instance.MainMenuScreen();
     }
     #endregion
@@ -96,7 +79,7 @@ public class PLayFabManager : MonoBehaviour
     {
         var request = new SendAccountRecoveryEmailRequest
         {
-            Email = forgetPasswordEmail.text,
+            Email = FirstMenuManager.Instance.forgetPasswordEmail.text,
             TitleId = "YOUR_TITLE_ID" // Replace with your actual TitleId.
         };
         PlayFabClientAPI.SendAccountRecoveryEmail(request, OnRecoverySuccess, OnErrorRecovery);
@@ -104,27 +87,33 @@ public class PLayFabManager : MonoBehaviour
 
     private void OnErrorRecovery(PlayFabError error)
     {
-        messageText.text = "No Email Found";
+        FirstMenuManager.Instance.messageText.text = "No Email Found";
     }
 
     private void OnRecoverySuccess(SendAccountRecoveryEmailResult result)
     {
-        messageText.text = "Recovery Email Sent";
+        FirstMenuManager.Instance.messageText.text = "Recovery Email Sent";
         FirstMenuManager.Instance.LoginScreen();
     }
 
     private void OnError(PlayFabError error)
     {
-        messageText.text = error.ErrorMessage;
+        FirstMenuManager.Instance.messageText.text = error.ErrorMessage;
         Debug.LogError(error.GenerateErrorReport());
     }
     #endregion
 
-    #region  plater data
-    [System.Serializable]
+    #region  player data
+    [Serializable]
+    public class FullSaveData
+    {
+        public PlayerData player;
+        public EnemyData[] enemies;
+    }
+    [Serializable]
     public class PlayerData
     {
-        public float[] playerStats;              // [0]: health, [1]: stamina
+        public float[] playerStats;              // [0]: health
         public float[] playerPositionAndRotation; // [0-2]: position, [3-5]: forward direction (for LookRotation)
         public string[] inventoryContent;
         public string[] quickSlotContent;
@@ -149,7 +138,7 @@ public class PLayFabManager : MonoBehaviour
 
             Vector3 spawnposition = PlayerState.Instance.spawnLocation.transform.position;
 
-            float[] defaultStats = new float[2] { 300f, 1000f };              
+            float[] defaultStats = new float[1] { 300f };              
             float[] defaultPosAndRot = new float[6] { spawnposition.x, spawnposition.y, spawnposition.z, 0f, 0f, 1f }; 
             string[] defaultInventory = new string[0];                       
             string[] defaultQuickSlots = new string[0];                        
@@ -160,20 +149,53 @@ public class PLayFabManager : MonoBehaviour
             return new PlayerData(defaultStats, defaultPosAndRot, defaultInventory, defaultQuickSlots, defaultTotalScore, defaultRemainingTime, defaultScene);
         }
     }
+    [Serializable]
+    public class EnemyData
+    {
+        public string enemyId;     
+        public string prefabName;     
+        public float[] position;      
+        public float currentHealth;
+        public bool isDead;
+
+        public EnemyData(string _enemyId, string _prefabName, float[] _position, float _currentHealth, bool _isDead)
+        {
+            this.enemyId = _enemyId;
+            this.prefabName = _prefabName;
+            this.position = _position;
+            this.currentHealth = _currentHealth;
+            this.isDead = _isDead;
+        }
+    }
+
+    // a wrapper for UnityJson to handle arrays:
+    [Serializable]
+    private class SerializationWrapper<T>
+    {
+        public T[] items;
+        public SerializationWrapper(T[] items) { this.items = items; }
+    }
     #endregion
 
     #region SaveDataPlayFab
-    public void SavePlayerData()
+    public void SaveGameData()
     {
-        PlayerData data = CreatePlayerData();
-        string jsonData = JsonUtility.ToJson(data);
-        Debug.Log("Saving Player Data: " + jsonData);
+        PlayerData pd = CreatePlayerData();
+        EnemyData[] ed = GatherAllEnemies();
+
+        var full = new FullSaveData
+        {
+            player = pd,
+            enemies = ed,
+        };
+        string json = JsonUtility.ToJson(full);
 
         var request = new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string>()
             {
-                { PlayerDataKey, jsonData }
+                { "FullGameData", json },
+
             }
         };
 
@@ -192,46 +214,35 @@ public class PLayFabManager : MonoBehaviour
     #endregion
 
     #region LoadData
-    public void LoadPlayerData(Action<PlayerData> OnDataLoaded)
+    public void LoadFullGameData(Action<FullSaveData> callback)
     {
-        var request = new GetUserDataRequest
+        var req = new GetUserDataRequest { Keys = new List<string> { "FullGameData" } };
+        PlayFabClientAPI.GetUserData(req, result =>
         {
-            Keys = new List<string>() { PlayerDataKey }
-        };
-
-        PlayFabClientAPI.GetUserData(request, result =>
-        {
-            if (result.Data != null && result.Data.ContainsKey(PlayerDataKey))
+            if (result.Data.TryGetValue("FullGameData", out var kv))
             {
-                string jsonData = result.Data[PlayerDataKey].Value;
-                Debug.Log("Loaded Player Data: " + jsonData);
-                PlayerData loadedData = JsonUtility.FromJson<PlayerData>(jsonData);
-                OnDataLoaded?.Invoke(loadedData);
+                var full = JsonUtility.FromJson<FullSaveData>(kv.Value);
+                callback?.Invoke(full);
             }
-            else
-            {
-                Debug.Log("No player data found.");
-                OnDataLoaded?.Invoke(null);
-            }
+            else callback?.Invoke(null);
         }, OnDataError);
     }
 
     /// Creates a PlayerData object from the current game state.
-    private PlayerData CreatePlayerData()
+    public PlayerData CreatePlayerData()
     {
         // Get player stats from PlayerState.
-        float[] playerStats = new float[2];
+        float[] playerStats = new float[1];
         playerStats[0] = PlayerState.Instance.currentHealth;
-        playerStats[1] = PlayerState.Instance.currentLife;
 
         // Get player position and rotation.
         float[] posAndRot = new float[6];
-        Vector3 pos = PlayerState.Instance.playerBody.transform.position;
+        Vector3 pos = AccessPo.Instance.PlayerPosition;
         posAndRot[0] = pos.x;
         posAndRot[1] = pos.y;
         posAndRot[2] = pos.z;
         // Store forward direction for rotation.
-        Vector3 forward = PlayerState.Instance.playerBody.transform.forward;
+        Vector3 forward = AccessPo.Instance.transform.forward;
         posAndRot[3] = forward.x;
         posAndRot[4] = forward.y;
         posAndRot[5] = forward.z;
@@ -251,8 +262,34 @@ public class PLayFabManager : MonoBehaviour
         return new PlayerData(playerStats, posAndRot, inventory, quickSlots,totalScore, remainingTime, currentScene);
     }
 
+    public EnemyData[] GatherAllEnemies()
+    {
+        Enemy[] allEnemies = FindObjectsOfType<Enemy>();
+        EnemyData[] result = new EnemyData[allEnemies.Length];
+
+        for (int i = 0; i < allEnemies.Length; i++)
+        {
+            var e = allEnemies[i];
+            string prefabName = e.gameObject.name.Replace("(Clone)", "").Trim();
+            string resourcePath = "Enemies/" + prefabName;
+            result[i] = new EnemyData(
+                e.enemyId,
+                resourcePath,
+                new float[]{
+                e.transform.position.x,
+                e.transform.position.y,
+                e.transform.position.z
+                },
+                e.currentHealth,
+                e.isDead
+            );
+        }
+
+        return result;
+    }
+
     /// Retrieves quick slot contents from EquipSystem.
-    private string[] GetQuickSlotContents()
+    public string[] GetQuickSlotContents()
     {
         List<string> temp = new List<string>();
 
@@ -268,70 +305,176 @@ public class PLayFabManager : MonoBehaviour
         return temp.ToArray();
     }
 
+
+
     /// Applies loaded player data to the game.
-    public IEnumerator SetPlayerDataCoroutine(PlayerData playerData)
-    {
-        // Check if the saved scene is different from the current scene.
-        if (SceneManager.GetActiveScene().name != playerData.currentScene)
-        {
-            Debug.Log("Loading saved scene: " + playerData.currentScene);
-            // Load the scene asynchronously.
-            AsyncOperation op = SceneManager.LoadSceneAsync(playerData.currentScene);
-            while (!op.isDone)
-            {
-                yield return null;
-            }
+    //public IEnumerator SetGameDataCoroutine(PlayerData playerData, EnemyData[] enemies)
+    //{
+    //    var pm = PlayerState.Instance.playerBody
+    //        .GetComponent<PlayerMovement>();
+    //    if (pm != null)
+    //        pm.enabled = false;
+    //    var cc = PlayerState.Instance.playerBody
+    //        .GetComponent<CharacterController>();
+    //    if (cc != null)
+    //        cc.enabled = false;
+    //    // Check if the saved scene is different from the current scene.
+    //    if (SceneManager.GetActiveScene().name != playerData.currentScene)
+    //    {
+    //        // Load the scene asynchronously.
+    //        AsyncOperation op = SceneManager.LoadSceneAsync(playerData.currentScene);
+    //        while (!op.isDone)
+    //        {
+    //            yield return null;
+    //        }
                     
+    //        yield return null;
+    //    }
+        
+    //    PlayerState.Instance.currentHealth = playerData.playerStats[0];
+
+    //    Vector3 loadPos = new Vector3(
+    //        playerData.playerPositionAndRotation[0],
+    //        playerData.playerPositionAndRotation[1],
+    //        playerData.playerPositionAndRotation[2]
+    //    );
+    //    Vector3 forward = new Vector3(
+    //        playerData.playerPositionAndRotation[3],
+    //        playerData.playerPositionAndRotation[4],
+    //        playerData.playerPositionAndRotation[5]
+    //    );
+    //    AccessPo.Instance.PlayerPosition = loadPos;
+    //    AccessPo.Instance.PlayerRotation = Quaternion.LookRotation(forward);
+
+    //    // Restore inventory.
+    //    foreach (string item in playerData.inventoryContent)
+    //    {
+    //        InventorySystem.Instance.AddToInventory(item);
+    //    }
+
+    //    // Restore quick slot content.
+    //    foreach (string item in playerData.quickSlotContent)
+    //    {
+    //        GameObject availableSlot = EquipSystem.Instance.FindNextEmptySlot();
+    //        GameObject itemToAdd = Instantiate(Resources.Load<GameObject>(item));
+    //        itemToAdd.transform.SetParent(availableSlot.transform, false);
+    //    }
+
+    //    // Update total score.
+    //    GameManager.instance.totalScore = playerData.totalScore;
+
+    //    // Update time.
+    //    GameManager.instance.SetRemainingTime(playerData.remainingTime);
+
+    //    foreach (var ed in enemies)
+    //    {
+    //        // load the prefab by name (adjust path as needed):
+    //        var prefab = Resources.Load<GameObject>(ed.prefabName);
+    //        if (prefab == null)
+    //        {
+    //            continue;
+    //        }
+
+    //        // instantiate at saved position:
+    //        Vector3 pos = new Vector3(ed.position[0], ed.position[1], ed.position[2]);
+    //        var go = Instantiate(prefab, pos, Quaternion.identity);
+
+    //        // apply saved health + dead?state:
+    //        var e = go.GetComponent<Enemy>();
+    //        if (e == null)
+    //        {
+    //            continue;
+    //        }
+
+    //        e.enemyId = ed.enemyId;
+    //        e.currentHealth = ed.currentHealth;
+    //        if (ed.isDead)
+    //        {
+    //            e.ForceDieImmediate();
+    //        }
+    //    }
+
+    //    Debug.Log("Player data applied.");
+    //    if (pm != null) pm.enabled = true;
+    //    if (cc != null) cc.enabled = true;
+    //}
+
+    public IEnumerator ApplyFullLoad(FullSaveData full)
+    {
+        if (SceneManager.GetActiveScene().name != full.player.currentScene)
+        {
+            var op = SceneManager.LoadSceneAsync(full.player.currentScene);
+            while (!op.isDone) yield return null;
             yield return null;
         }
-        playerBody.GetComponent<PlayerMovement>().enabled = false;
+        yield return new WaitForSeconds(2.5f);
 
-        PlayerState.Instance.currentHealth = playerData.playerStats[0];
-        PlayerState.Instance.currentLife = playerData.playerStats[1];
+        var pm = PlayerState.Instance.playerBody.GetComponent<PlayerMovement>();
+        var cc = PlayerState.Instance.playerBody.GetComponent<CharacterController>();
+        if (pm != null) pm.enabled = false;
+        if (cc != null) cc.enabled = false;
 
-        Vector3 loadPos = new Vector3(
-            playerData.playerPositionAndRotation[0],
-            playerData.playerPositionAndRotation[1],
-            playerData.playerPositionAndRotation[2]
-        );
-        Vector3 forward = new Vector3(
-            playerData.playerPositionAndRotation[3],
-            playerData.playerPositionAndRotation[4],
-            playerData.playerPositionAndRotation[5]
-        );
-        playerBody.transform.position = loadPos;
-        playerBody.transform.rotation = Quaternion.LookRotation(forward);
+        // player
+        // — health
+        PlayerState.Instance.currentHealth = full.player.playerStats[0];
 
-        // Restore inventory.
-        foreach (string item in playerData.inventoryContent)
-        {
+        // — position & rotation
+        var pd = full.player.playerPositionAndRotation;
+        Vector3 playerPos = new Vector3(pd[0], pd[1], pd[2]);
+        Vector3 lookFwd = new Vector3(pd[3], pd[4], pd[5]);
+        AccessPo.Instance.PlayerPosition = playerPos;
+        AccessPo.Instance.PlayerRotation = Quaternion.LookRotation(lookFwd);
+
+        // — inventory
+        foreach (var item in full.player.inventoryContent)
             InventorySystem.Instance.AddToInventory(item);
-        }
 
-        // Restore quick slot content.
-        foreach (string item in playerData.quickSlotContent)
+        // — quick-slots
+        foreach (var qs in full.player.quickSlotContent)
         {
-            GameObject availableSlot = EquipSystem.Instance.FindNextEmptySlot();
-            GameObject itemToAdd = Instantiate(Resources.Load<GameObject>(item));
-            itemToAdd.transform.SetParent(availableSlot.transform, false);
+            var slot = EquipSystem.Instance.FindNextEmptySlot();
+            var go = Instantiate(Resources.Load<GameObject>(qs));
+            go.transform.SetParent(slot.transform, false);
+        }
+        // — score & timer
+        GameManager.instance.totalScore = full.player.totalScore;
+        GameManager.instance.SetRemainingTime(full.player.remainingTime);
+
+        // enemies
+        Debug.Log($"Rehydrating {full.enemies.Length} enemies");
+        foreach (var ed in full.enemies)
+        {
+            var prefab = Resources.Load<GameObject>(ed.prefabName);
+            if (prefab == null)
+            {
+                Debug.LogError($"Couldn't load prefab '{ed.prefabName}'");
+                continue;
+            }
+            var spawnPos = new Vector3(ed.position[0], ed.position[1], ed.position[2]);
+            var go = Instantiate(prefab, spawnPos, Quaternion.identity);
+            var e = go.GetComponent<Enemy>();
+            if (e == null) continue;
+
+            // restore ID & health/death state
+            e.enemyId = ed.enemyId;
+            e.currentHealth = ed.currentHealth;
+            if (ed.isDead) e.ForceDieImmediate();
         }
 
-        // Update total score.
-        GameManager.instance.totalScore = playerData.totalScore;
+        // Re-enable player movement/look
+        if (pm != null) pm.enabled = true;
+        if (cc != null) cc.enabled = true;
 
-        // Update time.
-        GameManager.instance.SetRemainingTime(playerData.remainingTime);
-
-        playerBody.GetComponent<PlayerMovement>().enabled = true;
-        Debug.Log("Player data applied.");
+        Debug.Log("Full game data applied.");
+        yield break;
     }
+
     #endregion LoadData
 
     #region LeaderBoard 
 
     public void SendGameStatsToPlayFab()
     {
-        // Retrieve values from your GameManager (assumes singleton instance).
         int totalScore = GameManager.instance.totalScore;
         // Convert elapsedTime to an integer value (seconds).
         int elapsedTimeSeconds = Mathf.FloorToInt(GameManager.instance.GetRemainingTime());
@@ -341,8 +484,7 @@ public class PLayFabManager : MonoBehaviour
         {
             Statistics = new List<StatisticUpdate>
             {
-                new StatisticUpdate { StatisticName = "DungeonScore", Value = totalScore },
-                new StatisticUpdate { StatisticName = "Time", Value = elapsedTimeSeconds }
+                new StatisticUpdate { StatisticName = "DungeonScore", Value = totalScore }
             }
         };
 

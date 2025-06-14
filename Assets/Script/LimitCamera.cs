@@ -5,13 +5,24 @@ using UnityEngine;
 public class LimitCamera : MonoBehaviour
 {
 
-    public GameObject Player;
+    private Quaternion fixedRotation;
+    public Transform player;
+    public float height = 40f;
+
+    private void Start()
+    {
+         fixedRotation = transform.rotation;
+    }
 
     private void LateUpdate()
     {
-        if (Player != null) // Prevent null errors
+        if (player != null)
         {
-            transform.position = new Vector3(Player.transform.position.x, 40, Player.transform.position.z);
+            Vector3 pos = player.position;
+            pos.y = height;
+            transform.position = pos;
         }
+
+        transform.rotation = fixedRotation;
     }
 }

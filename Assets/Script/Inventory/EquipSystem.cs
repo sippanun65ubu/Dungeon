@@ -304,7 +304,6 @@ public class EquipSystem : MonoBehaviour
         {
             // Call the health and stamina effect calculation methods
             InventoryItem.healthEffectCalculation(item.healthEffect);
-            InventoryItem.lifeEffectCalculation(item.lifeEffect);
         }
     }
 
@@ -329,5 +328,39 @@ public class EquipSystem : MonoBehaviour
             // Update the UI
             InventorySystem.Instance.ReCalculateList();
         }
+    }
+    public void ResetToDefaults()
+    {
+        // 1) Deselect current slot
+        selectNumber = -1;
+        if (selectedItem != null)
+        {
+            selectedItem = null;
+        }
+
+        // 2) Destroy the in-hand model if any
+        if (selectedItemModel != null)
+        {
+            DestroyImmediate(selectedItemModel);
+            selectedItemModel = null;
+        }
+
+        // 3) Empty out all quick-slots
+        foreach (var slot in quickSlotsList)
+        {
+            if (slot.transform.childCount > 0)
+            {
+                var child = slot.transform.GetChild(0).gameObject;
+                DestroyImmediate(child);
+            }
+        }
+        foreach (Transform num in numberHolder.transform)
+        {
+            var txt = num.Find("Text")?.GetComponent<Text>();
+            if (txt != null)
+                txt.color = Color.gray;
+        }
+
+        InventorySystem.Instance.ReCalculateList();
     }
 }

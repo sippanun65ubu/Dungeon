@@ -117,11 +117,11 @@ MonoBehaviour:
   isTrashable: 1
   thisName: CrystalLBlue
   thisDescription: A cool, calming crystal that shimmers like ice.
-  thisFunctionality: 'Sell Price: 75 coins'
+  thisFunctionality: 'Sell Price: 150 coins'
   isConsumable: 0
   healthEffect: 0
-  staminaEffect: 0
+  lifeEffect: 0
   isEquippable: 0
   isInsideQuickSlot: 0
   isSelected: 0
-  sellingPrice: 75
+  sellingPrice: 150

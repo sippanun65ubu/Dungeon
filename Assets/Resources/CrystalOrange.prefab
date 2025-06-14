@@ -118,11 +118,11 @@ MonoBehaviour:
   thisName: CrystalOrange
   thisDescription: A fiery crystal that glows with intense heat. Dropped by fire-based
     monsters.
-  thisFunctionality: 'Sell Price: 250 coins'
+  thisFunctionality: 'Sell Price: 1000 coins'
   isConsumable: 0
   healthEffect: 0
-  staminaEffect: 0
+  lifeEffect: 0
   isEquippable: 0
   isInsideQuickSlot: 0
   isSelected: 0
-  sellingPrice: 250
+  sellingPrice: 1000

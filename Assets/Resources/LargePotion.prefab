@@ -117,10 +117,10 @@ MonoBehaviour:
   isTrashable: 1
   thisName: LargePotion
   thisDescription: a drink that is believed to be able to cure an illness
-  thisFunctionality: heal 80
+  thisFunctionality: heal 200
   isConsumable: 1
-  healthEffect: 80
-  staminaEffect: 0
+  healthEffect: 200
+  maxHealthEffect: 0
   isEquippable: 1
   isInsideQuickSlot: 0
   isSelected: 0

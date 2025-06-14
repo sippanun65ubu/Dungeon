@@ -29,7 +29,7 @@ public class NewGame : MonoBehaviour
         // Start the coroutine to apply the default data.
         if (PLayFabManager.Instance != null)
         {
-            StartCoroutine(PLayFabManager.Instance.SetPlayerDataCoroutine(defaultData));
+            //StartCoroutine(PLayFabManager.Instance.SetGameDataCoroutine(defaultData));
             StartCoroutine(MenuManager.Instance.ClosesMenu());
 
 

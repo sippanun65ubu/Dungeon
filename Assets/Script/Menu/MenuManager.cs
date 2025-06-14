@@ -1,5 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using PlayFab;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,10 +10,7 @@ public class MenuManager : MonoBehaviour
 
     public GameObject menuCanvas;
     public GameObject uiCanvas;
-    public GameObject saveMenu;
     public GameObject settingMenu;
-    public GameObject newOrLoadMenu;
-    public static bool showNewOrLoadOnStart = true;
     public bool isMenuOpen;
 
     private void Awake()
@@ -26,31 +24,10 @@ public class MenuManager : MonoBehaviour
             Instance = this;
         }
     }
-    public void Start()
-    {
-        menuCanvas.SetActive(true);
-        uiCanvas.SetActive(false);
-        newOrLoadMenu.SetActive(true);
-
-        settingMenu.SetActive(false);
-        saveMenu.SetActive(false);
-
-        showNewOrLoadOnStart = false;
-        isMenuOpen = true;
-        GameManager.instance.Pause();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        SelectionManager.Instance.DisableSelection();
-        SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
-        MovementManager.instance.EnableLook(false);
-        MovementManager.instance.EnableMovement(false);
-    }
     private void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape) && !isMenuOpen)
         {
-            saveMenu.SetActive(false);
             settingMenu.SetActive(false);
 
             uiCanvas.SetActive(false);
@@ -68,8 +45,6 @@ public class MenuManager : MonoBehaviour
         }
         else if (Input.GetKeyUp(KeyCode.Escape) && isMenuOpen)
         {
-
-            saveMenu.SetActive(false);
             settingMenu.SetActive(false);
 
             uiCanvas.SetActive(true);
@@ -94,19 +69,7 @@ public class MenuManager : MonoBehaviour
         if (isMenuOpen == true)
         {
             settingMenu.SetActive(true);
-            saveMenu.SetActive(false);
             menuCanvas.SetActive(false);
-            newOrLoadMenu.SetActive(false);
-        }
-    }
-    public void GoToSaving()
-    {
-        if (isMenuOpen == true)
-        {
-            settingMenu.SetActive(false);
-            saveMenu.SetActive(true);
-            menuCanvas.SetActive(false);
-            newOrLoadMenu.SetActive(false);
         }
     }
     public void GoToingamemanu()
@@ -114,42 +77,47 @@ public class MenuManager : MonoBehaviour
         if (isMenuOpen == true)
         {
             settingMenu.SetActive(false);
-            saveMenu.SetActive(false);
             menuCanvas.SetActive(true);
-            newOrLoadMenu.SetActive(false);
         }
     }
-    public void Mainmennu()
+    public void Mainmenu()
     {
         if (isMenuOpen == true)
         {
-            settingMenu.SetActive(false);
-            saveMenu.SetActive(false);
-            menuCanvas.SetActive(false);
-            newOrLoadMenu.SetActive(false);
+            if (PLayFabManager.Instance != null)
+                PLayFabManager.Instance.SaveGameData();
+            else
+                Debug.LogWarning("No PlayFabManager – skipping SaveGameData()");
+
+
+            if (PlayerState.Instance != null) PlayerState.Instance.ResetToDefaults();
+            if (GameManager.instance != null) GameManager.instance.ResetToDefaults();
+            if (InventorySystem.Instance != null) InventorySystem.Instance.ClearAllItems();
+            if (EquipSystem.Instance != null) EquipSystem.Instance.ResetToDefaults();
+            if (QuestManager.instance != null) QuestManager.instance.ResetToDefaults();
+
+            // 3) Reset every spawn‐point
+            foreach (var sp in FindObjectsOfType<EnemySpawnPoint>())
+                sp.ResetSpawnedEnemies();
+            foreach (var sp in FindObjectsOfType<EnemySpawnerNearPlayer>())
+                sp.KillAllEnemies();
+            // 4) Reset every NPC
+            foreach (var npc in FindObjectsOfType<NPC>())
+                npc.ResetToDefaults();
+            PlayFabClientAPI.ForgetAllCredentials();
+            settingMenu?.SetActive(false);
+            menuCanvas?.SetActive(false);
             SceneManager.LoadScene("MainMenu");
         }
     }
 
-    public void Loadmenu()
-    {
-        if (isMenuOpen == true)
-        {
-            settingMenu.SetActive(false);
-            saveMenu.SetActive(false);
-            menuCanvas.SetActive(false);
-            newOrLoadMenu.SetActive(true);
-        }
-    }
     public IEnumerator ClosesMenu()
     {
         if (isMenuOpen == true)
         {
             yield return new WaitForSeconds(1f); // wait 1 second (or your custom coroutine)
 
-            saveMenu.SetActive(false);
             settingMenu.SetActive(false);
-            newOrLoadMenu.SetActive(false);
 
             uiCanvas.SetActive(true);
             menuCanvas.SetActive(false);
@@ -169,4 +137,5 @@ public class MenuManager : MonoBehaviour
             SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
         }
     }
+    
 }

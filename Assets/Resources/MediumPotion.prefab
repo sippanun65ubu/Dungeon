@@ -117,10 +117,10 @@ MonoBehaviour:
   isTrashable: 1
   thisName: MediumPotion
   thisDescription: a drink that is believed to be able to cure an illness
-  thisFunctionality: heal 40
+  thisFunctionality: heal 100
   isConsumable: 1
-  healthEffect: 50
-  staminaEffect: 0
+  healthEffect: 100
+  maxHealthEffect: 0
   isEquippable: 1
   isInsideQuickSlot: 0
   isSelected: 0

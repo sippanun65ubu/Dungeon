@@ -118,11 +118,11 @@ MonoBehaviour:
   thisName: CrystalPurple
   thisDescription: A mysterious, otherworldly crystal that hums with dark energy.
     Said to contain the essence of ancient magic.
-  thisFunctionality: 'Sell Price: 1,000 coins'
+  thisFunctionality: 'Sell Price: 1,200 coins'
   isConsumable: 0
   healthEffect: 0
-  staminaEffect: 0
+  lifeEffect: 0
   isEquippable: 0
   isInsideQuickSlot: 0
   isSelected: 0
-  sellingPrice: 1000
+  sellingPrice: 1200

@@ -37,10 +37,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f668eef65f9bbb44081730a73744f25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 8
-  stopChasingDistance: 21
-  meleeAttackRange: 4
-  rangedAttackRange: 8
+  chaseSpeed: 20
+  stopChasingDistance: 50
+  meleeAttackRange: 10
+  rangedAttackRange: 25
 --- !u!1101 &-3985727916764042040
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c5cff4939ee8c48a0ec1dc7b4c1376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeRange: 4
+  meleeRange: 10
 --- !u!114 &-413081738027733309
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -582,7 +582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkingTime: 5
-  detectionAreaRadius: 18
+  detectionAreaRadius: 30
   walkSpeed: 5
 --- !u!1101 &3171117713582005805
 AnimatorStateTransition:
@@ -671,8 +671,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a47c5169c42944db004abe399bca56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangedMinRange: 5
-  rangedMaxRange: 8
+  rangedMinRange: 10.5
+  rangedMaxRange: 25
 --- !u!1101 &3793538284176991788
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

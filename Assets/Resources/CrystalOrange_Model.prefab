@@ -440,7 +440,7 @@ GameObject:
   - component: {fileID: 1017645413296929224}
   m_Layer: 8
   m_Name: CrystalOrange_Model
-  m_TagString: Untagged
+  m_TagString: Loot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

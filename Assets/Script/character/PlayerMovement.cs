@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
 
+
+
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -39,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError("Animator not found! Assign it manually.");
         }
 
-        currentSpeed = walkSpeed;  // Start with normal walking speed
+        currentSpeed = walkSpeed;
     }
 
     void Update()

@@ -10,6 +10,7 @@ public class NPC : MonoBehaviour
 
     public bool playerInRange;
     public bool isTalkingWithPlayer;
+    public string npcId;
 
     TextMeshProUGUI npcDialogText;
 
@@ -399,5 +400,14 @@ public class NPC : MonoBehaviour
 
         var yRotation = transform.eulerAngles.y;
         transform.rotation = Quaternion.Euler(0,yRotation, 0);
+    }
+    public void ResetToDefaults()
+    {
+        isTalkingWithPlayer = false;
+        firstTimeInteraction = true;
+        activeQuestIndex = 0;
+        currentDialog = 0;
+        currentActiveQuest = null;
+        DialogSystem.instance?.CloseDialogUI();
     }
 }

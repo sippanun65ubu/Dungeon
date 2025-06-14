@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour
-{
+{   
     public static QuestManager instance { get; set; }
     private void Awake()
     {
@@ -252,6 +252,15 @@ public class QuestManager : MonoBehaviour
     {
         var itemToGet = Resources.Load<GameObject>(item);
         return itemToGet.GetComponent<Image>().sprite;
+    }
+
+    internal void ResetToDefaults()
+    {
+        allActiveQuests.Clear();
+        allCompletedQuests.Clear();
+        allTrackedQuests.Clear();
+        RefreshQuestList();
+        RefreshTrackerList();
     }
 }
 

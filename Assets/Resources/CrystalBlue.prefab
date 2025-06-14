@@ -118,11 +118,11 @@ MonoBehaviour:
   thisName: CrystalBlue
   thisDescription: A deep, oceanic crystal that pulses with magical energy. Highly
     sought after by mages.
-  thisFunctionality: 'Sell Price: 150 coins'
+  thisFunctionality: 'Sell Price: 600 coins'
   isConsumable: 0
   healthEffect: 0
-  staminaEffect: 0
+  lifeEffect: 0
   isEquippable: 0
   isInsideQuickSlot: 0
   isSelected: 0
-  sellingPrice: 150
+  sellingPrice: 600

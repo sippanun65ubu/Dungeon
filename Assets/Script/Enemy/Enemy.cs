@@ -11,7 +11,12 @@ public class Enemy : MonoBehaviour
 
     private Animator animator;
     public bool isDead = false;
-    [SerializeField] float currentHealth;
+    [SerializeField] private float _currentHealth;
+    public float currentHealth
+    {
+        get => _currentHealth;
+        set => _currentHealth = value;
+    }
     [SerializeField] float maxHealth;
 
     private NavMeshAgent agent;
@@ -23,10 +28,14 @@ public class Enemy : MonoBehaviour
     public float healthRegenDelay = 3f;
     private float lastDamageTime; // Track when the enemy last took damage
 
-    public int damageToInflict = 1; // damage in attack
+    public float damageToInflict; // damage in attack
+    public float currentDamageToInflict;
     public int armor = 0;
     private int maxarmor = 5;
 
+    public string enemyId;
+
+    public string resourcePath;
     enum EnemyType
     {
         Skeleton,
@@ -42,9 +51,20 @@ public class Enemy : MonoBehaviour
 
 
     public int enemyScoreValue = 10;
+
+    private void Awake()
+    {
+        if (string.IsNullOrEmpty(enemyId))
+        {
+            // Generate a new GUID and store it
+            enemyId = Guid.NewGuid().ToString();
+        }
+    }
+
     private void Start()
     {
         currentHealth = maxHealth;
+        currentDamageToInflict = damageToInflict;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
@@ -146,6 +166,15 @@ public class Enemy : MonoBehaviour
     }
     public void Attack()
     {
-        PlayerState.Instance.TakeDamage(damageToInflict);
+        PlayerState.Instance.TakeDamage(currentDamageToInflict);
+    }
+
+
+    internal void ForceDieImmediate()
+    {
+        isDead = true;
+        agent.enabled = false;
+        animator.SetTrigger("DIE");
+        healthSlider.gameObject.SetActive(false);
     }
 }

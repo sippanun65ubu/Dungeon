@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 176528945511338500}
   m_Layer: 8
   m_Name: CrystalYellow_Model
-  m_TagString: Untagged
+  m_TagString: Loot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

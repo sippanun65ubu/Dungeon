@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65af0373df4664d4d93bc18a3e1d70fd, type: 3}
+  m_Name: GetWhiteCrystal
+  m_EditorClassIdentifier: 
+  initialDialog:
+  - "Well met, traveler.  I\u2019ve a task for you."
+  - "Deep in the old forest lurk bristling beasts\u2014and inside each one is the
+    fabled White Crystal."
+  - That crystal pulses with healing light. We need one to save our wounded healer
+  - Slay a forest monster, carve the crystal from its body, and bring it back to
+    me.
+  acceptOption: "nderstood. I\u2019ll retrieve a White Crystal from the beasts"
+  acceptAnswer: "Well said. Be wary\u2014the creatures bite fierce and the crystal
+    lies within their flesh."
+  declineOption: "I\u2019m not up for that hunt."
+  declineAnswer: "I see. Return when you\u2019ve steel in your heart."
+  comebackAfterDecline: "Changed your mind? The monsters won\u2019t wait forever."
+  comebackInProgress: "Have you extracted the White Crystal yet? Remember\u2014it\u2019s
+    inside their bodies."
+  comebackCompleted: Ah, you have the crystal! I see its glow even now.
+  finalWords: "You\u2019ve done a great service. With this crystal, our healer will
+    live."
+  coinReward: 500
+  rewardItem1: 
+  rewardItem2: 
+  firstRequirmentItem: CrystalWhite
+  firstRequirementAmount: 3
+  secondRequirmentItem: 
+  secondRequirementAmount: 0
+  hasCheckPoints: 0
+  checkPoints: []
+  questScoreValue: 0

@@ -277,5 +277,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41115edd4834de24398575ae5afda68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileDamage: 25
+  projectileDamage: 60
   projectilePenetration: 1

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RespawnLocation : MonoBehaviour
 {
-    private void RegisterLocation()
-    {
-        PlayerState.Instance.SpawnPlayerLocation(this);
-    }
+    //private void RegisterLocation()
+    //{
+    //    PlayerState.Instance.SpawnPlayerLocation(this);
+    //}
 }

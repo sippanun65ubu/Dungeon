@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkingTime: 10
-  detectionAreaRadius: 18
+  detectionAreaRadius: 30
   walkSpeed: 5
 --- !u!1101 &-7660521572478135875
 AnimatorStateTransition:
@@ -80,9 +80,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50a02e897fa105c4e83205d4c5526d8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 11
-  stopChasingDistance: 21
-  attackingDistance: 4
+  chaseSpeed: 20
+  stopChasingDistance: 50
+  attackingDistance: 10
 --- !u!1101 &-7063269529669115441
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615e2aa196a52994eb9a53bdcbfc290c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopAttackingDistance: 5
+  stopAttackingDistance: 11
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -376,7 +376,7 @@ AnimatorStateMachine:
     m_Position: {x: 500, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5853898010938322704}
-    m_Position: {x: 260, y: 180, z: 0}
+    m_Position: {x: -10, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5076826609213718389}
     m_Position: {x: 540, y: 200, z: 0}
@@ -393,7 +393,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 230, y: 280, z: 0}
+  m_AnyStatePosition: {x: 280, y: 280, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 50, y: 180, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

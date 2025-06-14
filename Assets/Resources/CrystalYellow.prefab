@@ -118,11 +118,11 @@ MonoBehaviour:
   thisName: CrystalYellow
   thisDescription: A bright, sunny crystal that radiates warmth. Slightly rarer than
     white crystals.
-  thisFunctionality: 'Sell Price: 50 coins'
+  thisFunctionality: 'Sell Price: 100 coins'
   isConsumable: 0
   healthEffect: 0
-  staminaEffect: 0
+  lifeEffect: 0
   isEquippable: 0
   isInsideQuickSlot: 0
   isSelected: 0
-  sellingPrice: 50
+  sellingPrice: 100

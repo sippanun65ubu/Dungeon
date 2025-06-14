@@ -37,8 +37,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a47c5169c42944db004abe399bca56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangedMinRange: 7.1
-  rangedMaxRange: 16
+  rangedMinRange: 10.5
+  rangedMaxRange: 18
 --- !u!114 &-6926834463817638834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c5cff4939ee8c48a0ec1dc7b4c1376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeRange: 7
+  meleeRange: 10
 --- !u!114 &-6787086219018233658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -778,7 +778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f668eef65f9bbb44081730a73744f25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 8
+  chaseSpeed: 20
   stopChasingDistance: 50
-  meleeAttackRange: 7
-  rangedAttackRange: 16
+  meleeAttackRange: 10
+  rangedAttackRange: 18

@@ -9,7 +9,8 @@ namespace PlayFab.ProgressionModels
     public class CreateLeaderboardDefinitionRequest : PlayFabRequestCommon
     {
         /// <summary>
-        /// Leaderboard columns describing the sort directions, cannot be changed after creation.
+        /// Leaderboard columns describing the sort directions, cannot be changed after creation. A maximum of 5 columns are
+        /// allowed.
         /// </summary>
         public List<LeaderboardColumn> Columns;
         /// <summary>
@@ -39,7 +40,13 @@ namespace PlayFab.ProgressionModels
     public class CreateStatisticDefinitionRequest : PlayFabRequestCommon
     {
         /// <summary>
-        /// The columns for the statistic defining the aggregation method for each column.
+        /// [In Preview]: The list of statistic definition names whose scores must be aggregated towards this stat. If
+        /// AggregationSource is specified, the entityType of this definition MUST be Title (making it a CommunityStat). Currently,
+        /// only one aggregation source can be specified.
+        /// </summary>
+        public List<string> AggregationSources;
+        /// <summary>
+        /// The columns for the statistic defining the aggregation method for each column. A maximum of 5 columns are allowed.
         /// </summary>
         public List<StatisticColumn> Columns;
         /// <summary>
@@ -241,7 +248,7 @@ namespace PlayFab.ProgressionModels
         /// </summary>
         public string LeaderboardName;
         /// <summary>
-        /// Maximum number of results to return from the leaderboard. Minimum 1, maximum 1,000.
+        /// Maximum number of results to return from the leaderboard. Minimum 1, maximum 100.
         /// </summary>
         public uint PageSize;
         /// <summary>
@@ -435,6 +442,16 @@ namespace PlayFab.ProgressionModels
     [Serializable]
     public class GetStatisticDefinitionResponse : PlayFabResultCommon
     {
+        /// <summary>
+        /// The list of statistic definitions names this definition aggregates to.
+        /// </summary>
+        public List<string> AggregationDestinations;
+        /// <summary>
+        /// The list of statistic definitions names whose values must be aggregated towards this stat. If AggregationSource is
+        /// specified, the entityType of this definition MUST be Title (making it a CommunityStat). Currently, only one aggregation
+        /// source can be specified.
+        /// </summary>
+        public List<string> AggregationSources;
         /// <summary>
         /// The columns for the statistic defining the aggregation method for each column.
         /// </summary>
@@ -745,6 +762,16 @@ namespace PlayFab.ProgressionModels
     [Serializable]
     public class StatisticDefinition : PlayFabBaseModel
     {
+        /// <summary>
+        /// The list of statistic definitions names this definition aggregates to.
+        /// </summary>
+        public List<string> AggregationDestinations;
+        /// <summary>
+        /// The list of statistic definitions names whose values must be aggregated towards this stat. If AggregationSource is
+        /// specified, the entityType of this definition MUST be Title (making it a CommunityStat). Currently, only one aggregation
+        /// source can be specified.
+        /// </summary>
+        public List<string> AggregationSources;
         /// <summary>
         /// The columns for the statistic defining the aggregation method for each column.
         /// </summary>

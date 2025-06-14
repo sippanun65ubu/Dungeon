@@ -226,4 +226,14 @@ public int CheckItemAmount(string name)
         }
         return itemCounter;
     }
+
+    internal void ClearAllItems()
+    {
+        foreach (var slot in slotList)
+            foreach (Transform child in slot.transform)
+                Destroy(child.gameObject);
+
+        itemList.Clear();
+        currentCoins = 100;
+    }
 }

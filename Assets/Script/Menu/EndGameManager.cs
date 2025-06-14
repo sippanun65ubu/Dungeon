@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class EndGameManager : MonoBehaviour
 {
     [Header("UI References")]
-    [SerializeField] private TextMeshProUGUI killCountText;
     [SerializeField] private TextMeshProUGUI totalScoreText;
     [SerializeField] private TextMeshProUGUI elapsedTimeText;
     [SerializeField] private Button submitButton;

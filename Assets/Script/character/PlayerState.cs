@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,19 +17,8 @@ public class PlayerState : MonoBehaviour
     public bool isSprinting;
     public bool isPlayerDead;
 
-    [Header("Life")]
-    public float maxLife = 100f;
-    public float currentLife;
-    public float baseLifeDrainRate = 1f;
-    public float lifeDrainTimeThreshold = 300f;
-    public float increasedLifeDrainRate = 2f;
-
-
     public RespawnLocation spawnLocation;
     public GameObject playerBody;
-
-    private float hurtSoundDelay = 2f;
-    private float nextHurtTime = 0f;
 
     public AudioSource playerAudio;
     public AudioClip playerHurt;
@@ -51,14 +41,12 @@ public class PlayerState : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
-        currentLife = maxLife;
 
     }
 
     private void Update()
     {
         HandleHealthRegeneration();
-        HandleLifeDrain();
     }
 
     private void HandleHealthRegeneration()
@@ -70,41 +58,13 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-    private void HandleLifeDrain()
-    {
-        float totalGameTime = 1800f;
-        // Ensure GameManager exists.
-        float remaining = GameManager.instance != null ? GameManager.instance.GetRemainingTime() : 0f;
-
-        // Calculate elapsed time.
-        float elapsed = totalGameTime - remaining;
-        // Every 5 minutes (300 seconds), the drain rate increases.
-        int factor = Mathf.FloorToInt(elapsed / 300f);
-        // Calculate current drain rate: add an extra "increasedLifeDrainRate" for every factor.
-        float currentDrainRate = baseLifeDrainRate + (increasedLifeDrainRate * factor);
-
-
-        currentLife -= currentDrainRate * Time.deltaTime;
-        currentLife = Mathf.Max(currentLife, 0); // Prevent negative life
-
-        //If life reaches zero, trigger endgame.
-        if (currentLife <= 0 && !isPlayerDead)
-        {
-            Debug.Log("Player's life has drained completely.");
-            SceneManager.LoadScene("EndGame");
-        }
-    }
     public void setHealth(float newHealth)
     {
         currentHealth = newHealth;
     }
 
-    public void setLife(float newLife)
-    {
-        currentLife = newLife;
-    }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
 
@@ -115,54 +75,59 @@ public class PlayerState : MonoBehaviour
         }
         else
         {
-            if (currentHealth > 0 && Time.time >= nextHurtTime)
-            {
                 Debug.Log("player is hurt");
                 playerAudio.PlayOneShot(playerHurt);
-
-                nextHurtTime = Time.time + hurtSoundDelay;
-            }
         }
     }
 
     public void PlayerDead()
     {
         isPlayerDead = true;
-        currentLife = Mathf.Max(currentLife - 100, 0);
         playerAudio.PlayOneShot(playerDie);
-        RespawnPlayer();
     }
 
-    public void RespawnPlayer()
+    internal void ResetToDefaults()
     {
-        StartCoroutine(RespawnCoroutine());
-    }
-
-    public IEnumerator RespawnCoroutine()
-    {
-        playerBody.GetComponent<PlayerMovement>().enabled = false;
-        //playerBody.GetComponent<MouseMovement>().enabled = false;
-
-        Vector3 position = spawnLocation.transform.position;
-
-        position.y += 3f;
-
-        playerBody.transform.position = position;
-
+        var pm = playerBody.GetComponent<PlayerMovement>();
+        if (pm != null) pm.enabled = false;
+        var cc = playerBody.GetComponent<CharacterController>();
+        if (cc != null) cc.enabled = false;
         currentHealth = maxHealth;
-
-        yield return new WaitForSeconds(0.2f);
-
         isPlayerDead = false;
-
-        playerBody.GetComponent<PlayerMovement>().enabled = true;
-        //playerBody.GetComponent<MouseMovement>().enabled = true;
+        Vector3 spawnPos = spawnLocation.transform.position;
+        spawnPos.y += 3f;
+        playerBody.transform.position = spawnPos;
+        if (pm != null) pm.enabled = true;
+        if (cc != null) cc.enabled = true;
     }
+
+    //public void RespawnPlayer()
+    //{
+    //    StartCoroutine(RespawnCoroutine());
+    //}
+
+    //public IEnumerator RespawnCoroutine()
+    //{
+    //    playerBody.GetComponent<PlayerMovement>().enabled = false;
+
+    //    Vector3 position = spawnLocation.transform.position;
+
+    //    position.y += 3f;
+
+    //    playerBody.transform.position = position;
+
+    //    currentHealth = maxHealth;
+
+    //    yield return new WaitForSeconds(0.2f);
+
+    //    isPlayerDead = false;
+
+    //    playerBody.GetComponent<PlayerMovement>().enabled = true;
+    //}
 
     internal void SpawnPlayerLocation(RespawnLocation respawnLocation)
     {
         spawnLocation = respawnLocation;
     }
-
 
 }

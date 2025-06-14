@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65af0373df4664d4d93bc18a3e1d70fd, type: 3}
+  m_Name: GoVisitTheShop
+  m_EditorClassIdentifier: 
+  initialDialog:
+  - "Ah\u2014there you are! You must be new around these parts. Name\u2019s Gut."
+  - I see you arrived with empty pockets and empty hands.
+  - "You\u2019ll need gear and supplies if you want to survive."
+  - Head over to the town shop in the square and pick up whatever you need, then
+    come back and tell me.
+  acceptOption: "Got it. I\u2019ll visit the shop now."
+  acceptAnswer: "Good choice. The shop\u2019s just down Main Street\u2014can\u2019t
+    miss it."
+  declineOption: Sorry, not right now.
+  declineAnswer: "I understand\u2014but don\u2019t wander empty-handed too long."
+  comebackAfterDecline: "Changed your mind? The shop awaits when you\u2019re ready."
+  comebackInProgress: "Still haven\u2019t been to the shop? They\u2019ve got what
+    you need."
+  comebackCompleted: You made it to the shop! Nice haul, newcomer.
+  finalWords: "Keep that gear safe\u2014adventure won\u2019t wait."
+  coinReward: 0
+  rewardItem1: sword
+  rewardItem2: 
+  firstRequirmentItem: 
+  firstRequirementAmount: 0
+  secondRequirmentItem: 
+  secondRequirementAmount: 0
+  hasCheckPoints: 1
+  checkPoints:
+  - {fileID: 11400000, guid: 50398f400c350d24f96baf4090be3a09, type: 2}
+  questScoreValue: 100

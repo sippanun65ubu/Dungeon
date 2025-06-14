@@ -117,11 +117,11 @@ MonoBehaviour:
   isTrashable: 1
   thisName: CrystalWhite
   thisDescription: 'A basic crystal with a faint glow. '
-  thisFunctionality: 'Sell Price: 25 coins'
+  thisFunctionality: 'Sell Price: 50 coins'
   isConsumable: 0
   healthEffect: 0
-  staminaEffect: 0
+  lifeEffect: 0
   isEquippable: 0
   isInsideQuickSlot: 0
   isSelected: 0
-  sellingPrice: 25
+  sellingPrice: 50
