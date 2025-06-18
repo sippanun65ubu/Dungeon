@@ -1488,16 +1488,17 @@ MonoBehaviour:
   enemyName: Smlie
   playerInRange: 0
   isDead: 0
-  currentHealth: 0
+  _currentHealth: 0
   maxHealth: 100
   healthSlider: {fileID: 5607153227771870443}
   isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
-  damageToInflict: 10
+  damageToInflict: 5
   currentDamageToInflict: 0
   armor: 0
   enemyId: 
+  resourcePath: 
   soundChannel: {fileID: 3828011135297785446}
   skeletonTakeDamage: {fileID: 8300000, guid: 71f5af87f7f2dfb4e890afe369e36c24, type: 3}
   skeletonDie: {fileID: 8300000, guid: 8e65f2b68ee6726478a28888f61c8feb, type: 3}

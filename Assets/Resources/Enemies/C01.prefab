@@ -2419,15 +2419,17 @@ MonoBehaviour:
   enemyName: C01
   playerInRange: 0
   isDead: 0
+  _currentHealth: 0
   maxHealth: 400
   healthSlider: {fileID: 2288445611878271483}
   isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
-  damageToInflict: 20
+  damageToInflict: 10
   currentDamageToInflict: 0
   armor: 3
   enemyId: 
+  resourcePath: 
   soundChannel: {fileID: 6536898236550078447}
   skeletonTakeDamage: {fileID: 8300000, guid: 71f5af87f7f2dfb4e890afe369e36c24, type: 3}
   skeletonDie: {fileID: 8300000, guid: 8e65f2b68ee6726478a28888f61c8feb, type: 3}

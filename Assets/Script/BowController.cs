@@ -38,15 +38,7 @@ public class BowController : MonoBehaviour
 
     void Update()
     {
-        if (true) // LAter Check if there are arrows in the inventory
-        {
-            HandleBowDrawing();
-        }
-        else
-        {
-            if(isDrawing) CancelDraw();
-            
-        }
+        HandleBowDrawing();
     }
 
     private void HandleBowDrawing()

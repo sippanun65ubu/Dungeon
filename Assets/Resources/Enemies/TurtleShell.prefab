@@ -2447,16 +2447,17 @@ MonoBehaviour:
   enemyName: TurtleShell
   playerInRange: 0
   isDead: 0
-  currentHealth: 0
+  _currentHealth: 0
   maxHealth: 100
   healthSlider: {fileID: 3939688609298649439}
   isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
-  damageToInflict: 10
+  damageToInflict: 5
   currentDamageToInflict: 0
   armor: 0
   enemyId: 
+  resourcePath: 
   soundChannel: {fileID: 7557900134824474258}
   skeletonTakeDamage: {fileID: 8300000, guid: 71f5af87f7f2dfb4e890afe369e36c24, type: 3}
   skeletonDie: {fileID: 8300000, guid: 8e65f2b68ee6726478a28888f61c8feb, type: 3}

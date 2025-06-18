@@ -1529,15 +1529,17 @@ MonoBehaviour:
   enemyName: Skeleton
   playerInRange: 0
   isDead: 0
+  _currentHealth: 0
   maxHealth: 700
   healthSlider: {fileID: 8867934364677779256}
   isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
-  damageToInflict: 40
+  damageToInflict: 20
   currentDamageToInflict: 0
   armor: 3
   enemyId: 
+  resourcePath: 
   soundChannel: {fileID: 6671256131559214744}
   skeletonTakeDamage: {fileID: 8300000, guid: 4978fcbaf8e035043ab38aa034ae6bbe, type: 3}
   skeletonDie: {fileID: 8300000, guid: 27d2304b3cd64874ab9532e3bc76ae37, type: 3}
