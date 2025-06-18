@@ -108,6 +108,7 @@ public class MenuManager : MonoBehaviour
             settingMenu?.SetActive(false);
             menuCanvas?.SetActive(false);
             SceneManager.LoadScene("MainMenu");
+            Application.Quit();
         }
     }
 
@@ -135,6 +136,8 @@ public class MenuManager : MonoBehaviour
 
             SelectionManager.Instance.EnableSelection();
             SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
+
+
         }
     }
     

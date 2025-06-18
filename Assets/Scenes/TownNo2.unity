@@ -15797,14 +15797,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df829ce0d6cf7e4baa9932700368205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginEmail: {fileID: 0}
-  loginPassword: {fileID: 0}
-  signupUsername: {fileID: 0}
-  signupEmail: {fileID: 0}
-  signupPassword: {fileID: 0}
-  signupCPassword: {fileID: 0}
-  forgetPasswordEmail: {fileID: 0}
-  messageText: {fileID: 0}
 --- !u!4 &168736911 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4811437788955060, guid: 756bd484e6f626047a701d6c3d7cfd1e, type: 3}
@@ -130182,6 +130174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  xRotation: 0
   playerBody: {fileID: 1974044713}
 --- !u!1 &1374169895
 GameObject:
@@ -181108,6 +181101,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ManQ2
       objectReference: {fileID: 0}
+    - target: {fileID: 5608417719302625767, guid: 5813884abca403d4a9dd3cf2671975f3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5806623697955028302, guid: 5813884abca403d4a9dd3cf2671975f3, type: 3}
       propertyPath: m_LocalPosition.y
       value: -2.19
@@ -212172,6 +212169,10 @@ PrefabInstance:
     - target: {fileID: 5608417719302625767, guid: 5813884abca403d4a9dd3cf2671975f3, type: 3}
       propertyPath: m_Name
       value: Man
+      objectReference: {fileID: 0}
+    - target: {fileID: 5608417719302625767, guid: 5813884abca403d4a9dd3cf2671975f3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5806623697955028302, guid: 5813884abca403d4a9dd3cf2671975f3, type: 3}
       propertyPath: m_LocalPosition.y

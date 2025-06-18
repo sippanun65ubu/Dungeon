@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
+using static PLayFabManager;
 
 public class QuestManager : MonoBehaviour
 {   
@@ -262,5 +264,6 @@ public class QuestManager : MonoBehaviour
         RefreshQuestList();
         RefreshTrackerList();
     }
+
 }
 

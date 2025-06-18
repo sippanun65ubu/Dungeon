@@ -9,7 +9,6 @@ public class Quest
     public string questGiver;
     public string questDescription;
 
-
     [Header("Bools")]
     public bool accepted;
     public bool declined;
@@ -17,9 +16,7 @@ public class Quest
     public bool isCompleted;
     public bool hasNoRequirements;
 
-
     [Header("Quest info")]
     public QuestInfo info;
-
 
 }

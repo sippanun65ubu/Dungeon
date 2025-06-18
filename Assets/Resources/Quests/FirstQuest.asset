@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65af0373df4664d4d93bc18a3e1d70fd, type: 3}
   m_Name: FirstQuest
   m_EditorClassIdentifier: 
+  QuestId: 
   initialDialog:
   - Hi, Adventure!
   - ' I lost my precious pendant in the nearby forest while gathering herbs.'
@@ -34,4 +35,4 @@ MonoBehaviour:
   hasCheckPoints: 1
   checkPoints:
   - {fileID: 11400000, guid: 50398f400c350d24f96baf4090be3a09, type: 2}
-  questScoreValue: 700
+  questScoreValue: 200

@@ -23,12 +23,12 @@ public class Enemy : MonoBehaviour
 
     public Slider healthSlider;
 
-    public bool isSuperregen = false; // Enable/disable super regeneration
-    public float healthRegenRate = 5f; // Health regenerated per second
+    public bool isSuperregen = false; 
+    public float healthRegenRate = 5f; 
     public float healthRegenDelay = 3f;
-    private float lastDamageTime; // Track when the enemy last took damage
+    private float lastDamageTime; 
 
-    public float damageToInflict; // damage in attack
+    public float damageToInflict; 
     public float currentDamageToInflict;
     public int armor = 0;
     private int maxarmor = 5;

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65af0373df4664d4d93bc18a3e1d70fd, type: 3}
   m_Name: GivePotion
   m_EditorClassIdentifier: 
+  QuestId: 
   initialDialog:
   - Greetings, adventurer. I am Master Alaric, and I require your assistance.
   - For years, I have researched the secrets of a powerful potion known as the Elixir
@@ -43,4 +44,4 @@ MonoBehaviour:
   secondRequirementAmount: 1
   hasCheckPoints: 0
   checkPoints: []
-  questScoreValue: 2000
+  questScoreValue: 200

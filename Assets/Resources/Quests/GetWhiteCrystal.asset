@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65af0373df4664d4d93bc18a3e1d70fd, type: 3}
   m_Name: GetWhiteCrystal
   m_EditorClassIdentifier: 
+  QuestId: 
   initialDialog:
   - "Well met, traveler.  I\u2019ve a task for you."
   - "Deep in the old forest lurk bristling beasts\u2014and inside each one is the
@@ -39,4 +40,4 @@ MonoBehaviour:
   secondRequirementAmount: 0
   hasCheckPoints: 0
   checkPoints: []
-  questScoreValue: 0
+  questScoreValue: 200

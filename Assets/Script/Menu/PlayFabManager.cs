@@ -14,14 +14,12 @@ using UnityEngine.UI;
 public class PLayFabManager : MonoBehaviour
 {
     #region Awake
-    public static PLayFabManager Instance { get; private set; }
-    private const string PlayerDataKey = "PlayerData";
-    private const string EnemyDataKey = "EnemyData";
-    private const string EnvironmentDataKey = "EnvironmentData";
+    public static PLayFabManager Instance { get; set; }
+
 
     private void Awake()
     {
-        // Setup singleton.
+
         if (Instance == null)
         {
             Instance = this;
@@ -108,7 +106,8 @@ public class PLayFabManager : MonoBehaviour
     public class FullSaveData
     {
         public PlayerData player;
-        public EnemyData[] enemies;
+        public EnemyData[] enemies;  
+        public LootData[] loot;
     }
     [Serializable]
     public class PlayerData
@@ -167,6 +166,22 @@ public class PLayFabManager : MonoBehaviour
             this.isDead = _isDead;
         }
     }
+    [Serializable]
+    public class LootData
+    {
+        public string lootId;
+        public string lprefabName;
+        public float[] lposition;
+
+        public LootData(string _lootId, string _lprefabName, float[] _lposition)
+        {
+            this.lootId = _lootId;
+            this.lprefabName= _lprefabName;
+            this.lposition = _lposition;
+        }
+    }
+
+
 
     // a wrapper for UnityJson to handle arrays:
     [Serializable]
@@ -180,13 +195,12 @@ public class PLayFabManager : MonoBehaviour
     #region SaveDataPlayFab
     public void SaveGameData()
     {
-        PlayerData pd = CreatePlayerData();
-        EnemyData[] ed = GatherAllEnemies();
 
         var full = new FullSaveData
         {
-            player = pd,
-            enemies = ed,
+            player = CreatePlayerData(),
+            enemies = GatherAllEnemies(),
+            loot = GatherAllLoot(),
         };
         string json = JsonUtility.ToJson(full);
 
@@ -287,6 +301,24 @@ public class PLayFabManager : MonoBehaviour
 
         return result;
     }
+
+    public LootData[] GatherAllLoot()
+    {
+        var all = FindObjectsOfType<LootSave>();
+        var result = new LootData[all.Length];
+        for (int i = 0; i < all.Length; i++)
+        {
+            var ls = all[i];
+            var pos = ls.GetWorldPosition();
+            result[i] = new LootData(
+                ls.lootId,
+                "Loot/" + ls.lootName,   
+                new float[] { pos.x, pos.y, pos.z }
+            );
+        }
+        return result;
+    }
+
 
     /// Retrieves quick slot contents from EquipSystem.
     public string[] GetQuickSlotContents()
@@ -407,7 +439,7 @@ public class PLayFabManager : MonoBehaviour
             while (!op.isDone) yield return null;
             yield return null;
         }
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1f);
 
         var pm = PlayerState.Instance.playerBody.GetComponent<PlayerMovement>();
         var cc = PlayerState.Instance.playerBody.GetComponent<CharacterController>();
@@ -441,7 +473,6 @@ public class PLayFabManager : MonoBehaviour
         GameManager.instance.SetRemainingTime(full.player.remainingTime);
 
         // enemies
-        Debug.Log($"Rehydrating {full.enemies.Length} enemies");
         foreach (var ed in full.enemies)
         {
             var prefab = Resources.Load<GameObject>(ed.prefabName);
@@ -459,6 +490,28 @@ public class PLayFabManager : MonoBehaviour
             e.enemyId = ed.enemyId;
             e.currentHealth = ed.currentHealth;
             if (ed.isDead) e.ForceDieImmediate();
+        }
+        foreach (var ld in full.loot)
+        {
+            // load the prefab
+            var prefab = Resources.Load<GameObject>(ld.lprefabName);
+            if (prefab == null)
+            {
+                Debug.LogError($"Couldn’t load loot prefab '{ld.lprefabName}'");
+                continue;
+            }
+
+            // instantiate in world
+            var spawnPos = new Vector3(ld.lposition[0], ld.lposition[1], ld.lposition[2]);
+            var go = Instantiate(prefab, spawnPos, Quaternion.identity);
+
+            // restore its save?ID so we don’t double?spawn next time
+            var ls = go.GetComponent<LootSave>();
+            if (ls != null)
+            {
+                ls.lootId = ld.lootId;
+                ls.lootName = prefab.name; 
+            }
         }
 
         // Re-enable player movement/look
