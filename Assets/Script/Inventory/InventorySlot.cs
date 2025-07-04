@@ -9,7 +9,7 @@ public class InventorySlot : MonoBehaviour
     public TextMeshProUGUI amountTXT;
     public InventoryItem itemInSlot;
 
-    private void Update()
+    public void Update()
     {
         InventoryItem item = CheckInventoryItem();
 
@@ -23,7 +23,7 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
-    private InventoryItem CheckInventoryItem()
+    public InventoryItem CheckInventoryItem()
     {
         foreach (Transform child in transform)
         {

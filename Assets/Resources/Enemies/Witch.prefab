@@ -1559,7 +1559,6 @@ GameObject:
   - component: {fileID: 2718833718854748113}
   - component: {fileID: 6862138130638629045}
   - component: {fileID: 3513212574566545023}
-  - component: {fileID: 105519904535909392}
   - component: {fileID: 8206514833083150095}
   - component: {fileID: 841040362844570800}
   - component: {fileID: 727461902914741961}
@@ -1675,19 +1674,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Witch
   playerInRange: 0
+  animator: {fileID: 0}
   isDead: 0
+  _currentHealth: 0
   maxHealth: 1000
+  agent: {fileID: 0}
   healthSlider: {fileID: 7347643964838591860}
   isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
+  lastDamageTime: 0
   damageToInflict: 0
   currentDamageToInflict: 0
   armor: 4
+  maxarmor: 5
   enemyId: 
+  resourcePath: 
+  thisenemyType: 0
   soundChannel: {fileID: 8206514833083150095}
-  skeletonTakeDamage: {fileID: 8300000, guid: 71f5af87f7f2dfb4e890afe369e36c24, type: 3}
-  skeletonDie: {fileID: 8300000, guid: 90b3d298255549944a5fb78bc933785f, type: 3}
+  monsterTakeDamage: {fileID: 0}
+  monsterDie: {fileID: 0}
   enemyScoreValue: 500
 --- !u!65 &2718833718854748113
 BoxCollider:
@@ -1745,18 +1751,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &105519904535909392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5109871050878376439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95c8c6db7b46c594f876028b086773b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &8206514833083150095
 AudioSource:
   m_ObjectHideFlags: 0

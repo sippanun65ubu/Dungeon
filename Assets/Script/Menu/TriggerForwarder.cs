@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TriggerForwarder : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         GameManager.instance.ChildTriggerEntered(other);
     }

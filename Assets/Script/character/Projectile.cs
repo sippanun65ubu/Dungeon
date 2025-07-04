@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private Rigidbody rb;
+    public Rigidbody rb;
     public int projectileDamage = 25;
     public int projectilePenetration = 0;
 
-    private bool isStuck = false; // Flag to track if the arrow is stuck
-    private void Start()
+    public bool isStuck = false; // Flag to track if the arrow is stuck
+    public void Start()
     {
         rb = GetComponent<Rigidbody>();
 
@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
     }
 
     // This method is called when the arrow hits a collider
-    private void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
         // Check if the arrow is not already stuck
         if (!isStuck && !collision.transform.CompareTag("Player"))

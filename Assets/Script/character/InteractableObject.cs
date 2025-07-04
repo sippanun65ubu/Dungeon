@@ -11,7 +11,7 @@ public class InteractableObject : MonoBehaviour
     {
         return ItemName;
     }
-    private void Update()
+    public void Update()
     {
         if(Input.GetKeyDown(KeyCode.E) && playerInRange && SelectionManager.Instance.onTarget && SelectionManager.Instance.selectedObject == gameObject)
         {
@@ -32,7 +32,7 @@ public class InteractableObject : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
          if(other.CompareTag("Player"))
         {
@@ -40,7 +40,7 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {

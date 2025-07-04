@@ -9,29 +9,20 @@ public class LeaderboardUI : MonoBehaviour
 {
     [Header("Leaderboard UI References")]
     [Tooltip("The parent container (e.g., Content under a ScrollRect) where leaderboard entries will be placed.")]
-    [SerializeField] private Transform leaderboardContent;
+    public Transform leaderboardContent;
 
     [Tooltip("Prefab for each leaderboard entry (with RankText, NameText, ScoreText).")]
-    [SerializeField] private GameObject leaderboardRowPrefab;
+    public GameObject leaderboardRowPrefab;
 
     [Tooltip("Maximum number of leaderboard entries to retrieve from PlayFab.")]
-    [SerializeField] private int maxResultsCount = 10;
-
-    public void LoadKillCountLeaderboard()
-    {
-        LoadLeaderboard("KillCount");
-    }
+    public int maxResultsCount = 10;
 
     public void LoadDungeonScoreLeaderboard()
     {
         LoadLeaderboard("DungeonScore");
     }
-    public void LoadTimeLeaderboard()
-    {
-        LoadLeaderboard("Time");
-    }
 
-    private void LoadLeaderboard(string statisticName)
+    public void LoadLeaderboard(string statisticName)
     {
         Debug.Log($"Requesting leaderboard for: {statisticName}");
 
@@ -46,7 +37,7 @@ public class LeaderboardUI : MonoBehaviour
     }
 
 
-    private void OnGetLeaderboardSuccess(GetLeaderboardResult result)
+    public void OnGetLeaderboardSuccess(GetLeaderboardResult result)
     {
         Debug.Log("Leaderboard data retrieved successfully.");
 
@@ -79,7 +70,7 @@ public class LeaderboardUI : MonoBehaviour
         }
     }
 
-    private void OnGetLeaderboardError(PlayFabError error)
+    public void OnGetLeaderboardError(PlayFabError error)
     {
         Debug.LogError("Error retrieving leaderboard: " + error.GenerateErrorReport());
     }

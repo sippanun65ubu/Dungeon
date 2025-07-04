@@ -5,17 +5,17 @@ using UnityEngine.AI;
 
 public class Enemy_walkState : StateMachineBehaviour
 {
-    float timer;
+    public float timer;
     public float walkingTime = 5f;
 
-    Transform player;
-    NavMeshAgent agent;
+    public Transform player;
+    public NavMeshAgent agent;
 
 
     public float detectionAreaRadius = 25f;
     public float walkSpeed = 5f;
 
-    List<Transform> waypointsList = new List<Transform>();
+    public List<Transform> waypointsList = new List<Transform>();
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

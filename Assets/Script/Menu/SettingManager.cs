@@ -7,11 +7,11 @@ using UnityEngine.UI;
 public class SettingManager : MonoBehaviour
 {
     public static SettingManager Instance {  get; set; }
-    
-    
-    [SerializeField]private Slider musicSlider;
-    [SerializeField]private Slider sFXSlider;
-    [SerializeField]private AudioMixer audioMixer;
+
+
+    public Slider musicSlider;
+    public Slider sFXSlider;
+    public AudioMixer audioMixer;
 
 
     public void Start()
@@ -42,7 +42,7 @@ public class SettingManager : MonoBehaviour
 
     }
 
-    private void LoadVolume()
+    public void LoadVolume()
     {
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
         sFXSlider.value = PlayerPrefs.GetFloat("SFXVolume");

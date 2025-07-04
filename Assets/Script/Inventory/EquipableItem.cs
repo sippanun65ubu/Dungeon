@@ -8,9 +8,9 @@ public class EquippableItem : MonoBehaviour
 {
     public Animator animator;
     public bool swingWait = false;
-    private Weapon damage;
+    public Weapon damage;
 
-    void Start()
+    public void Start()
     {
         animator = GetComponent<Animator>();
         damage = GetComponent<Weapon>();
@@ -18,7 +18,7 @@ public class EquippableItem : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (Input.GetMouseButtonDown(0) &&
             InventorySystem.Instance.isOpen == false &&
@@ -31,7 +31,7 @@ public class EquippableItem : MonoBehaviour
         }
     }
 
-    IEnumerator NewSwingDelay()
+    public IEnumerator NewSwingDelay()
     {
         Debug.Log("Starting swing delay coroutine");
         animator.SetTrigger("hit");

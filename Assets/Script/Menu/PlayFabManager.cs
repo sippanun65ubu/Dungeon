@@ -17,7 +17,7 @@ public class PLayFabManager : MonoBehaviour
     public static PLayFabManager Instance { get; set; }
 
 
-    private void Awake()
+    public void Awake()
     {
 
         if (Instance == null)
@@ -108,6 +108,7 @@ public class PLayFabManager : MonoBehaviour
         public PlayerData player;
         public EnemyData[] enemies;  
         public LootData[] loot;
+        public List<NPCQuestData> npcQuests;
     }
     [Serializable]
     public class PlayerData
@@ -135,10 +136,8 @@ public class PLayFabManager : MonoBehaviour
         public static PlayerData CreateDefaultData()
         {
 
-            Vector3 spawnposition = PlayerState.Instance.spawnLocation.transform.position;
-
             float[] defaultStats = new float[1] { 300f };              
-            float[] defaultPosAndRot = new float[6] { spawnposition.x, spawnposition.y, spawnposition.z, 0f, 0f, 1f }; 
+            float[] defaultPosAndRot = new float[6] { 336.9f,  7.87f, 336.7f, 0f, 0f, 1f }; 
             string[] defaultInventory = new string[0];                       
             string[] defaultQuickSlots = new string[0];                        
             int defaultTotalScore = 0;
@@ -181,6 +180,25 @@ public class PLayFabManager : MonoBehaviour
         }
     }
 
+    [Serializable]
+    public class NPCQuestData
+    {
+        public string npcId;
+        public List<Quest> quests;
+        public int activeQuestIndex;
+        public bool firstTimeInteraction;
+        public int currentDialog;
+
+        public NPCQuestData(NPC npc)
+        {
+            npcId = npc.npcId;
+            quests = npc.quests;
+            activeQuestIndex = npc.activeQuestIndex;
+            firstTimeInteraction = npc.firstTimeInteraction;
+            currentDialog = npc.currentDialog;
+        }
+    }
+
 
 
     // a wrapper for UnityJson to handle arrays:
@@ -201,6 +219,7 @@ public class PLayFabManager : MonoBehaviour
             player = CreatePlayerData(),
             enemies = GatherAllEnemies(),
             loot = GatherAllLoot(),
+            npcQuests = GatherAllNPCQuestData()
         };
         string json = JsonUtility.ToJson(full);
 
@@ -319,6 +338,16 @@ public class PLayFabManager : MonoBehaviour
         return result;
     }
 
+    public List<NPCQuestData> GatherAllNPCQuestData()
+    {
+        List<NPCQuestData> result = new List<NPCQuestData>();
+        foreach (NPC npc in FindObjectsOfType<NPC>())
+        {
+            result.Add(new NPCQuestData(npc));
+        }
+        return result;
+    }
+
 
     /// Retrieves quick slot contents from EquipSystem.
     public string[] GetQuickSlotContents()
@@ -359,10 +388,10 @@ public class PLayFabManager : MonoBehaviour
     //        {
     //            yield return null;
     //        }
-                    
+
     //        yield return null;
     //    }
-        
+
     //    PlayerState.Instance.currentHealth = playerData.playerStats[0];
 
     //    Vector3 loadPos = new Vector3(
@@ -439,7 +468,7 @@ public class PLayFabManager : MonoBehaviour
             while (!op.isDone) yield return null;
             yield return null;
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         var pm = PlayerState.Instance.playerBody.GetComponent<PlayerMovement>();
         var cc = PlayerState.Instance.playerBody.GetComponent<CharacterController>();
@@ -513,6 +542,8 @@ public class PLayFabManager : MonoBehaviour
                 ls.lootName = prefab.name; 
             }
         }
+        ApplyNPCQuestData(full.npcQuests);
+
 
         // Re-enable player movement/look
         if (pm != null) pm.enabled = true;
@@ -520,6 +551,50 @@ public class PLayFabManager : MonoBehaviour
 
         Debug.Log("Full game data applied.");
         yield break;
+    }
+
+    public void ApplyNPCQuestData(List<NPCQuestData> savedQuests)
+    {
+        foreach (var npc in FindObjectsOfType<NPC>())
+        {
+            NPCQuestData data = savedQuests.Find(n => n.npcId == npc.npcId);
+            if (data != null)
+            {
+                npc.quests = data.quests;
+                npc.activeQuestIndex = data.activeQuestIndex;
+                npc.firstTimeInteraction = data.firstTimeInteraction;
+                npc.currentDialog = data.currentDialog;
+
+                if (npc.quests != null && npc.quests.Count > npc.activeQuestIndex)
+                {
+                    npc.currentActiveQuest = npc.quests[npc.activeQuestIndex];
+
+                    if (npc.activeQuestIndex > 0)
+                    {
+                        for (int i = 0; i < npc.activeQuestIndex; i++)
+                        {
+                            if (npc.quests[i].accepted)
+                            {
+                                QuestManager.instance.MarkQuestCompleted(npc.quests[i]);
+                            }
+                        }
+                    }
+
+                    if (npc.currentActiveQuest.accepted && !npc.currentActiveQuest.isCompleted)
+                    {
+                        QuestManager.instance.AddActiveQuest(npc.currentActiveQuest);
+                    }
+                    else if (npc.currentActiveQuest.accepted && npc.currentActiveQuest.isCompleted)
+                    {
+                        QuestManager.instance.MarkQuestCompleted(npc.currentActiveQuest);
+                    }
+                    else if (npc.currentActiveQuest.declined)
+                    {
+                        // Do nothing or maybe log
+                    }
+                }
+            }
+        }
     }
 
     #endregion LoadData

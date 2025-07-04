@@ -5,16 +5,16 @@ using UnityEngine;
 public class LimitCamera : MonoBehaviour
 {
 
-    private Quaternion fixedRotation;
+    public Quaternion fixedRotation;
     public Transform player;
     public float height = 40f;
 
-    private void Start()
+    public void Start()
     {
          fixedRotation = transform.rotation;
     }
 
-    private void LateUpdate()
+    public void LateUpdate()
     {
         if (player != null)
         {

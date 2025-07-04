@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    void Start()
+    public void Start()
     {
         animator = GetComponentInChildren<Animator>();
 
@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         currentSpeed = walkSpeed;
     }
 
-    void Update()
+    public void Update()
     {
         if (MovementManager.instance.canMove)
         {

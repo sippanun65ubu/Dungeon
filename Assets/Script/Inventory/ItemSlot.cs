@@ -52,7 +52,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
     }
 
-    IEnumerator DelayScan()
+    public IEnumerator DelayScan()
     {
         yield return new WaitForSeconds(0.1f);
         SellSystem.Instance.ScanItemInSlots();

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SaveZone : MonoBehaviour
 {
     public EnemySpawnerNearPlayer spawner;
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -13,7 +13,7 @@ public class SaveZone : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {

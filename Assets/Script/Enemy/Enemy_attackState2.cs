@@ -37,10 +37,6 @@ public class Enemy_attackState2 : StateMachineBehaviour
         }
     }
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        // Optionally reset attackTimer if needed
-    }
     private void LookAtPlayer()
     {
         Vector3 direction = player.position - agent.transform.position;

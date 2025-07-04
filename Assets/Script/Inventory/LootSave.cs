@@ -8,7 +8,7 @@ public class LootSave : MonoBehaviour
     public string lootId;
     public string lootName;
 
-    void Awake()
+    public void Awake()
     {
         // 1) Generate a GUID once, on first Awake.  This becomes the unique key for saving/spawning.
         if (string.IsNullOrEmpty(lootId))

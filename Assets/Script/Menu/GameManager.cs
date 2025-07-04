@@ -9,20 +9,20 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public int totalScore = 0; // Track total score
-    [SerializeField] TextMeshProUGUI timerText;
+    public TextMeshProUGUI timerText;
     public bool isPaused = false;
 
     // Countdown: 30 minutes = 1800 seconds.
     public float remainingTime = 1800f;
 
     [Header("UI References (End Game)")]
-    [SerializeField] GameObject endPage;
-    [SerializeField] TextMeshProUGUI TotalScoreText;
-    [SerializeField] TextMeshProUGUI ElapsedTimeText;
-    [SerializeField] Button SubmitButton;
+    public GameObject endPage;
+    public TextMeshProUGUI TotalScoreText;
+    public TextMeshProUGUI ElapsedTimeText;
+    public Button SubmitButton;
 
     [Header("Main Menu Scene")]
-    [SerializeField] private string mainMenuSceneName = "MainMenu";
+    public string mainMenuSceneName = "MainMenu";
     public int requiredScore = 1000;
     private bool hasTriggeredEndGame = false;
     private bool hasActivatedChild = false;
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     public GameObject QuickSlotPanel;
     public GameObject StatBarPanel;
 
-    void Awake()
+    public void Awake()
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
@@ -50,14 +50,14 @@ public class GameManager : MonoBehaviour
         totalScore += scoreValue;
     }
 
-    private void Start()
+    public void Start()
     {
         endPage.SetActive(false);
         SubmitButton.onClick.AddListener(OnEndSubmitButtonClicked);
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (!isPaused && remainingTime > 0f)
         {
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ShowEndGamePage(bool isDeath)
+    public void ShowEndGamePage(bool isDeath)
     {
         isPaused = true;
         Time.timeScale = 0f;
@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
         remainingTime = time;
     }
 
-    private void OnEndSubmitButtonClicked()
+    public void OnEndSubmitButtonClicked()
     {
         // Send leaderboard stats to PlayFab
         if (PLayFabManager.Instance != null)
@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
         // Load the main menu scene
         SceneManager.LoadScene(mainMenuSceneName);
     }
-    private void ActivateRandomChild()
+    public void ActivateRandomChild()
     {
         int childCount = transform.childCount;
         if (childCount == 0) return;
@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    internal void ResetToDefaults()
+    public void ResetToDefaults()
     {
         isPaused = false;
         totalScore = 0;

@@ -6,7 +6,7 @@ public class AccessPo : MonoBehaviour
 {
     public static AccessPo Instance { get; private set; }
 
-    void Awake()
+    public void Awake()
     {
         Instance = this;
     }

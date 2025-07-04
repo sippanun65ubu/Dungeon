@@ -151,14 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df829ce0d6cf7e4baa9932700368205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginEmail: {fileID: 1055446928}
-  loginPassword: {fileID: 376825448}
-  signupUsername: {fileID: 793984126}
-  signupEmail: {fileID: 354166715}
-  signupPassword: {fileID: 1129422010}
-  signupCPassword: {fileID: 767903395}
-  forgetPasswordEmail: {fileID: 982399426}
-  messageText: {fileID: 1519434253}
 --- !u!4 &5381427
 Transform:
   m_ObjectHideFlags: 0
@@ -5268,7 +5260,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Logout
+  m_Text: Exit
 --- !u!222 &1022159568
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6796,7 +6788,7 @@ GameObject:
   - component: {fileID: 1576041899}
   - component: {fileID: 1576041898}
   m_Layer: 5
-  m_Name: LogOut
+  m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

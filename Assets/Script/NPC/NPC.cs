@@ -14,13 +14,13 @@ public class NPC : MonoBehaviour
     public bool isTalkingWithPlayer;
     public string npcId;
 
-    TextMeshProUGUI npcDialogText;
+    public TextMeshProUGUI npcDialogText;
 
-    Button optionButton1;
-    TextMeshProUGUI optionButton1Text;
+    public Button optionButton1;
+    public TextMeshProUGUI optionButton1Text;
 
-    Button optionButton2;
-    TextMeshProUGUI optionButton2Text;
+    public Button optionButton2;
+    public TextMeshProUGUI optionButton2Text;
 
     public List<Quest> quests;
     public Quest currentActiveQuest = null;
@@ -28,7 +28,7 @@ public class NPC : MonoBehaviour
     public bool firstTimeInteraction = true;
     public int currentDialog;
 
-    private void Start()
+    public void Start()
     {
         npcDialogText = DialogSystem.instance.dialogText;
 
@@ -38,7 +38,7 @@ public class NPC : MonoBehaviour
         optionButton2 = DialogSystem.instance.option2BTN;
         optionButton2Text = DialogSystem.instance.option2BTN.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
     }
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
 
 
@@ -51,7 +51,7 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -147,7 +147,7 @@ public class NPC : MonoBehaviour
 
     }
 
-    private void SetAcceptAndDeclineOptions()
+    public void SetAcceptAndDeclineOptions()
     {
         optionButton1Text.text = currentActiveQuest.info.acceptOption;
         optionButton1.onClick.RemoveAllListeners();
@@ -163,7 +163,7 @@ public class NPC : MonoBehaviour
         });
     }
 
-    private void SubmitRequiredItems()
+    public void SubmitRequiredItems()
     {
         string firstRequiredItem = currentActiveQuest.info.firstRequirmentItem;
         int firstRequiredAmount = currentActiveQuest.info.firstRequirementAmount;
@@ -184,7 +184,7 @@ public class NPC : MonoBehaviour
 
     }
 
-    private bool AreQuestRequirmentsCompleted()
+    public bool AreQuestRequirmentsCompleted()
     {
         print("Checking Requirments");
 
@@ -261,7 +261,7 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void SetQuestHasCheckPoints(Quest activeQuest)
+    public void SetQuestHasCheckPoints(Quest activeQuest)
     {
         if (currentActiveQuest.info.checkPoints.Count > 0)
         {
@@ -273,7 +273,7 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void StartQuestInitialDialog()
+    public void StartQuestInitialDialog()
     {
         DialogSystem.instance.OpenDialogUI();
 
@@ -288,7 +288,7 @@ public class NPC : MonoBehaviour
         optionButton2.gameObject.SetActive(false);
     }
 
-    private void CheckIfDialogDone()
+    public void CheckIfDialogDone()
     {
         if (currentDialog == currentActiveQuest.info.initialDialog.Count - 1) // If its the last dialog 
         {
@@ -310,7 +310,7 @@ public class NPC : MonoBehaviour
             });
         }
     }
-    private void AcceptedQuest()
+    public void AcceptedQuest()
     {
         QuestManager.instance.AddActiveQuest(currentActiveQuest);
          
@@ -337,7 +337,7 @@ public class NPC : MonoBehaviour
 
     }
 
-    private void CloseDialogUI()
+    public void CloseDialogUI()
     {
         optionButton1Text.text = "[Close]";
         optionButton1.onClick.RemoveAllListeners();
@@ -348,7 +348,7 @@ public class NPC : MonoBehaviour
         optionButton2.gameObject.SetActive(false);
     }
 
-    private void ReceiveRewardAndCompleteQuest()
+    public void ReceiveRewardAndCompleteQuest()
     {
         QuestManager.instance.MarkQuestCompleted(currentActiveQuest);
 
@@ -386,7 +386,7 @@ public class NPC : MonoBehaviour
 
     }
 
-    private void DeclinedQuest()
+    public void DeclinedQuest()
     {
         currentActiveQuest.declined = true;
 

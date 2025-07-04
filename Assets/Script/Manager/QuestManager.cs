@@ -10,7 +10,7 @@ using static PLayFabManager;
 public class QuestManager : MonoBehaviour
 {   
     public static QuestManager instance { get; set; }
-    private void Awake()
+    public void Awake()
     {
         if (instance != null && instance != this)
         {
@@ -39,7 +39,7 @@ public class QuestManager : MonoBehaviour
     public GameObject trackerRowPrefab;
 
     public List<Quest> allTrackedQuests;
-    void Update()
+    public void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.H) && !isQuestMenuOpen)
@@ -128,7 +128,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    private string PrintCheckpoints(Quest trackedQuest, string existingText)
+    public string PrintCheckpoints(Quest trackedQuest, string existingText)
     {
         var finalText = existingText;
         
@@ -250,13 +250,13 @@ public class QuestManager : MonoBehaviour
 
     }
 
-    private Sprite GetSpriteForitem(string item)
+    public Sprite GetSpriteForitem(string item)
     {
         var itemToGet = Resources.Load<GameObject>(item);
         return itemToGet.GetComponent<Image>().sprite;
     }
 
-    internal void ResetToDefaults()
+    public void ResetToDefaults()
     {
         allActiveQuests.Clear();
         allCompletedQuests.Clear();

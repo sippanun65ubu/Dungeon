@@ -13,11 +13,9 @@ public class PlayerState : MonoBehaviour
     public float healthRegenRate; // Health regenerated per second
     public float healthRegenDelay; // Delay before health regeneration starts
 
-    private float lastDamageTime;
+    public float lastDamageTime;
     public bool isSprinting;
     public bool isPlayerDead;
-
-    public RespawnLocation spawnLocation;
     public GameObject playerBody;
 
     public AudioSource playerAudio;
@@ -38,18 +36,18 @@ public class PlayerState : MonoBehaviour
 
     }
 
-    private void Start()
+    public void Start()
     {
         currentHealth = maxHealth;
 
     }
 
-    private void Update()
+    public void Update()
     {
         HandleHealthRegeneration();
     }
 
-    private void HandleHealthRegeneration()
+    public void HandleHealthRegeneration()
     {
         if (Time.time - lastDamageTime > healthRegenDelay && currentHealth < maxHealth)
         {
@@ -86,7 +84,7 @@ public class PlayerState : MonoBehaviour
         playerAudio.PlayOneShot(playerDie);
     }
 
-    internal void ResetToDefaults()
+    public void ResetToDefaults()
     {
         var pm = playerBody.GetComponent<PlayerMovement>();
         if (pm != null) pm.enabled = false;
@@ -94,40 +92,7 @@ public class PlayerState : MonoBehaviour
         if (cc != null) cc.enabled = false;
         currentHealth = maxHealth;
         isPlayerDead = false;
-        Vector3 spawnPos = spawnLocation.transform.position;
-        spawnPos.y += 3f;
-        playerBody.transform.position = spawnPos;
         if (pm != null) pm.enabled = true;
         if (cc != null) cc.enabled = true;
     }
-
-    //public void RespawnPlayer()
-    //{
-    //    StartCoroutine(RespawnCoroutine());
-    //}
-
-    //public IEnumerator RespawnCoroutine()
-    //{
-    //    playerBody.GetComponent<PlayerMovement>().enabled = false;
-
-    //    Vector3 position = spawnLocation.transform.position;
-
-    //    position.y += 3f;
-
-    //    playerBody.transform.position = position;
-
-    //    currentHealth = maxHealth;
-
-    //    yield return new WaitForSeconds(0.2f);
-
-    //    isPlayerDead = false;
-
-    //    playerBody.GetComponent<PlayerMovement>().enabled = true;
-    //}
-
-    internal void SpawnPlayerLocation(RespawnLocation respawnLocation)
-    {
-        spawnLocation = respawnLocation;
-    }
-
 }

@@ -12,17 +12,17 @@ public class SelectionManager : MonoBehaviour
     public bool onTarget;
     public GameObject interaction_Info_UI;
     public GameObject selectedObject;
-    Text interaction_text;
+    public Text interaction_text;
     public Image centerDotIcon;
     public Image handIcon;
 
     public bool handIsVisible;
-    private void Start()
+    public void Start()
     {
         onTarget = false;
         interaction_text = interaction_Info_UI.GetComponent<Text>();
     }
-    private void Awake()
+    public void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -33,7 +33,7 @@ public class SelectionManager : MonoBehaviour
             Instance = this;
         }
     }
-    void Update()
+    public void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -148,7 +148,7 @@ public class SelectionManager : MonoBehaviour
         }
     }
 
-    private void loot(Lootable lootable)
+    public void loot(Lootable lootable)
     {
         if (lootable.wasLootCalculated == false)
         {

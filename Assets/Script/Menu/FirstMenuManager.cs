@@ -33,7 +33,7 @@ public class FirstMenuManager : MonoBehaviour
     public Text messageText;
 
     public static FirstMenuManager Instance { get; set; }
-    private void Awake()
+    public void Awake()
     {
         // Setup singleton.
         if (Instance == null)

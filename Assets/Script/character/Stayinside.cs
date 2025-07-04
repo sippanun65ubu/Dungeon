@@ -6,17 +6,17 @@ public class Stayinside : MonoBehaviour
 {
 	public Transform MinimapCam;
 	public float MinimapSize;
-	Vector3 TempV3;
+    public Vector3 TempV3;
 
 
-	void Update() {
+    public void Update() {
 		TempV3 = transform.parent.transform.position;
 		TempV3.y = transform.position.y;
 		transform.position = TempV3;
 	}
 
 
-	void LateUpdate() {
+    public void LateUpdate() {
 		transform.position = new Vector3 (
 			Mathf.Clamp(transform.position.x, MinimapCam.position.x-MinimapSize, MinimapSize+MinimapCam.position.x),
 			transform.position.y,

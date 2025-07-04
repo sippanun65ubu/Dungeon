@@ -17,7 +17,7 @@ public class DialogSystem : MonoBehaviour
 
     public bool dialogUIActive;
 
-    private void Awake()
+    public void Awake()
     {
         if (instance != null && instance != this)
         {

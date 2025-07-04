@@ -11,13 +11,13 @@ public class MouseMovement : MonoBehaviour
 
     public Transform playerBody;
 
-    void Start()
+    public void Start()
     {
         //Locking the cursor to the middle of the screen and making it invisible
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Update()
+    public void Update()
     {
         //if (!InventorySystem.Instance.isOpen && !MenuManager.Instance.isMenuOpen && !DialogSystem.instance.dialogUIActive && !QuestManager.instance.isQuestMenuOpen)
         if(MovementManager.instance.canLookAround)

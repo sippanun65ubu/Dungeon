@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Enemy_idleState : StateMachineBehaviour
 {
-    float timer;
+    public float timer;
     public float idleTime = 4f;
 
-    Transform player;
+    public Transform player;
 
     public float detectionAreaRadius = 25f;
 

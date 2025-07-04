@@ -12,16 +12,16 @@ public class HomingProjectile : MonoBehaviour
     [Header("Damage")]
     public int damage = 10;
 
-    private Rigidbody rb;
+    public Rigidbody rb;
 
-    void Start()
+    public void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed;
         Destroy(gameObject, lifeTime);
     }
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         // Always steer toward the player
         Vector3 targetPos = AccessPo.Instance.PlayerPosition;
@@ -35,7 +35,7 @@ public class HomingProjectile : MonoBehaviour
         rb.velocity = transform.forward * speed;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {

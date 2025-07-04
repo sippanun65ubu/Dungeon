@@ -31,7 +31,7 @@ public class InventorySystem : MonoBehaviour
 
     public TextMeshProUGUI currencyUI;
 
-    private void Awake()
+    public void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -44,7 +44,7 @@ public class InventorySystem : MonoBehaviour
     }
 
 
-    void Start()
+    public void Start()
     {
         isOpen = false;
 
@@ -67,7 +67,7 @@ public class InventorySystem : MonoBehaviour
 
     }
 
-    void Update()
+    public void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.F) && !isOpen)
@@ -125,7 +125,7 @@ public class InventorySystem : MonoBehaviour
         QuestManager.instance.RefreshTrackerList();
     }
 
-    void TriggerPickupPopUp(string itemName, Sprite itemSprite)
+    public void TriggerPickupPopUp(string itemName, Sprite itemSprite)
     {
         pickupAlert.SetActive(true);
         
@@ -227,7 +227,7 @@ public int CheckItemAmount(string name)
         return itemCounter;
     }
 
-    internal void ClearAllItems()
+    public void ClearAllItems()
     {
         foreach (var slot in slotList)
             foreach (Transform child in slot.transform)

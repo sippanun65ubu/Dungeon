@@ -13,12 +13,12 @@ public class ProjectileEnemy : MonoBehaviour
     public float spawnChance = 0.3f;
     public GameObject enemyPrefab;
 
-    private void Start()
+    public void Start()
     {
         Destroy(gameObject, lifeTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {

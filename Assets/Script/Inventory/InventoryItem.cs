@@ -10,28 +10,28 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public bool isTrashable;
 
     // --- Item Info UI --- //
-    private GameObject itemInfoUI;
+    public GameObject itemInfoUI;
 
-    private Text itemInfoUI_itemName;
-    private Text itemInfoUI_itemDescription;
-    private Text itemInfoUI_itemFunctionality;
+    public Text itemInfoUI_itemName;
+    public Text itemInfoUI_itemDescription;
+    public Text itemInfoUI_itemFunctionality;
 
     public string thisName, thisDescription, thisFunctionality;
     // --- Consumption --- //
-    private GameObject itemPendingConsumption;
+    public GameObject itemPendingConsumption;
     public bool isConsumable;
     public float healthEffect;
     public float maxHealthEffect;
 
     //--- Equipping --//
     public bool isEquippable;
-    private GameObject itemPendingEquipping;
+    public GameObject itemPendingEquipping;
     public bool isInsideQuickSlot;
 
     public bool isSelected;
     public int sellingPrice;
 
-    private void Start()
+    public void Start()
     {
         itemInfoUI = InventorySystem.Instance.ItemInfoUi;
         itemInfoUI_itemName = itemInfoUI.transform.Find("ItemName").GetComponent<Text>();
@@ -40,7 +40,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     }
 
-    void Update()
+    public void Update()
     {
         if (isSelected)
         {
@@ -104,7 +104,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
     }
 
-    private void consumingFunction(float healthEffect)
+    public void consumingFunction(float healthEffect)
     {
         itemInfoUI.SetActive(false);
 

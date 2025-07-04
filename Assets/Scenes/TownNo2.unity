@@ -1468,6 +1468,7 @@ MonoBehaviour:
   onTarget: 0
   interaction_Info_UI: {fileID: 450965755}
   selectedObject: {fileID: 1796953365}
+  interaction_text: {fileID: 0}
   centerDotIcon: {fileID: 2115967368}
   handIcon: {fileID: 1796953367}
   handIsVisible: 0
@@ -30573,6 +30574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7898b54cd2fee4d8239bfe747a5abb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fixedRotation: {x: 0, y: 0, z: 0, w: 0}
   player: {fileID: 1974044713}
   height: 40
 --- !u!1001 &356867182
@@ -37949,6 +37951,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 5109871050878376439, guid: ac300d944d202734a93019a96b4394a0, type: 3}
+  activeBoss: {fileID: 0}
   minions:
   - prefab: {fileID: 5969877847064609456, guid: 2cec6906026a6434aa3e3e59f051bd84, type: 3}
     spawnWeight: 0.3
@@ -37956,6 +37959,7 @@ MonoBehaviour:
     spawnWeight: 0.3
   maxMinions: 20
   minionSpawnRadius: 20
+  activeMinions: []
   spawnLocations:
   - {fileID: 1927099909}
   - {fileID: 907419657}
@@ -53405,6 +53409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 9058408009184898926, guid: 72ea2e0679c7b2d46bafa946bd883ad6, type: 3}
+  activeBoss: {fileID: 0}
   minions:
   - prefab: {fileID: 8009746976746960287, guid: 4ec6b50725b55a74e9e1d403c2003031, type: 3}
     spawnWeight: 0.4
@@ -53412,6 +53417,7 @@ MonoBehaviour:
     spawnWeight: 0.4
   maxMinions: 20
   minionSpawnRadius: 20
+  activeMinions: []
   spawnLocations:
   - {fileID: 35619529}
   - {fileID: 823918250}
@@ -68382,6 +68388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 2534507159416327860, guid: f857a4c68ee491e4d9707a32ab943fcb, type: 3}
+  activeBoss: {fileID: 0}
   minions:
   - prefab: {fileID: 5969877847064609456, guid: 2cec6906026a6434aa3e3e59f051bd84, type: 3}
     spawnWeight: 0.3
@@ -68389,6 +68396,7 @@ MonoBehaviour:
     spawnWeight: 0.3
   maxMinions: 20
   minionSpawnRadius: 20
+  activeMinions: []
   spawnLocations:
   - {fileID: 648529251}
   - {fileID: 771773102}
@@ -107396,6 +107404,9 @@ MonoBehaviour:
   maxActiveEnemies: 3
   allowSpawning: 1
   movementThreshold: 5
+  accumulatedMovement: 0
+  lastPlayerPosition: {x: 0, y: 0, z: 0}
+  activeEnemies: []
 --- !u!4 &1163122570
 Transform:
   m_ObjectHideFlags: 0
@@ -117384,6 +117395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 3128424637781106762, guid: b23e303e402d1364bb7d4a9ea166ebb3, type: 3}
+  activeBoss: {fileID: 0}
   minions:
   - prefab: {fileID: 8009746976746960287, guid: 4ec6b50725b55a74e9e1d403c2003031, type: 3}
     spawnWeight: 0.4
@@ -117391,6 +117403,7 @@ MonoBehaviour:
     spawnWeight: 0.4
   maxMinions: 20
   minionSpawnRadius: 20
+  activeMinions: []
   spawnLocations:
   - {fileID: 2007938582}
   - {fileID: 1089578296}
@@ -118057,6 +118070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 6690943475240465362, guid: 64aff1932f8b4da4c86af55de7be7e24, type: 3}
+  activeBoss: {fileID: 0}
   minions:
   - prefab: {fileID: 3697663018319043308, guid: d8bb02c40baf0f042adbf5aa5f0c4757, type: 3}
     spawnWeight: 0.3
@@ -118066,6 +118080,7 @@ MonoBehaviour:
     spawnWeight: 0.35
   maxMinions: 20
   minionSpawnRadius: 20
+  activeMinions: []
   spawnLocations:
   - {fileID: 1887028526}
   - {fileID: 1967889024}
@@ -122910,7 +122925,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 681357749}
-  - {fileID: 1353035303}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1303973001
@@ -128505,22 +128519,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352758743}
   m_Mesh: {fileID: -971911258708587270, guid: 65fac7cc44cc1cc4092bad889ea7cb6d, type: 3}
---- !u!114 &1353035302 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6277415895259718528, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-  m_PrefabInstance: {fileID: 4293675618422346999}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca433eaaa336f7e4c82c22781116a749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1353035303 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5407454776513474690, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-  m_PrefabInstance: {fileID: 4293675618422346999}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1353099358
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -141644,6 +141642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219ce3938dbf9b84e820859a69f4fbaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 0}
   healthCounter: {fileID: 1007831221}
   playerState: {fileID: 1799820794}
   currentHealth: 0
@@ -147987,6 +147986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 484181280954526158, guid: b254ea6c55605eb46b9f0be2d11098df, type: 3}
+  activeBoss: {fileID: 0}
   minions:
   - prefab: {fileID: 3697663018319043308, guid: d8bb02c40baf0f042adbf5aa5f0c4757, type: 3}
     spawnWeight: 0.3
@@ -147996,6 +147996,7 @@ MonoBehaviour:
     spawnWeight: 0.35
   maxMinions: 20
   minionSpawnRadius: 20
+  activeMinions: []
   spawnLocations:
   - {fileID: 1336845958}
   - {fileID: 1036455454}
@@ -174533,9 +174534,9 @@ MonoBehaviour:
   currentHealth: 0
   healthRegenRate: 0.5
   healthRegenDelay: 10
+  lastDamageTime: 0
   isSprinting: 0
   isPlayerDead: 0
-  spawnLocation: {fileID: 1353035302}
   playerBody: {fileID: 1974044710}
   playerAudio: {fileID: 1799820797}
   playerHurt: {fileID: 8300000, guid: 3e6b68524ff6a2548b1454e2ce4448a3, type: 3}
@@ -192004,7 +192005,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1928679342}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: GoToSetting
+        m_MethodName: ClosesMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -194990,8 +194991,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trashAlertUI: {fileID: 43244609}
+  textToModify: {fileID: 0}
   trash_closed: {fileID: 21300000, guid: 67fb22f185b35774eb81a352f391b170, type: 3}
   trash_opened: {fileID: 21300000, guid: 4c300b9d6ffe60241a029536ce4b8128, type: 3}
+  imageComponent: {fileID: 0}
+  YesBTN: {fileID: 0}
+  NoBTN: {fileID: 0}
+  itemToBeDeleted: {fileID: 0}
 --- !u!1001 &1991508763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -196842,6 +196848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 484181280954526158, guid: b254ea6c55605eb46b9f0be2d11098df, type: 3}
+  activeBoss: {fileID: 0}
   minions:
   - prefab: {fileID: 3697663018319043308, guid: d8bb02c40baf0f042adbf5aa5f0c4757, type: 3}
     spawnWeight: 0.3
@@ -196851,6 +196858,7 @@ MonoBehaviour:
     spawnWeight: 0.35
   maxMinions: 20
   minionSpawnRadius: 20
+  activeMinions: []
   spawnLocations:
   - {fileID: 1964954182}
   - {fileID: 1554985934}
@@ -205097,6 +205105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 5109871050878376439, guid: ac300d944d202734a93019a96b4394a0, type: 3}
+  activeBoss: {fileID: 0}
   minions:
   - prefab: {fileID: 5969877847064609456, guid: 2cec6906026a6434aa3e3e59f051bd84, type: 3}
     spawnWeight: 0.3
@@ -205104,6 +205113,7 @@ MonoBehaviour:
     spawnWeight: 0.3
   maxMinions: 20
   minionSpawnRadius: 20
+  activeMinions: []
   spawnLocations:
   - {fileID: 504821684}
   - {fileID: 100839109}
@@ -214320,63 +214330,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1001 &4293675618422346999
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1301815363}
-    m_Modifications:
-    - target: {fileID: 44556934573903755, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-      propertyPath: m_Name
-      value: SpawnLocation
-      objectReference: {fileID: 0}
-    - target: {fileID: 5407454776513474690, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 81.19806
-      objectReference: {fileID: 0}
-    - target: {fileID: 5407454776513474690, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.6226072
-      objectReference: {fileID: 0}
-    - target: {fileID: 5407454776513474690, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 5.0631104
-      objectReference: {fileID: 0}
-    - target: {fileID: 5407454776513474690, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5407454776513474690, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5407454776513474690, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5407454776513474690, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5407454776513474690, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5407454776513474690, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5407454776513474690, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 671abbe534bceab44a232ac17c008be4, type: 3}
 --- !u!1 &4441848306777483445
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class MenuManager : MonoBehaviour
     public GameObject settingMenu;
     public bool isMenuOpen;
 
-    private void Awake()
+    public void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -24,7 +24,7 @@ public class MenuManager : MonoBehaviour
             Instance = this;
         }
     }
-    private void Update()
+    public void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape) && !isMenuOpen)
         {
@@ -112,23 +112,20 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public IEnumerator ClosesMenu()
+    public void ClosesMenu()
     {
         if (isMenuOpen == true)
         {
-            yield return new WaitForSeconds(1f); // wait 1 second (or your custom coroutine)
-
             settingMenu.SetActive(false);
 
             uiCanvas.SetActive(true);
             menuCanvas.SetActive(false);
             GameManager.instance.UnpauseGame();
             isMenuOpen = false;
-
             MovementManager.instance.EnableLook(true);
             MovementManager.instance.EnableMovement(true);
 
-            if (!InventorySystem.Instance.isOpen)
+            if (InventorySystem.Instance.isOpen == false)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -136,8 +133,6 @@ public class MenuManager : MonoBehaviour
 
             SelectionManager.Instance.EnableSelection();
             SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
-
-
         }
     }
     

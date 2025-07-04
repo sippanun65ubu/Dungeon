@@ -22,7 +22,7 @@ public class EquipSystem : MonoBehaviour
     public GameObject selectedItemModel;
     public GameObject toolHolder;
 
-    private void Awake()
+    public void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -35,18 +35,18 @@ public class EquipSystem : MonoBehaviour
     }
 
 
-    private void Start()
+    public void Start()
     {
         PopulateSlotList();
     }
 
-    void Update()
+    public void Update()
     {
         HandleQuickSlotSelection();
         HandleConsumableItemUse();
 
     }
-    private void HandleQuickSlotSelection()
+    public void HandleQuickSlotSelection()
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
@@ -74,7 +74,7 @@ public class EquipSystem : MonoBehaviour
         }
     }
 
-    void SelectQuickSlot(int number)
+    public void SelectQuickSlot(int number)
     {
         if (checkedIfSlotIsFull(number) == true)
         {
@@ -140,7 +140,7 @@ public class EquipSystem : MonoBehaviour
         }
     }
 
-    private void SetEquippedModel(GameObject selectedItem)
+    public void SetEquippedModel(GameObject selectedItem)
     {
         if (selectedItemModel != null)
         {
@@ -152,13 +152,13 @@ public class EquipSystem : MonoBehaviour
         selectedItemModel.transform.SetParent(toolHolder.transform, false); 
     }
 
-    GameObject GetSelectedItem(int slotnumber)
+    public GameObject GetSelectedItem(int slotnumber)
     {
         return quickSlotsList[slotnumber - 1].transform.GetChild(0).gameObject;
 
 
     }
-    bool checkedIfSlotIsFull(int slotNumber)
+    public bool checkedIfSlotIsFull(int slotNumber)
     {
         if (quickSlotsList[slotNumber - 1].transform.childCount > 0)
         {
@@ -170,7 +170,7 @@ public class EquipSystem : MonoBehaviour
         }
     }
 
-    private void PopulateSlotList()
+    public void PopulateSlotList()
     {
         foreach (Transform child in quickSlotsPanel.transform)
         {
@@ -228,7 +228,7 @@ public class EquipSystem : MonoBehaviour
         }
     }
 
-    internal bool IsHoldingWeapon()
+    public bool IsHoldingWeapon()
     {
         if (selectedItem != null)
         {
@@ -247,7 +247,7 @@ public class EquipSystem : MonoBehaviour
         }
     }
 
-    internal int GetWeaponDamage()
+    public int GetWeaponDamage()
     {
         if (selectedItem != null)
         {
@@ -260,7 +260,7 @@ public class EquipSystem : MonoBehaviour
             return 0;
         }
     }
-    internal int GetWeaponPenetration()
+    public int GetWeaponPenetration()
     {
         if (selectedItem != null)
         {
@@ -274,18 +274,7 @@ public class EquipSystem : MonoBehaviour
     }
 
 
-    internal bool IsThereASwingLock()
-    {
-        if (selectedItemModel && selectedItemModel.GetComponent<EquippableItem>())
-        {
-            return selectedItemModel.GetComponent<EquippableItem>().swingWait;
-        } 
-        else
-        {
-            return false; 
-        }
-    }
-    private void HandleConsumableItemUse()
+    public void HandleConsumableItemUse()
     {
         if (selectNumber != -1 && selectedItem != null)
         {
@@ -298,7 +287,7 @@ public class EquipSystem : MonoBehaviour
         }
     }
 
-    private void ApplyConsumableEffect(InventoryItem item)
+    public void ApplyConsumableEffect(InventoryItem item)
     {
         if (item.isConsumable)
         {
@@ -307,7 +296,7 @@ public class EquipSystem : MonoBehaviour
         }
     }
 
-    private void DestroyConsumableItem(InventoryItem item)
+    public void DestroyConsumableItem(InventoryItem item)
     {
         if (item.isConsumable)
         {

@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     public string enemyName;
     public bool playerInRange;
 
-    private Animator animator;
+    public Animator animator;
     public bool isDead = false;
     [SerializeField] private float _currentHealth;
     public float currentHealth
@@ -17,42 +17,42 @@ public class Enemy : MonoBehaviour
         get => _currentHealth;
         set => _currentHealth = value;
     }
-    [SerializeField] float maxHealth;
+    public float maxHealth;
 
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     public Slider healthSlider;
 
     public bool isSuperregen = false; 
     public float healthRegenRate = 5f; 
     public float healthRegenDelay = 3f;
-    private float lastDamageTime; 
+    public float lastDamageTime; 
 
     public float damageToInflict; 
     public float currentDamageToInflict;
     public int armor = 0;
-    private int maxarmor = 5;
+    public int maxarmor = 5;
 
     public string enemyId;
 
     public string resourcePath;
-    enum EnemyType
+    public enum EnemyType
     {
         Skeleton,
         Bat,
         Slime
     }
-    EnemyType thisenemyType;
+    public EnemyType thisenemyType;
 
     [Header("Sound")]
     [SerializeField] AudioSource soundChannel;
-    [SerializeField] AudioClip skeletonTakeDamage;
-    [SerializeField] AudioClip skeletonDie;
+    [SerializeField] AudioClip monsterTakeDamage;
+    [SerializeField] AudioClip monsterDie;
 
 
     public int enemyScoreValue = 10;
 
-    private void Awake()
+    public void Awake()
     {
         if (string.IsNullOrEmpty(enemyId))
         {
@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void Start()
     {
         currentHealth = maxHealth;
         currentDamageToInflict = damageToInflict;
@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
     }
-    private void Update()
+    public void Update()
     {
         healthSlider.value = currentHealth / maxHealth;
 
@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    private void HandleHealthRegeneration()
+    public void HandleHealthRegeneration()
     {
         // Check if enough time has passed since the last damage
         if (Time.time - lastDamageTime > healthRegenDelay && currentHealth < maxHealth)
@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour
             currentHealth = Mathf.Min(currentHealth, maxHealth);
         }
     }
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -99,7 +99,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -139,12 +139,12 @@ public class Enemy : MonoBehaviour
     }
 
 
-    private void PlayHitSound()
+    public void PlayHitSound()
     {
         switch (thisenemyType)
         {
             case EnemyType.Skeleton:
-                soundChannel.PlayOneShot(skeletonTakeDamage);
+                soundChannel.PlayOneShot(monsterTakeDamage);
                 break;
                 //case :
                 //    soundChannel.PlayOneShot();
@@ -152,12 +152,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void PlayDyingSound()
+    public void PlayDyingSound()
     {
         switch (thisenemyType)
         {
             case EnemyType.Skeleton:
-                soundChannel.PlayOneShot(skeletonDie);
+                soundChannel.PlayOneShot(monsterDie);
                 break;
                 //case :
                 //    soundChannel.PlayOneShot();
@@ -170,7 +170,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    internal void ForceDieImmediate()
+    public void ForceDieImmediate()
     {
         isDead = true;
         agent.enabled = false;

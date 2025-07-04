@@ -33,14 +33,14 @@ public class SellSystem : MonoBehaviour
     public ShopSystem ShopSystem;
     public GameObject sellPanel;
 
-    private void Start()
+    public void Start()
     {
         GetAllSlot();
         sellButton.onClick.AddListener(SellItem);
         backBTN.onClick.AddListener(ExitSellMode);
     }
 
-    private void ExitSellMode()
+    public void ExitSellMode()
     {
         if (SellPanelIsEmpty())
         {
@@ -48,7 +48,7 @@ public class SellSystem : MonoBehaviour
         }
     }
 
-    private bool SellPanelIsEmpty()
+    public bool SellPanelIsEmpty()
     {
         if (itemToBeSold.Count <= 0)
         {
@@ -61,7 +61,7 @@ public class SellSystem : MonoBehaviour
     }
 
 
-    private void SellItem()
+    public void SellItem()
     {
         List<GameObject> itemToDestory = new List<GameObject>();
 
@@ -83,7 +83,7 @@ public class SellSystem : MonoBehaviour
         UpdateSellAmountUI();
     }
 
-    private void GetAllSlot()
+    public void GetAllSlot()
     {
         sellSlots.Clear();
         foreach (Transform child in sellPanel.transform)

@@ -9,16 +9,16 @@ public class TrashSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
     public GameObject trashAlertUI;
 
-    private Text textToModify;
+    public Text textToModify;
 
     public Sprite trash_closed;
     public Sprite trash_opened;
 
-    private Image imageComponent;
+    public Image imageComponent;
 
-    Button YesBTN, NoBTN;
+    public Button YesBTN, NoBTN;
 
-    GameObject draggedItem
+    public GameObject draggedItem
     {
         get
         {
@@ -26,7 +26,7 @@ public class TrashSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         }
     }
 
-    GameObject itemToBeDeleted;
+    public GameObject itemToBeDeleted;
 
 
 
@@ -43,7 +43,7 @@ public class TrashSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
 
 
-    void Start()
+    public void Start()
     {
         imageComponent = transform.Find("background").GetComponent<Image>();
 
@@ -70,20 +70,20 @@ public class TrashSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
     }
 
-    IEnumerator notifyBeforeDeletion()
+    public IEnumerator notifyBeforeDeletion()
     {
         trashAlertUI.SetActive(true);
         textToModify.text = "Throw away this " + itemName + "?";
         yield return new WaitForSeconds(1f);
     }
 
-    private void CancelDeletion()
+    public void CancelDeletion()
     {
         imageComponent.sprite = trash_closed;
         trashAlertUI.SetActive(false);
     }
 
-    private void DeleteItem()
+    public void DeleteItem()
     {
         imageComponent.sprite = trash_closed;
         DestroyImmediate(itemToBeDeleted.gameObject);

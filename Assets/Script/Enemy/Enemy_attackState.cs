@@ -6,8 +6,8 @@ using UnityEngine.AI;
 
 public class Enemy_attackState : StateMachineBehaviour
 {
-    Transform player;
-    NavMeshAgent agent;
+    public Transform player;
+    public NavMeshAgent agent;
 
     public float stopAttackingDistance = 7.1f;
 
@@ -32,13 +32,7 @@ public class Enemy_attackState : StateMachineBehaviour
     }
 
 
-
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
-    private void LookAtPlayer()
+    public void LookAtPlayer()
     {
         Vector3 direction  = player.position - agent.transform.position;
         agent.transform.rotation = Quaternion.LookRotation(direction);

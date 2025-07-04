@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class BowController : MonoBehaviour
 {
-    private Animator bowAnimator; // Reference to the Animator
+    public Animator bowAnimator; // Reference to the Animator
     public InventorySystem inventory; // Reference to your inventory system
-    public string arrowItemName = "Arrow"; // Name of the arrow item in the inventory
-    private bool isDrawing = false;
+    public bool isDrawing = false;
 
     public string arrowPrefabPath = "Arrow"; // Path in the Resources folder (without file extension)
 
-    private GameObject arrowPrefab; // The loaded arrow prefab
+    public GameObject arrowPrefab; // The loaded arrow prefab
     public Transform spawnPosition;
 
     public float shootingForce = 100;
@@ -20,12 +19,12 @@ public class BowController : MonoBehaviour
     public AudioClip loadBow;
     public AudioClip shotBow;
 
-    private void Start()
+    public void Start()
     {
         bowAnimator = GetComponent<Animator>();
         LoadArrowPrefab();
     }
-    private void LoadArrowPrefab()
+    public void LoadArrowPrefab()
     {
         // Load the arrow prefab from the specified path in the Resources folder
         arrowPrefab = Resources.Load<GameObject>(arrowPrefabPath);
@@ -36,12 +35,12 @@ public class BowController : MonoBehaviour
         }
     }
 
-    void Update()
+    public void Update()
     {
         HandleBowDrawing();
     }
 
-    private void HandleBowDrawing()
+    public void HandleBowDrawing()
     {
         if (Input.GetMouseButtonDown(1)) // Right mouse button pressed
         {
@@ -60,7 +59,7 @@ public class BowController : MonoBehaviour
         }
     }
 
-    private void StartDraw()
+    public void StartDraw()
     {
         isDrawing = true;
         bowAnimator.SetBool("IsDrawing", true); // Set the Animator parameter
@@ -68,13 +67,13 @@ public class BowController : MonoBehaviour
 
     }
 
-    private void CancelDraw()
+    public void CancelDraw()
     {
         isDrawing = false;
         bowAnimator.SetBool("IsDrawing", false); // Reset the Animator parameter
     }
 
-    private void ReleaseArrow()
+    public void ReleaseArrow()
     {
         if (!isDrawing) return;
 
@@ -87,7 +86,7 @@ public class BowController : MonoBehaviour
     }
 
 
-    private void ShootArrow()
+    public void ShootArrow()
     {
         Vector3 shootingDirection = CalculateDirection().normalized;
 

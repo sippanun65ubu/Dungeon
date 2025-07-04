@@ -14,13 +14,13 @@ public class EnemySpawnPoint : MonoBehaviour
     public static EnemySpawnPoint Instance { get; set; }
     [Header("Boss Settings")]
     public GameObject bossPrefab;
-    private GameObject activeBoss;
+    public GameObject activeBoss;
 
     [Header("Minion Settings")]
     public List<SpawnableEnemy> minions;
     public int maxMinions = 5;
     public float minionSpawnRadius = 10f;
-    private List<GameObject> activeMinions = new List<GameObject>();
+    public List<GameObject> activeMinions = new List<GameObject>();
 
     [Header("Spawn Locations")]
     public List<Transform> spawnLocations;
@@ -28,14 +28,14 @@ public class EnemySpawnPoint : MonoBehaviour
     [Header("Trigger Settings")]
     public string playerTag = "Player";
 
-    void Reset()
+    public void Reset()
     {
         // Make sure this collider is a trigger
         var col = GetComponent<Collider>();
         col.isTrigger = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(playerTag))
         {
@@ -47,7 +47,7 @@ public class EnemySpawnPoint : MonoBehaviour
         }
     }
 
-    private void SpawnBoss()
+    public void SpawnBoss()
     {
         // Only spawn a boss if one isn't already alive
         if (activeBoss != null) return;
@@ -57,7 +57,7 @@ public class EnemySpawnPoint : MonoBehaviour
         Debug.Log($"[BossSpawn] Boss spawned at {pos}");
     }
 
-    private void SpawnMinions()
+    public void SpawnMinions()
     {
         // Clean up any that have been destroyed already
         activeMinions.RemoveAll(e => e == null);
@@ -79,7 +79,7 @@ public class EnemySpawnPoint : MonoBehaviour
         }
     }
 
-    private GameObject GetWeightedMinion()
+    public GameObject GetWeightedMinion()
     {
         float total = 0f;
         foreach (var m in minions) total += m.spawnWeight;
@@ -94,7 +94,7 @@ public class EnemySpawnPoint : MonoBehaviour
         return null;
     }
 
-    private Vector3 PickSpawnPosition()
+    public Vector3 PickSpawnPosition()
     {
         if (spawnLocations != null && spawnLocations.Count > 0)
         {

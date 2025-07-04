@@ -8,16 +8,16 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 {
 
 
-    private RectTransform rectTransform;
-    private CanvasGroup canvasGroup;
+    public RectTransform rectTransform;
+    public CanvasGroup canvasGroup;
 
     public static GameObject itemBeingDragged;
-    Vector3 startPosition;
-    Transform startParent;
+    public Vector3 startPosition;
+    public Transform startParent;
 
 
 
-    private void Awake()
+    public void Awake()
     {
 
         rectTransform = GetComponent<RectTransform>();

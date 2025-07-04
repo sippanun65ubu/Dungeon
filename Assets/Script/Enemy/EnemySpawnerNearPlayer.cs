@@ -21,12 +21,12 @@ public class EnemySpawnerNearPlayer : MonoBehaviour
     public bool allowSpawning = true;
 
     public float movementThreshold = 5f; 
-    private float accumulatedMovement = 0f;
-    private Vector3 lastPlayerPosition;
+    public float accumulatedMovement = 0f;
+    public Vector3 lastPlayerPosition;
 
-    private List<GameObject> activeEnemies = new List<GameObject>();
+    public List<GameObject> activeEnemies = new List<GameObject>();
 
-    private void Start()
+    public void Start()
     {
 
         if (player != null)
@@ -62,7 +62,7 @@ public class EnemySpawnerNearPlayer : MonoBehaviour
         }
     }
 
-    void SpawnEnemyNearPlayer()
+    public void SpawnEnemyNearPlayer()
     {
         GameObject enemyToSpawn = GetWeightedRandomEnemy();
 
@@ -77,7 +77,7 @@ public class EnemySpawnerNearPlayer : MonoBehaviour
         activeEnemies.Add(newEnemy);
     }
 
-    GameObject GetWeightedRandomEnemy()
+    public GameObject GetWeightedRandomEnemy()
     {
         float totalWeight = 0f;
         foreach (var enemy in enemySpawnTable)

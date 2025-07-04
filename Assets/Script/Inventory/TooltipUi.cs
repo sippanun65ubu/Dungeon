@@ -10,7 +10,7 @@ public class TooltipUI : MonoBehaviour
     public Text itemDescriptionText;    // Text for item description
     public Text itemStatsText;          // Text for item stats
 
-    private void Awake()
+    public void Awake()
     {
         if (Instance != null && Instance != this)
         {
