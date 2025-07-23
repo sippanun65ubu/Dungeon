@@ -23,7 +23,6 @@ public class Enemy : MonoBehaviour
 
     public Slider healthSlider;
 
-    public bool isSuperregen = false; 
     public float healthRegenRate = 5f; 
     public float healthRegenDelay = 3f;
     public float lastDamageTime; 
@@ -73,7 +72,7 @@ public class Enemy : MonoBehaviour
     {
         healthSlider.value = currentHealth / maxHealth;
 
-        if (isSuperregen && !isDead)
+        if (!isDead)
         {
             HandleHealthRegeneration();
         }

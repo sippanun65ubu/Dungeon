@@ -5,7 +5,6 @@ using UnityEngine;
 public class BowController : MonoBehaviour
 {
     public Animator bowAnimator; // Reference to the Animator
-    public InventorySystem inventory; // Reference to your inventory system
     public bool isDrawing = false;
 
     public string arrowPrefabPath = "Arrow"; // Path in the Resources folder (without file extension)

@@ -86,7 +86,6 @@ public class InventorySystem : MonoBehaviour
     {
         inventoryScreenUI.SetActive(true);
 
-        //inventoryScreenUI.GetComponent<Canvas>().sortingOrder = MenuManager.Instance.SetAsFront();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 

@@ -132,20 +132,6 @@ public class PLayFabManager : MonoBehaviour
             remainingTime = _remainingTime;
             currentScene = _currentScene;
         }
-
-        public static PlayerData CreateDefaultData()
-        {
-
-            float[] defaultStats = new float[1] { 300f };              
-            float[] defaultPosAndRot = new float[6] { 336.9f,  7.87f, 336.7f, 0f, 0f, 1f }; 
-            string[] defaultInventory = new string[0];                       
-            string[] defaultQuickSlots = new string[0];                        
-            int defaultTotalScore = 0;
-            float defaultRemainingTime = 1800f;                                
-            string defaultScene = "TownNo2";                             
-
-            return new PlayerData(defaultStats, defaultPosAndRot, defaultInventory, defaultQuickSlots, defaultTotalScore, defaultRemainingTime, defaultScene);
-        }
     }
     [Serializable]
     public class EnemyData
@@ -365,100 +351,6 @@ public class PLayFabManager : MonoBehaviour
         }
         return temp.ToArray();
     }
-
-
-
-    /// Applies loaded player data to the game.
-    //public IEnumerator SetGameDataCoroutine(PlayerData playerData, EnemyData[] enemies)
-    //{
-    //    var pm = PlayerState.Instance.playerBody
-    //        .GetComponent<PlayerMovement>();
-    //    if (pm != null)
-    //        pm.enabled = false;
-    //    var cc = PlayerState.Instance.playerBody
-    //        .GetComponent<CharacterController>();
-    //    if (cc != null)
-    //        cc.enabled = false;
-    //    // Check if the saved scene is different from the current scene.
-    //    if (SceneManager.GetActiveScene().name != playerData.currentScene)
-    //    {
-    //        // Load the scene asynchronously.
-    //        AsyncOperation op = SceneManager.LoadSceneAsync(playerData.currentScene);
-    //        while (!op.isDone)
-    //        {
-    //            yield return null;
-    //        }
-
-    //        yield return null;
-    //    }
-
-    //    PlayerState.Instance.currentHealth = playerData.playerStats[0];
-
-    //    Vector3 loadPos = new Vector3(
-    //        playerData.playerPositionAndRotation[0],
-    //        playerData.playerPositionAndRotation[1],
-    //        playerData.playerPositionAndRotation[2]
-    //    );
-    //    Vector3 forward = new Vector3(
-    //        playerData.playerPositionAndRotation[3],
-    //        playerData.playerPositionAndRotation[4],
-    //        playerData.playerPositionAndRotation[5]
-    //    );
-    //    AccessPo.Instance.PlayerPosition = loadPos;
-    //    AccessPo.Instance.PlayerRotation = Quaternion.LookRotation(forward);
-
-    //    // Restore inventory.
-    //    foreach (string item in playerData.inventoryContent)
-    //    {
-    //        InventorySystem.Instance.AddToInventory(item);
-    //    }
-
-    //    // Restore quick slot content.
-    //    foreach (string item in playerData.quickSlotContent)
-    //    {
-    //        GameObject availableSlot = EquipSystem.Instance.FindNextEmptySlot();
-    //        GameObject itemToAdd = Instantiate(Resources.Load<GameObject>(item));
-    //        itemToAdd.transform.SetParent(availableSlot.transform, false);
-    //    }
-
-    //    // Update total score.
-    //    GameManager.instance.totalScore = playerData.totalScore;
-
-    //    // Update time.
-    //    GameManager.instance.SetRemainingTime(playerData.remainingTime);
-
-    //    foreach (var ed in enemies)
-    //    {
-    //        // load the prefab by name (adjust path as needed):
-    //        var prefab = Resources.Load<GameObject>(ed.prefabName);
-    //        if (prefab == null)
-    //        {
-    //            continue;
-    //        }
-
-    //        // instantiate at saved position:
-    //        Vector3 pos = new Vector3(ed.position[0], ed.position[1], ed.position[2]);
-    //        var go = Instantiate(prefab, pos, Quaternion.identity);
-
-    //        // apply saved health + dead?state:
-    //        var e = go.GetComponent<Enemy>();
-    //        if (e == null)
-    //        {
-    //            continue;
-    //        }
-
-    //        e.enemyId = ed.enemyId;
-    //        e.currentHealth = ed.currentHealth;
-    //        if (ed.isDead)
-    //        {
-    //            e.ForceDieImmediate();
-    //        }
-    //    }
-
-    //    Debug.Log("Player data applied.");
-    //    if (pm != null) pm.enabled = true;
-    //    if (cc != null) cc.enabled = true;
-    //}
 
     public IEnumerator ApplyFullLoad(FullSaveData full)
     {
