@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Load the main menu scene
-        SceneManager.LoadScene(mainMenuSceneName);
+        Application.Quit();
     }
     public void ActivateRandomChild()
     {
