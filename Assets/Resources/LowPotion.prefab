@@ -102,6 +102,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c1a7b221295144fa06dffcd9e5d92d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  canvasGroup: {fileID: 0}
+  startPosition: {x: 0, y: 0, z: 0}
+  startParent: {fileID: 0}
 --- !u!114 &3871629557152523964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,13 +119,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTrashable: 1
+  itemInfoUI: {fileID: 0}
+  itemInfoUI_itemName: {fileID: 0}
+  itemInfoUI_itemDescription: {fileID: 0}
+  itemInfoUI_itemFunctionality: {fileID: 0}
   thisName: LowPotion
   thisDescription: a drink that is believed to be able to cure an illness
-  thisFunctionality: heal 50
+  thisFunctionality: heal 150
+  itemPendingConsumption: {fileID: 0}
   isConsumable: 1
-  healthEffect: 50
+  healthEffect: 150
   maxHealthEffect: 0
   isEquippable: 1
+  itemPendingEquipping: {fileID: 0}
   isInsideQuickSlot: 0
   isSelected: 0
   sellingPrice: 10

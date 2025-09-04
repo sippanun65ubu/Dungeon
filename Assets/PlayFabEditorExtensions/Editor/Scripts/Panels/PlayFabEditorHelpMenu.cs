@@ -25,6 +25,7 @@ namespace PlayFab.PfEditor
                 scrollPos = new Vector2(0, scrollPos.y + scrollFactor);
             }
         }
+
         private static void shiftKeyHandler()
         {
             var e = Event.current;
@@ -38,6 +39,7 @@ namespace PlayFab.PfEditor
                 isShiftKeyPressed = false;
             }
         }
+
         private static void HelpInputHandler()
         {
             var e = Event.current;
@@ -70,6 +72,22 @@ namespace PlayFab.PfEditor
                             break;
                         case 5:
                             EditorGUI.FocusTextInControl("view_service_availability");
+                            focusIndex = 6;
+                            break;
+                        case 6:
+                            EditorGUI.FocusTextInControl("upgradeEdex");
+                            focusIndex = 7;
+                            break;
+                        case 7:
+                            EditorGUI.FocusTextInControl("view_documentation");
+                            focusIndex = 8;
+                            break;
+                        case 8:
+                            EditorGUI.FocusTextInControl("report_issues");
+                            focusIndex = 9;
+                            break;
+                        case 9:
+                            EditorGUI.FocusTextInControl("unInstall");
                             focusIndex = 0;
                             break;
                     }
@@ -79,8 +97,8 @@ namespace PlayFab.PfEditor
                     switch (focusIndex)
                     {
                         case 0:
-                            EditorGUI.FocusTextInControl("view_service_availability");
-                            focusIndex = 5;
+                            EditorGUI.FocusTextInControl("unInstall");
+                            focusIndex = 9;
                             break;
                         case 1:
                             EditorGUI.FocusTextInControl("beginners_guide");
@@ -102,10 +120,27 @@ namespace PlayFab.PfEditor
                             EditorGUI.FocusTextInControl("ask_questions");
                             focusIndex = 4;
                             break;
+                        case 6:
+                            EditorGUI.FocusTextInControl("view_service_availability");
+                            focusIndex = 5;
+                            break;
+                        case 7:
+                            EditorGUI.FocusTextInControl("upgradeEdex");
+                            focusIndex = 6;
+                            break;
+                        case 8:
+                            EditorGUI.FocusTextInControl("view_documentation");
+                            focusIndex = 7;
+                            break;
+                        case 9:
+                            EditorGUI.FocusTextInControl("report_issues");
+                            focusIndex = 8;
+                            break;
                     }
                 }
             }
         }
+
         public static void DrawHelpPanel()
         {
             HelpInputHandler();

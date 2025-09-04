@@ -491,6 +491,28 @@ public class PLayFabManager : MonoBehaviour
 
     #endregion LoadData
 
+    #region ClearSaveData
+    public void ClearSavedGameData()
+    {
+        // Create a new UpdateUserDataRequest.
+        var request = new UpdateUserDataRequest
+        {
+            // The KeysToRemove list is where you specify which data to delete.
+            KeysToRemove = new List<string> { "FullGameData" }
+        };
+
+        // Call the PlayFab API to update the user data.
+        PlayFabClientAPI.UpdateUserData(request, OnDataCleared, OnDataError);
+    }
+
+    private void OnDataCleared(UpdateUserDataResult result)
+    {
+        Debug.Log("Successfully cleared saved game data!");
+
+    }
+
+    #endregion
+
     #region LeaderBoard 
 
     public void SendGameStatsToPlayFab()

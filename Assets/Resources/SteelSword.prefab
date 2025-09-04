@@ -91,6 +91,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c1a7b221295144fa06dffcd9e5d92d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  canvasGroup: {fileID: 0}
+  startPosition: {x: 0, y: 0, z: 0}
+  startParent: {fileID: 0}
 --- !u!225 &-4826051339334335220
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -116,14 +120,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTrashable: 1
+  itemInfoUI: {fileID: 0}
+  itemInfoUI_itemName: {fileID: 0}
+  itemInfoUI_itemDescription: {fileID: 0}
+  itemInfoUI_itemFunctionality: {fileID: 0}
   thisName: SteelSword
   thisDescription: an edged, bladed weapon intended for manual cutting or thrusting
   thisFunctionality: damage 170
+  itemPendingConsumption: {fileID: 0}
   isConsumable: 0
   healthEffect: 0
-  lifeEffect: 0
   maxHealthEffect: 0
   isEquippable: 1
+  itemPendingEquipping: {fileID: 0}
   isInsideQuickSlot: 0
   isSelected: 0
   sellingPrice: 50
@@ -139,5 +148,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42374edc4ae729f4fbb5a916fd5ee208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDamage: 170
+  weaponDamage: 200
   penetration: 4

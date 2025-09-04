@@ -471,7 +471,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -526,7 +526,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1744364113985538516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d5157a1de4a374da880d6f40cf263e, type: 3}
+  m_Script: {fileID: 11500000, guid: 91854e2828f7dab4395501a018682c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1750645325505743447
@@ -1141,19 +1141,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: NightMare
   playerInRange: 0
+  animator: {fileID: 0}
   isDead: 0
+  _currentHealth: 0
   maxHealth: 1200
+  agent: {fileID: 0}
   healthSlider: {fileID: 4047227087171090348}
-  isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
-  damageToInflict: 50
+  lastDamageTime: 0
+  damageToInflict: 40
   currentDamageToInflict: 0
   armor: 5
+  maxarmor: 5
   enemyId: 
+  resourcePath: 
+  thisenemyType: 0
   soundChannel: {fileID: -683131427954325367}
-  skeletonTakeDamage: {fileID: 8300000, guid: c564fc86cfa1faf45b1bc980034e7768, type: 3}
-  skeletonDie: {fileID: 8300000, guid: 50d25b28abc988544ab2331e689ecd9e, type: 3}
+  monsterTakeDamage: {fileID: 0}
+  monsterDie: {fileID: 0}
   enemyScoreValue: 500
 --- !u!114 &5365398259359954193
 MonoBehaviour:
@@ -2216,7 +2222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5074571298042536553
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4003,7 +4009,7 @@ RectTransform:
   m_Father: {fileID: 9087872289170176989}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 125, y: 0}
   m_SizeDelta: {x: 270, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

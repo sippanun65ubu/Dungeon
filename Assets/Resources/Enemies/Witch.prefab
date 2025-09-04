@@ -1001,7 +1001,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -1056,7 +1056,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3706112032476048714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d5157a1de4a374da880d6f40cf263e, type: 3}
+  m_Script: {fileID: 11500000, guid: 91854e2828f7dab4395501a018682c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3950006547111135158
@@ -1680,7 +1680,6 @@ MonoBehaviour:
   maxHealth: 1000
   agent: {fileID: 0}
   healthSlider: {fileID: 7347643964838591860}
-  isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
   lastDamageTime: 0

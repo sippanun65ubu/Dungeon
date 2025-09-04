@@ -1972,7 +1972,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -2027,7 +2027,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6996047161653678368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d5157a1de4a374da880d6f40cf263e, type: 3}
+  m_Script: {fileID: 11500000, guid: 91854e2828f7dab4395501a018682c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7103213665744272269
@@ -2707,20 +2707,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Mutant
   playerInRange: 0
+  animator: {fileID: 0}
   isDead: 0
+  _currentHealth: 0
   maxHealth: 800
+  agent: {fileID: 0}
   healthSlider: {fileID: 7468941704572073009}
-  isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
+  lastDamageTime: 0
   damageToInflict: 25
   currentDamageToInflict: 0
   armor: 4
+  maxarmor: 5
   enemyId: 
+  resourcePath: 
+  thisenemyType: 0
   soundChannel: {fileID: -2953364179545364435}
-  skeletonTakeDamage: {fileID: 8300000, guid: 90b3d298255549944a5fb78bc933785f, type: 3}
-  skeletonDie: {fileID: 8300000, guid: 8e65f2b68ee6726478a28888f61c8feb, type: 3}
-  enemyScoreValue: 200
+  monsterTakeDamage: {fileID: 0}
+  monsterDie: {fileID: 0}
+  enemyScoreValue: 500
 --- !u!114 &4690813969596589491
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -779,7 +779,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -834,7 +834,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3016634042747774080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d5157a1de4a374da880d6f40cf263e, type: 3}
+  m_Script: {fileID: 11500000, guid: 91854e2828f7dab4395501a018682c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3122374071865365698
@@ -1374,19 +1374,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Stik
   playerInRange: 0
+  animator: {fileID: 0}
   isDead: 0
+  _currentHealth: 0
   maxHealth: 300
+  agent: {fileID: 0}
   healthSlider: {fileID: 3706842156525696180}
-  isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
+  lastDamageTime: 0
   damageToInflict: 0
   currentDamageToInflict: 0
   armor: 0
+  maxarmor: 5
   enemyId: 
+  resourcePath: 
+  thisenemyType: 0
   soundChannel: {fileID: 8920552440575567984}
-  skeletonTakeDamage: {fileID: 8300000, guid: 71f5af87f7f2dfb4e890afe369e36c24, type: 3}
-  skeletonDie: {fileID: 8300000, guid: 8e65f2b68ee6726478a28888f61c8feb, type: 3}
+  monsterTakeDamage: {fileID: 0}
+  monsterDie: {fileID: 0}
   enemyScoreValue: 60
 --- !u!114 &7940003068005960984
 MonoBehaviour:

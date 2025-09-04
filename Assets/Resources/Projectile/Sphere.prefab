@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 25
-  lifeTime: 100
+  lifeTime: 300
   spawnEnemyOnHit: 0
   spawnChance: 0.3
   enemyPrefab: {fileID: 0}

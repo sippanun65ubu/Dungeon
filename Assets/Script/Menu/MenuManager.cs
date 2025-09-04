@@ -12,7 +12,6 @@ public class MenuManager : MonoBehaviour
     public GameObject uiCanvas;
     public GameObject settingMenu;
     public bool isMenuOpen;
-
     public void Awake()
     {
         if (Instance != null && Instance != this)
@@ -89,7 +88,6 @@ public class MenuManager : MonoBehaviour
             else
                 Debug.LogWarning("No PlayFabManager – skipping SaveGameData()");
 
-
             if (PlayerState.Instance != null) PlayerState.Instance.ResetToDefaults();
             if (GameManager.instance != null) GameManager.instance.ResetToDefaults();
             if (InventorySystem.Instance != null) InventorySystem.Instance.ClearAllItems();
@@ -104,11 +102,10 @@ public class MenuManager : MonoBehaviour
             // 4) Reset every NPC
             foreach (var npc in FindObjectsOfType<NPC>())
                 npc.ResetToDefaults();
-            PlayFabClientAPI.ForgetAllCredentials();
             settingMenu?.SetActive(false);
             menuCanvas?.SetActive(false);
+            KeepState.Instance.aftergame = true;
             SceneManager.LoadScene("MainMenu");
-            Application.Quit();
         }
     }
 

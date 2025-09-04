@@ -47,6 +47,14 @@ public class FirstMenuManager : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        if (KeepState.Instance.aftergame == true)
+        {
+            MainMenuScreen();
+            KeepState.Instance.aftergame = false;
+        }
+    }
 
     public void NewGame()
     {

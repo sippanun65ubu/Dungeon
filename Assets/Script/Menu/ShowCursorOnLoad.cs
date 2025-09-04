@@ -8,10 +8,15 @@ public class ShowCursorOnLoad : MonoBehaviour
 
     void Start()
     {
-        if (unlockAndShowCursor)
-        {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+    }
+
+    private void Update()
+    {
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }

@@ -687,7 +687,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -742,7 +742,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3147818307873787769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d5157a1de4a374da880d6f40cf263e, type: 3}
+  m_Script: {fileID: 11500000, guid: 91854e2828f7dab4395501a018682c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5519788067312542210
@@ -1377,15 +1377,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -364.7
+      value: 352.2711
       objectReference: {fileID: 0}
     - target: {fileID: 400078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -56.857533
+      value: 6.192396
       objectReference: {fileID: 0}
     - target: {fileID: 400078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 300.6
+      value: 347.20752
       objectReference: {fileID: 0}
     - target: {fileID: 400078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1528,21 +1528,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Skeleton
   playerInRange: 0
+  animator: {fileID: 0}
   isDead: 0
   _currentHealth: 0
-  maxHealth: 700
+  maxHealth: 400
+  agent: {fileID: 0}
   healthSlider: {fileID: 8867934364677779256}
-  isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
+  lastDamageTime: 0
   damageToInflict: 20
   currentDamageToInflict: 0
   armor: 3
+  maxarmor: 5
   enemyId: 
   resourcePath: 
+  thisenemyType: 0
   soundChannel: {fileID: 6671256131559214744}
-  skeletonTakeDamage: {fileID: 8300000, guid: 4978fcbaf8e035043ab38aa034ae6bbe, type: 3}
-  skeletonDie: {fileID: 8300000, guid: 27d2304b3cd64874ab9532e3bc76ae37, type: 3}
+  monsterTakeDamage: {fileID: 0}
+  monsterDie: {fileID: 0}
   enemyScoreValue: 80
 --- !u!65 &7205377524682839802
 BoxCollider:

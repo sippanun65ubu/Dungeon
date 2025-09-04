@@ -3927,7 +3927,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -3982,7 +3982,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5509723851534958344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d5157a1de4a374da880d6f40cf263e, type: 3}
+  m_Script: {fileID: 11500000, guid: 91854e2828f7dab4395501a018682c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5762575143989127587
@@ -4731,7 +4731,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7853090666087950963}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 320.9, y: 2.7578154, z: 225.29056}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
@@ -4811,21 +4811,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: C02
   playerInRange: 0
+  animator: {fileID: 0}
   isDead: 0
   _currentHealth: 0
   maxHealth: 400
+  agent: {fileID: 0}
   healthSlider: {fileID: 4045303118104314716}
-  isSuperregen: 0
   healthRegenRate: 5
   healthRegenDelay: 3
+  lastDamageTime: 0
   damageToInflict: 10
   currentDamageToInflict: 0
   armor: 3
+  maxarmor: 5
   enemyId: 
   resourcePath: 
+  thisenemyType: 0
   soundChannel: {fileID: 5592998903700524815}
-  skeletonTakeDamage: {fileID: 8300000, guid: 71f5af87f7f2dfb4e890afe369e36c24, type: 3}
-  skeletonDie: {fileID: 8300000, guid: 8e65f2b68ee6726478a28888f61c8feb, type: 3}
+  monsterTakeDamage: {fileID: 0}
+  monsterDie: {fileID: 0}
   enemyScoreValue: 40
 --- !u!114 &3359192914468057491
 MonoBehaviour:

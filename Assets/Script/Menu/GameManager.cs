@@ -156,6 +156,7 @@ public class GameManager : MonoBehaviour
         if (PLayFabManager.Instance != null)
         {
             PLayFabManager.Instance.SendGameStatsToPlayFab();
+            PLayFabManager.Instance.ClearSavedGameData();
         }
         else
         {
@@ -163,7 +164,8 @@ public class GameManager : MonoBehaviour
         }
 
         // Load the main menu scene
-        Application.Quit();
+        KeepState.Instance.aftergame = true;
+        SceneManager.LoadScene("MainMenu");
     }
     public void ActivateRandomChild()
     {

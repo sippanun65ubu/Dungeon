@@ -2111,6 +2111,7 @@ namespace PlayFab.ServerModels
         InvalidReportName,
         ResourceNotModified,
         StudioCreationLimitExceeded,
+        StudioDeletionInitiated,
         MatchmakingEntityInvalid,
         MatchmakingPlayerAttributesInvalid,
         MatchmakingQueueNotFound,
@@ -2418,6 +2419,9 @@ namespace PlayFab.ServerModels
         GameSaveServiceNotEnabledForTitle,
         GameSaveServiceOnboardingPending,
         GameSaveManifestNotEligibleAsConflictingVersion,
+        GameSaveServiceUnavailable,
+        GameSaveConflict,
+        GameSaveManifestNotEligibleForRollback,
         StateShareForbidden,
         StateShareTitleNotInFlight,
         StateShareStateNotFound,
@@ -2435,7 +2439,9 @@ namespace PlayFab.ServerModels
         VersionConfigurationCannotBeSpecifiedForLinkedStat,
         VersionConfigurationIsRequired,
         InvalidEntityTypeForAggregation,
-        MultiLevelAggregationNotAllowed
+        MultiLevelAggregationNotAllowed,
+        AggregationTypeNotAllowedForLinkedStat,
+        StoreMetricsRequestInvalidInput
     }
 
     [Serializable]
@@ -3362,8 +3368,8 @@ namespace PlayFab.ServerModels
     public class GetPlayFabIDsFromFacebookIDsRequest : PlayFabRequestCommon
     {
         /// <summary>
-        /// Array of unique Facebook identifiers for which the title needs to get PlayFab identifiers. The array cannot exceed 2,000
-        /// in length.
+        /// Array of unique Facebook identifiers for which the title needs to get PlayFab identifiers. The array cannot exceed 25 in
+        /// length.
         /// </summary>
         public List<string> FacebookIDs;
     }
@@ -3429,7 +3435,7 @@ namespace PlayFab.ServerModels
     {
         /// <summary>
         /// Array of unique Nintendo Switch Account identifiers for which the title needs to get PlayFab identifiers. The array
-        /// cannot exceed 2,000 in length.
+        /// cannot exceed 25 in length.
         /// </summary>
         public List<string> NintendoAccountIds;
     }
@@ -3451,7 +3457,7 @@ namespace PlayFab.ServerModels
     {
         /// <summary>
         /// Array of unique Nintendo Switch Device identifiers for which the title needs to get PlayFab identifiers. The array
-        /// cannot exceed 2,000 in length.
+        /// cannot exceed 25 in length.
         /// </summary>
         public List<string> NintendoSwitchDeviceIds;
     }
@@ -3477,7 +3483,7 @@ namespace PlayFab.ServerModels
         public int? IssuerId;
         /// <summary>
         /// Array of unique PlayStation :tm: Network identifiers for which the title needs to get PlayFab identifiers. The array
-        /// cannot exceed 2,000 in length.
+        /// cannot exceed 25 in length.
         /// </summary>
         public List<string> PSNAccountIDs;
     }
@@ -3503,7 +3509,7 @@ namespace PlayFab.ServerModels
         public int? IssuerId;
         /// <summary>
         /// Array of unique PlayStation :tm: Network identifiers for which the title needs to get PlayFab identifiers. The array
-        /// cannot exceed 2,000 in length.
+        /// cannot exceed 25 in length.
         /// </summary>
         public List<string> PSNOnlineIDs;
     }
@@ -3525,7 +3531,7 @@ namespace PlayFab.ServerModels
     {
         /// <summary>
         /// Array of unique Steam identifiers (Steam profile IDs) for which the title needs to get PlayFab identifiers. The array
-        /// cannot exceed 2,000 in length.
+        /// cannot exceed 25 in length.
         /// </summary>
         public List<string> SteamStringIDs;
     }
@@ -3546,7 +3552,7 @@ namespace PlayFab.ServerModels
     public class GetPlayFabIDsFromSteamNamesRequest : PlayFabRequestCommon
     {
         /// <summary>
-        /// Array of unique Steam identifiers for which the title needs to get PlayFab identifiers. The array cannot exceed 2,000 in
+        /// Array of unique Steam identifiers for which the title needs to get PlayFab identifiers. The array cannot exceed 25 in
         /// length.
         /// </summary>
         public List<string> SteamNames;
@@ -3569,7 +3575,7 @@ namespace PlayFab.ServerModels
     {
         /// <summary>
         /// Array of unique Twitch identifiers (Twitch's _id) for which the title needs to get PlayFab identifiers. The array cannot
-        /// exceed 2,000 in length.
+        /// exceed 25 in length.
         /// </summary>
         public List<string> TwitchIds;
     }
@@ -3595,7 +3601,7 @@ namespace PlayFab.ServerModels
         public string Sandbox;
         /// <summary>
         /// Array of unique Xbox Live account identifiers for which the title needs to get PlayFab identifiers. The array cannot
-        /// exceed 2,000 in length.
+        /// exceed 25 in length.
         /// </summary>
         public List<string> XboxLiveAccountIDs;
     }

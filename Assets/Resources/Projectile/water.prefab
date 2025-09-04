@@ -146,8 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912d4e99ace06464780ccdbfbebe86bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
-  lifeTime: 100
+  damage: 25
+  lifeTime: 300
   spawnEnemyOnHit: 0
   spawnChance: 0.3
   enemyPrefab: {fileID: 0}
